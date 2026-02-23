@@ -1,36 +1,53 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
+```markdown
+# OneMark Creative | Coming Soon 🚀
 
-First, run the development server:
+The temporary "Under Construction" landing page for **OneMark Creative**, the visual arts and interactive event branch of [OneMark Digital](https://www.onemark.digital).
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+This repository currently houses the high-conversion waitlist page, featuring premium dark-mode typography, ambient glowing effects, and a direct WhatsApp lead-generation funnel.
+
+## 🌟 Current Features
+* **Premium UI/UX:** High-contrast dark mode aesthetic with custom typography and smooth hover micro-interactions.
+* **Direct Lead Capture:** Integrated `wa.me` WhatsApp routing with pre-filled messaging to instantly capture project interest.
+* **Fully Responsive:** Optimized for both mobile and desktop viewports.
+* **Vercel-Ready:** Configured for zero-config deployments.
+
+## 🛠 Tech Stack
+* **Framework:** Next.js (Pages Router)
+* **Styling:** Tailwind CSS
+* **Deployment:** Vercel
+
+## 🚀 Quick Start (Local Development)
+
+1. **Clone the repository:**
+   ```bash
+   git clone [https://github.com/your-username/onemark-creative.git](https://github.com/your-username/onemark-creative.git)
+   cd onemark-creative
+
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. **Install dependencies:**
+```bash
+npm install
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## Learn More
+3. **Run the development server:**
+```bash
+npm run dev
 
-To learn more about Next.js, take a look at the following resources:
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+4. **Open your browser:**
+Navigate to `http://localhost:3000` to see the site in action.
 
-## Deploy on Vercel
+## 🌐 Deployment
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+This project is linked to Vercel and deployed to `creative.onemark.co.in`. Pushing to the `main` branch will automatically trigger a new production build.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+*Built with ❤️ by Viswanath Bodasakurthi* **Co-Founder, [Onemark](https://www.onemark.digital)**
+

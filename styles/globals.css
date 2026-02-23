@@ -1,0 +1,211 @@
+/* ─────────────────────────────────────────────────────
+   OneMark Creative — Global Styles
+   Tailwind CSS v4 + Next.js
+   ───────────────────────────────────────────────────── */
+
+/* 1. FONTS
+   Syne          — geometric display, bold personality
+   Plus Jakarta Sans — clean modern body, highly readable
+   Space Mono    — mono for labels/code-like elements
+*/
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Space+Mono:wght@400;700&display=swap');
+
+@import "tailwindcss";
+
+@theme {
+  --font-family-display: "Syne", sans-serif;
+  --font-family-body:    "Plus Jakarta Sans", sans-serif;
+  --font-family-mono:    "Space Mono", monospace;
+
+  --color-bg:      #080809;
+  --color-surface: #0E0E10;
+  --color-border:  #1C1C20;
+  --color-cyan:    #00BFFF;
+  --color-coral:   #FF4D6D;
+  --color-amber:   #FFB547;
+  --color-muted:   #5A5A6A;
+}
+
+/* 2. CSS CUSTOM PROPERTIES */
+:root {
+  --cyan:    #00BFFF;
+  --coral:   #FF4D6D;
+  --amber:   #FFB547;
+  --bg:      #080809;
+  --surface: #0E0E10;
+  --border:  #1C1C20;
+  --muted:   #5A5A6A;
+}
+
+/* 3. BASE RESET */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background-color: var(--bg);
+  color: #EDEDF2;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  overflow-x: hidden;
+  cursor: none !important;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+* { cursor: none !important; }
+
+/* 4. SCROLLBAR */
+::-webkit-scrollbar       { width: 3px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+/* 5. NOISE TEXTURE */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+/* 6. CUSTOM CURSOR */
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
+  top: 0; left: 0;
+  z-index: 9999;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  will-change: left, top;
+}
+.cursor-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--cyan);
+  mix-blend-mode: screen;
+  transition: width .18s, height .18s, background .18s;
+}
+.cursor-ring {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(0, 191, 255, 0.38);
+  transition:
+    width  .35s cubic-bezier(.23,1,.32,1),
+    height .35s cubic-bezier(.23,1,.32,1),
+    border-color .3s;
+}
+body.cursor-hovered .cursor-dot  { width: 13px; height: 13px; background: var(--coral); }
+body.cursor-hovered .cursor-ring { width: 54px; height: 54px; border-color: rgba(255,77,109,.42); }
+body.cursor-clicking .cursor-dot { width: 4px; height: 4px; }
+
+/* 7. LAYOUT UTILITIES */
+.grid-bg {
+  background-image:
+    linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+
+.glass {
+  background: rgba(14,14,16,.62);
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  border: 1px solid rgba(255,255,255,.07);
+}
+
+.glow-cyan  { box-shadow: 0 0 40px rgba(0,191,255,.14), 0 0 100px rgba(0,191,255,.05); }
+.glow-coral { box-shadow: 0 0 30px rgba(255,77,109,.18); }
+
+/* 8. MAGNETIC BUTTON */
+.mag-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 28px;
+  border-radius: 100px;
+  border: 1px solid rgba(0,191,255,.32);
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  letter-spacing: .08em;
+  color: var(--cyan);
+  background: transparent;
+  text-decoration: none;
+  transition: border-color .3s, background .3s;
+  overflow: hidden;
+}
+.mag-btn::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(0,191,255,.1), transparent);
+  opacity: 0;
+  transition: opacity .3s;
+}
+.mag-btn:hover::before { opacity: 1; }
+.mag-btn:hover         { border-color: rgba(0,191,255,.75); }
+.mag-btn.primary {
+  background: linear-gradient(135deg, var(--cyan), rgba(0,100,255,.85));
+  border-color: transparent;
+  color: #000;
+  font-weight: 700;
+}
+.mag-btn.primary:hover { box-shadow: 0 0 32px rgba(0,191,255,.38); }
+
+/* 9. SECTION LABEL */
+.sec-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  letter-spacing: .2em;
+  color: var(--cyan);
+  text-transform: uppercase;
+}
+
+/* 10. BLOB */
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(60px);
+}
+
+/* 11. IFRAME SCALING */
+.iframe-desktop {
+  width: 1280px; height: 820px;
+  transform: scale(.5);
+  transform-origin: top left;
+  position: absolute; top: 0; left: 0;
+  border: none;
+}
+.iframe-mobile {
+  width: 390px; height: 844px;
+  transform: scale(.615);
+  transform-origin: top left;
+  position: absolute; top: 0; left: 0;
+  border: none;
+}
+
+/* 12. KEYFRAMES */
+@keyframes revealWord {
+  from { transform: translateY(112%); }
+  to   { transform: translateY(0); }
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes scrollBounce {
+  0%,100% { transform: translateY(0) translateX(-50%); opacity: 1; }
+  50%     { transform: translateY(9px) translateX(-50%); opacity: .35; }
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes pulse {
+  0%,100% { opacity: .6; }
+  50%     { opacity: 1; }
+}
+
+/* 13. RESPONSIVE */
+@media (max-width: 768px) {
+  .iframe-desktop { transform: scale(.34); }
+  .showcase-cols  { flex-direction: column !important; }
+}
