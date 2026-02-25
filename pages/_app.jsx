@@ -1,15 +1,14 @@
 /**
  * pages/_app.jsx
- *
- * Next.js custom App — wraps every page.
- *
- * IMPORTANT: Global CSS must be imported HERE (Next.js rule).
- * We import from styles/globals.css — NOT from app/globals.css.
- * The app/globals.css is intentionally empty to avoid conflicts.
+ * Wraps entire app with ThemeProvider for light/dark mode.
  */
-
 import "../styles/globals.css";
+import { ThemeProvider } from "../context/ThemeContext";
 
 export default function App({ Component, pageProps }) {
-  return <Component {...pageProps} />;
+  return (
+    <ThemeProvider>
+      <Component {...pageProps} />
+    </ThemeProvider>
+  );
 }

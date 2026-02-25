@@ -1,0 +1,10 @@
+# OneMark Stories — robots.txt
+User-agent: *
+Allow: /
+
+# Block status pages from indexing
+Disallow: /maintenance
+Disallow: /404
+Disallow: /_error
+
+Sitemap: https://stories.onemark.co.in/sitemap.xml

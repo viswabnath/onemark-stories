@@ -1,100 +1,84 @@
-
-
-// import { useState } from "react";
-// import dynamic from "next/dynamic";
-// import Head from "next/head";
-
-// import Cursor   from "../components/Cursor";
-// import Loader   from "../components/Loader";
-// import Nav      from "../components/Nav";
-// import Showcase from "../components/Showcase";
-// import About    from "../components/About";
-// import Footer   from "../components/Footer";
-
-// const Hero = dynamic(() => import("../components/Hero"), { ssr: false });
-
-// export default function Home() {
-//   const [loaded, setLoaded] = useState(false);
-
-//   return (
-//     <>
-//       <Head>
-//         <title>OneMark Creative — Premium Digital Experiences</title>
-//         <meta
-//           name="description"
-//           content="We craft immersive digital experiences — wedding keepsakes, live event pages, and portfolio sites — designed to surprise and be remembered forever."
-//         />
-//         <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-//         {/* ── Favicon — using the OM logo mark ─── */}
-//         <link rel="icon"             href="/logo-om.png" type="image/png" />
-//         <link rel="apple-touch-icon" href="/logo-om.png" />
-//         <link rel="shortcut icon"    href="/logo-om.png" />
-
-//         {/* Open Graph */}
-//         <meta property="og:title"       content="OneMark Creative" />
-//         <meta property="og:description" content="Premium digital experiences for life's most memorable moments." />
-//         <meta property="og:image"       content="/onemark-logo.png" />
-//         <meta property="og:url"         content="https://creative.onemark.co.in" />
-//         <meta property="og:type"        content="website" />
-
-//         {/* Twitter card */}
-//         <meta name="twitter:card"        content="summary_large_image" />
-//         <meta name="twitter:title"       content="OneMark Creative" />
-//         <meta name="twitter:description" content="Premium digital experiences for life's most memorable moments." />
-//         <meta name="twitter:image"       content="/onemark-logo.png" />
-//       </Head>
-
-//       <Loader onDone={() => setLoaded(true)} />
-//       <Cursor />
-
-//       {loaded && (
-//         <>
-//           <Nav />
-//           <main>
-//             <Hero />
-//             <Showcase />
-//             <About />
-//           </main>
-//           <Footer />
-//         </>
-//       )}
-//     </>
-//   );
-// }
+/**
+ * pages/index.jsx — Perf optimised: lazy canvas, no full block on loader
+ */
+import { useState } from "react";
+import dynamic from "next/dynamic";
 import Head from "next/head";
+import Cursor   from "../components/Cursor";
+import Loader   from "../components/Loader";
+import Nav      from "../components/Nav";
+import About    from "../components/About";
+import Footer   from "../components/Footer";
 
-export default function Maintenance() {
-  const whatsappNumber = "919392704742";
-  const whatsappMessage = encodeURIComponent("Hi OneMark! I'm interested in a creative project when you launch.");
-  const whatsappLink = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
+// Lazy load heavy components
+const Hero     = dynamic(() => import("../components/Hero"),     { ssr: false });
+const Showcase = dynamic(() => import("../components/Showcase"), { ssr: false });
+
+const DOMAIN = "https://stories.onemark.co.in";
+const TITLE  = "OneMark Stories — Moments Told By OneMark";
+const DESC   = "We craft bespoke digital experiences for weddings, events, and special occasions. Custom wedding sites, live countdown pages, event timelines — built in Kakinada, India.";
+
+export default function Home() {
+  const [loaded, setLoaded] = useState(false);
+
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@graph": [
+      { "@type": "Organization", "@id": `${DOMAIN}/#organization`, "name": "OneMark Stories", "url": DOMAIN,
+        "logo": `${DOMAIN}/logo-om.png`, "description": DESC,
+        "address": { "@type": "PostalAddress", "addressLocality": "Kakinada", "addressRegion": "Andhra Pradesh", "addressCountry": "IN" },
+        "sameAs": ["https://www.instagram.com/stories.onemark","https://onemark.digital","https://onemark.digital"] },
+      { "@type": "WebSite", "@id": `${DOMAIN}/#website`, "url": DOMAIN, "name": "OneMark Stories", "description": DESC,
+        "publisher": { "@id": `${DOMAIN}/#organization` } },
+    ],
+  };
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-white flex flex-col items-center justify-center relative overflow-hidden font-sans">
+    <>
       <Head>
-        <title>OneMark Creative | Coming Soon</title>
+        <title>{TITLE}</title>
+        <meta name="description"         content={DESC} />
+        <meta name="keywords"            content="wedding website, wedding countdown, event website, digital invitation, Kakinada, OneMark, stories onemark" />
+        <meta name="author"              content="OneMark Digital, Kakinada" />
+        <meta name="robots"              content="index, follow, max-image-preview:large" />
+        <meta name="viewport"            content="width=device-width, initial-scale=1" />
+        <link rel="canonical"            href={DOMAIN} />
+        <meta name="geo.region"          content="IN-AP" />
+        <meta name="geo.placename"       content="Kakinada" />
+        <meta property="og:type"         content="website" />
+        <meta property="og:url"          content={DOMAIN} />
+        <meta property="og:title"        content={TITLE} />
+        <meta property="og:description"  content={DESC} />
+        <meta property="og:image"        content={`${DOMAIN}/onemark-logo.png`} />
+        <meta property="og:image:width"  content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:site_name"    content="OneMark Stories" />
+        <meta property="og:locale"       content="en_IN" />
+        <meta name="twitter:card"        content="summary_large_image" />
+        <meta name="twitter:title"       content={TITLE} />
+        <meta name="twitter:description" content={DESC} />
+        <meta name="twitter:image"       content={`${DOMAIN}/onemark-logo.png`} />
+        {/* Favicon — proper sizes */}
+        <link rel="icon"             href="/favicon.ico" sizes="any" />
+        <link rel="icon"             href="/logo-om.png" type="image/png" sizes="192x192" />
+        <link rel="apple-touch-icon" href="/logo-om.png" sizes="180x180" />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
       </Head>
 
-      {/* Background Ambient Glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-cyan-500/10 rounded-full blur-[120px] pointer-events-none" />
+      <Loader onDone={() => setLoaded(true)} />
+      <Cursor />
 
-      {/* Main Content */}
-      <div className="z-10 text-center flex flex-col items-center px-6">
-        <h1 className="text-5xl md:text-7xl font-black tracking-tighter mb-4 text-transparent bg-clip-text bg-gradient-to-br from-white to-neutral-500">
-          We're Crafting
-          <br /> Something <span className="text-cyan-400">Unforgettable.</span>
-        </h1>
-        
-        <p className="text-neutral-400 max-w-md mx-auto text-lg mb-10 tracking-wide">
-          The creative lab of OneMark is currently under construction. We're building a new digital experience for your special moments.
-        </p>
+      {/* Show nav immediately — don't block on loader */}
+      <Nav />
 
-      </div>
-
-      {/* Footer Branding */}
-      <div className="absolute bottom-10 text-xs tracking-[0.2em] text-neutral-600 uppercase">
-        Powered by <span className="text-neutral-300 font-bold">OneMark Digital</span>
-      </div>
-    </div>
+      {loaded && (
+        <main>
+          <Hero />
+          <Showcase />
+          <About />
+          <Footer />
+        </main>
+      )}
+    </>
   );
 }

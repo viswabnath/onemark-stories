@@ -1,146 +1,61 @@
 /**
- * components/Loader.jsx
- *
- * Full-screen loading screen with the OneMark logo (image) as the centerpiece.
- * Replaces the old text-only "ONEMARK CREATIVE" placeholder.
- *
- * Logo files (placed in /public/):
- *   /public/logo-om.png         — the OM icon mark
- *   /public/onemark-logo.png    — full wordmark logo
- *
- * Animation sequence:
- *   1. Logo fades + slides up gently on mount
- *   2. Progress bar fills with randomised increments (feels organic)
- *   3. At 100% → short pause → entire loader fades out
- *   4. `onDone()` fires → parent renders the main content
+ * Loader.jsx — GSAP-animated logo + progress bar
  */
-
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
+import { gsap } from "gsap";
 
 export default function Loader({ onDone }) {
   const [percent,   setPercent]   = useState(0);
-  const [fading,    setFading]    = useState(false);
   const [unmounted, setUnmounted] = useState(false);
+  const loaderRef  = useRef(null);
+  const barRef     = useRef(null);
 
   useEffect(() => {
-    let current = 0;
+    // Entrance animation
+    const tl = gsap.timeline();
+    tl.fromTo(".loader__logo",         { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" })
+      .fromTo(".loader__progress-wrap", { opacity: 0 },         { opacity: 1, duration: 0.5 }, "-=0.3");
+  }, []);
 
-    const interval = setInterval(() => {
-      current = Math.min(current + Math.random() * 9 + 3, 98);
-      setPercent(Math.floor(current));
-
-      if (current >= 98) {
-        clearInterval(interval);
+  useEffect(() => {
+    let cur = 0;
+    const iv = setInterval(() => {
+      cur = Math.min(cur + Math.random() * 9 + 3, 98);
+      setPercent(Math.floor(cur));
+      if (barRef.current) gsap.to(barRef.current, { width: `${cur}%`, duration: 0.1, ease: "none" });
+      if (cur >= 98) {
+        clearInterval(iv);
         setTimeout(() => {
           setPercent(100);
+          if (barRef.current) gsap.to(barRef.current, { width: "100%", duration: 0.15 });
           setTimeout(() => {
-            setFading(true);
-            setTimeout(() => {
-              setUnmounted(true);
-              onDone?.();
-            }, 650);
+            gsap.to(loaderRef.current, {
+              opacity: 0, duration: 0.6, ease: "power2.in",
+              onComplete: () => { setUnmounted(true); onDone?.(); }
+            });
           }, 280);
         }, 200);
       }
     }, 55);
-
-    return () => clearInterval(interval);
+    return () => clearInterval(iv);
   }, [onDone]);
 
   if (unmounted) return null;
 
   return (
-    <div
-      style={{
-        position:        "fixed",
-        inset:           0,
-        zIndex:          9990,
-        backgroundColor: "var(--bg)",
-        display:         "flex",
-        flexDirection:   "column",
-        alignItems:      "center",
-        justifyContent:  "center",
-        gap:             32,
-        opacity:         fading ? 0 : 1,
-        visibility:      fading ? "hidden" : "visible",
-        transition:      "opacity 0.65s ease, visibility 0.65s",
-      }}
-    >
-      {/* ── Logo mark (animated in) ─────────────────────────────────────── */}
-      <div
-        style={{
-          animation: "fadeUp 0.8s cubic-bezier(.16,1,.3,1) 0.1s both",
-          display:   "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          gap: 16,
-        }}
-      >
-        {/* OM icon mark */}
-        <div
-          style={{
-            width:    72,
-            height:   72,
-            position: "relative",
-            filter:   "drop-shadow(0 0 20px rgba(0,191,255,0.35))",
-          }}
-        >
-         
-          <Image
-            src="/onemark-logo.png"
-            alt="OneMark Creative"
-            fill
-            style={{ objectFit: "contain" }}
-            priority
-          />
-        </div>
+    <div className="loader" ref={loaderRef}>
+      <div className="loader__logo">
+        <Image src="/stories-logo-white-resized.png" alt="OneMark Stories"
+          width={200} height={80}
+          style={{ objectFit: "contain", filter: "drop-shadow(0 0 20px rgba(41,171,226,0.3))" }}
+          priority />
       </div>
-
-      {/* ── Progress bar ────────────────────────────────────────────────── */}
-      <div
-        style={{
-          animation:    "fadeUp 0.8s cubic-bezier(.16,1,.3,1) 0.25s both",
-          display:      "flex",
-          flexDirection: "column",
-          alignItems:   "center",
-          gap:          10,
-        }}
-      >
-        {/* Track */}
-        <div
-          style={{
-            width:        160,
-            height:       2,
-            background:   "rgba(255,255,255,0.07)",
-            borderRadius: 1,
-            overflow:     "hidden",
-          }}
-        >
-          {/* Fill */}
-          <div
-            style={{
-              height:       "100%",
-              width:        `${percent}%`,
-              background:   "linear-gradient(90deg, var(--cyan), rgba(0,100,255,0.9))",
-              borderRadius: 1,
-              transition:   "width 0.05s linear",
-              boxShadow:    "0 0 8px rgba(0,191,255,0.6)",
-            }}
-          />
+      <div className="loader__progress-wrap">
+        <div className="loader__bar-track">
+          <div className="loader__bar-fill" ref={barRef} style={{ width: "0%" }} />
         </div>
-
-        {/* Percentage */}
-        <span
-          style={{
-            fontFamily:    "'Space Mono', monospace",
-            fontSize:      10,
-            letterSpacing: "0.18em",
-            color:         "var(--muted)",
-          }}
-        >
-          {percent}%
-        </span>
+        <span className="loader__pct">{percent}%</span>
       </div>
     </div>
   );

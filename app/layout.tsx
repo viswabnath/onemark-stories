@@ -14,7 +14,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "OneMark Creative",
+  title: "OneMark Stories",
   description: "Premium digital experiences for life's most memorable moments.",
 };
 

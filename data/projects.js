@@ -12,22 +12,22 @@ export const PROJECTS = [
   {
     id:    0,
     num:   "01",
-    title: "Venkat × Nandini",
+    title: "Anil × Eswari",
     tag:   "Wedding",
-    desc:  "Interactive Wedding Keepsake",
+    desc:  "Wedding Celebration Site",
     color: "#FF4D6D",
-    url:   "https://venkat-nandini.netlify.app/",
+    url:   "https://anil-eswari.netlify.app/",
 
     about:
-      "A beautifully crafted wedding site for Venkat & Nandini — capturing their love story, ceremony details, and a live countdown to the big day.",
+      "A vibrant celebration site for Anil & Eswari — bringing together their ceremony schedule, family message, and wedding memories in one joyful experience.",
 
     importance:
-      "Your wedding is a once-in-a-lifetime event. A dedicated site lets your guests experience the joy before they arrive — no WhatsApp forwards, no confusion. Just one beautiful link shared with everyone you love.",
+      "Families are spread across cities and countries. A website becomes the central hub — your out-of-town guests know exactly where to go, what to wear, and when to arrive.",
 
     features: [
-      "Live countdown to the wedding day",
-      "Couple's story & photo gallery",
-      "Venue info & event timeline",
+     "Live countdown to the wedding day",
+      "Family greeting section",
+      "Shareable across WhatsApp & Instagram",
     ],
   },
   {
@@ -54,24 +54,25 @@ export const PROJECTS = [
   {
     id:    2,
     num:   "03",
-    title: "Anil × Eswari",
+    title: "Venkat × Nandini",
     tag:   "Wedding",
-    desc:  "Wedding Celebration Site",
+    desc:  "Interactive Wedding Keepsake",
     color: "#FF4D6D",
-    url:   "https://anil-eswari.netlify.app/",
+    url:   "https://venkat-nandini.netlify.app/",
 
     about:
-      "A vibrant celebration site for Anil & Eswari — bringing together their ceremony schedule, family message, and wedding memories in one joyful experience.",
+      "A beautifully crafted wedding site for Venkat & Nandini — capturing their love story, ceremony details, and a live countdown to the big day.",
 
     importance:
-      "Families are spread across cities and countries. A website becomes the central hub — your out-of-town guests know exactly where to go, what to wear, and when to arrive.",
+      "Your wedding is a once-in-a-lifetime event. A dedicated site lets your guests experience the joy before they arrive — no WhatsApp forwards, no confusion. Just one beautiful link shared with everyone you love.",
 
     features: [
-      "Multi-event schedule",
-      "Family greeting section",
-      "Shareable across WhatsApp & Instagram",
+      "Live countdown to the wedding day",
+      "Couple's story & photo gallery",
+      "Venue info & event timeline",
     ],
   },
+  
   {
     id:    3,
     num:   "04",
