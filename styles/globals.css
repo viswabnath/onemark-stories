@@ -114,12 +114,71 @@ body:has([data-hover]:hover) .cursor-ring {
   border-color: var(--cyan);
 }
 
-/* ── GRID BG ────────────────────────────────────────────────────── */
-.grid-bg {
-  background-image:
-    linear-gradient(var(--border) 1px, transparent 1px),
-    linear-gradient(90deg, var(--border) 1px, transparent 1px);
-  background-size: 60px 60px;
+/* ── aura BG ────────────────────────────────────────────────────── */
+/* ── NEW: Cinematic Hero Aura (Replaces .grid-bg) ── */
+.hero-aura-bg {
+  position: relative;
+  background-color: var(--bg);
+  overflow: hidden;
+}
+
+/* The floating light leaks */
+.hero-aura-bg::before,
+.hero-aura-bg::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px); /* Massive blur for a soft, premium glow */
+  opacity: 0.6;
+  animation: floatAura 15s ease-in-out infinite alternate;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Cyan Aura - Top Left */
+.hero-aura-bg::before {
+  width: 80vw;
+  height: 80vw;
+  max-width: 800px;
+  max-height: 800px;
+  background: radial-gradient(circle, color-mix(in srgb, var(--cyan) 40%, transparent) 0%, transparent 70%);
+  top: -20%;
+  left: -10%;
+}
+
+/* Coral/Amber Aura - Bottom Right */
+.hero-aura-bg::after {
+  width: 60vw;
+  height: 60vw;
+  max-width: 600px;
+  max-height: 600px;
+  background: radial-gradient(circle, color-mix(in srgb, var(--coral) 30%, transparent) 0%, transparent 70%);
+  bottom: -10%;
+  right: -10%;
+  animation-delay: -5s;
+  animation-duration: 20s;
+}
+
+/* Subtle Film Grain / Noise Texture */
+.hero-noise {
+  position: absolute;
+  inset: 0;
+  /* SVG Noise encoded as a data URL for instant loading */
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.05; /* Barely visible, adds physical texture */
+  z-index: 1;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+}
+
+[data-theme="light"] .hero-noise {
+  opacity: 0.03; /* Softer grain in light mode */
+}
+
+@keyframes floatAura {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(6%, 8%) scale(1.05); }
+  100% { transform: translate(-4%, -6%) scale(0.95); }
 }
 
 /* ── GLASS ──────────────────────────────────────────────────────── */

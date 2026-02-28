@@ -9,9 +9,32 @@
  */
 
 export const PROJECTS = [
-  {
+   {
     id:    0,
     num:   "01",
+    title: "Vijay × Rashmika",
+    tag:   "Wedding",
+    desc:  "Wedding Celebration Site",
+    color: "#FF4D6D",
+    url:   "https://vijay-rashmika.netlify.app/",
+
+   about:
+      "A bespoke, interactive digital experience for Vijay & Rashmika. Crafted with modern web technologies and fluid animations, it transforms standard event details into an immersive, cinematic journey for their guests.",
+
+    importance:
+      "Modern weddings require more than a paper invite. With guests traveling from across the globe, a centralized, high-performance web platform ensures seamless access to itineraries, locations, and updates—all while building anticipation for the big day.",
+
+    features: [
+      "Dynamic, real-time wedding countdown",
+      "Silky smooth scroll animations and cinematic UI",
+      "Interactive event itinerary and venue navigation",
+      "High-performance, responsive design for all mobile devices",
+      "Optimized for seamless sharing across WhatsApp & Instagram",
+    ],
+  },
+  {
+    id:    1,
+    num:   "02",
     title: "Anil × Eswari",
     tag:   "Wedding",
     desc:  "Wedding Celebration Site",
@@ -31,8 +54,8 @@ export const PROJECTS = [
     ],
   },
   {
-    id:    1,
-    num:   "02",
+    id:    2,
+    num:   "03",
     title: "Nazurul × Sajida",
     tag:   "Wedding",
     desc:  "Elegant Wedding Story",
@@ -52,8 +75,8 @@ export const PROJECTS = [
     ],
   },
   {
-    id:    2,
-    num:   "03",
+    id:    3,
+    num:   "04",
     title: "Venkat × Nandini",
     tag:   "Wedding",
     desc:  "Interactive Wedding Keepsake",
@@ -74,8 +97,8 @@ export const PROJECTS = [
   },
   
   {
-    id:    3,
-    num:   "04",
+    id:    4,
+    num:   "05",
     title: "Valentine Week",
     tag:   "Valentine",
     desc:  "Live Countdown Experience",
@@ -95,8 +118,8 @@ export const PROJECTS = [
     ],
   },
   {
-    id:    4,
-    num:   "05",
+    id:    5,
+    num:   "06",
     title: "Viswanath",
     tag:   "Portfolio",
     desc:  "Personal Portfolio Showcase",
@@ -116,8 +139,8 @@ export const PROJECTS = [
     ],
   },
   {
-    id:    5,
-    num:   "06",
+    id:    6,
+    num:   "07",
     title: "Family Wall",
     tag:   "Community",
     desc:  "Community Memory Platform",
