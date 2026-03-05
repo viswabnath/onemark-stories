@@ -12,7 +12,6 @@ import Footer   from "../components/Footer";
 
 // Lazy load heavy components
 const Hero     = dynamic(() => import("../components/Hero"),     { ssr: false });
-const Showcase = dynamic(() => import("../components/Showcase"), { ssr: false });
 
 const DOMAIN = "https://stories.onemark.co.in";
 const TITLE  = "OneMark Stories — Moments Told By OneMark";
@@ -74,7 +73,6 @@ export default function Home() {
       {loaded && (
         <main>
           <Hero />
-          <Showcase />
           <About />
           <Footer />
         </main>

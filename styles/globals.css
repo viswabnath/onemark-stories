@@ -560,7 +560,7 @@ body:has([data-hover]:hover) .cursor-ring {
   font-weight: 800;
   line-height: .92;
   letter-spacing: -.03em;
-  font-size: clamp(3.2rem, 9.5vw, 9rem);
+  font-size: clamp(2.8rem, 7.5vw, 9rem);
   margin-bottom: 1.75rem;
   width: 100%;
 }
@@ -1253,7 +1253,7 @@ body:has([data-hover]:hover) .cursor-ring {
   padding: 18px 16px 18px 0;
   border-bottom: 1px solid var(--border);
   font-size: 13px;
-  color: var(--muted);
+  color: var(--text-2);
 }
 
 .comp-table tr:last-child td {
@@ -1395,7 +1395,7 @@ body:has([data-hover]:hover) .cursor-ring {
 .footer__cta-heading {
   font-family: 'Syne', sans-serif;
   font-weight: 800;
-  font-size: clamp(2rem, 5vw, 3.6rem);
+  font-size: clamp(2rem, 4.5vw, 3.6rem);
   line-height: 1.05;
   letter-spacing: -.02em;
   color: var(--text);

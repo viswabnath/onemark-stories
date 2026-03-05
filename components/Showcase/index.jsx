@@ -184,10 +184,6 @@ export default function Showcase() {
                     isActive={project.id === activeId} onSelect={selectProject} />
                 ))}
               </div>
-              <a href={activeProject?.url} target="_blank" rel="noopener noreferrer"
-                className="mag-btn showcase__open-link" data-hover>
-                Open Live Site ↗
-              </a>
             </div>
 
             <div className="showcase__device-col">
@@ -202,6 +198,10 @@ export default function Showcase() {
                   {activeProject?.num} / {String(PROJECTS.length).padStart(2, "0")}
                 </div>
               </div>
+              <a href={activeProject?.url} target="_blank" rel="noopener noreferrer"
+                className="mag-btn showcase__open-link" data-hover>
+                Open Live Site ↗
+              </a>
             </div>
           </div>
         )}

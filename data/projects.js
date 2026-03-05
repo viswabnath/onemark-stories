@@ -9,16 +9,16 @@
  */
 
 export const PROJECTS = [
-   {
-    id:    0,
-    num:   "01",
+  {
+    id: 0,
+    num: "01",
     title: "Vijay × Rashmika",
-    tag:   "Wedding",
-    desc:  "Wedding Celebration Site",
+    tag: "Wedding",
+    desc: "Wedding Celebration Site",
     color: "#FF4D6D",
-    url:   "https://vijay-rashmika.netlify.app/",
+    url: "https://vijay-rashmika.netlify.app/",
 
-   about:
+    about:
       "A bespoke, interactive digital experience for Vijay & Rashmika. Crafted with modern web technologies and fluid animations, it transforms standard event details into an immersive, cinematic journey for their guests.",
 
     importance:
@@ -33,13 +33,13 @@ export const PROJECTS = [
     ],
   },
   {
-    id:    1,
-    num:   "02",
+    id: 1,
+    num: "02",
     title: "Anil × Eswari",
-    tag:   "Wedding",
-    desc:  "Wedding Celebration Site",
+    tag: "Wedding",
+    desc: "Wedding Celebration Site",
     color: "#FF4D6D",
-    url:   "https://anil-eswari.netlify.app/",
+    url: "https://anil-eswari.netlify.app/",
 
     about:
       "A vibrant celebration site for Anil & Eswari — bringing together their ceremony schedule, family message, and wedding memories in one joyful experience.",
@@ -48,19 +48,19 @@ export const PROJECTS = [
       "Families are spread across cities and countries. A website becomes the central hub — your out-of-town guests know exactly where to go, what to wear, and when to arrive.",
 
     features: [
-     "Live countdown to the wedding day",
+      "Live countdown to the wedding day",
       "Family greeting section",
       "Shareable across WhatsApp & Instagram",
     ],
   },
   {
-    id:    2,
-    num:   "03",
+    id: 2,
+    num: "03",
     title: "Nazurul × Sajida",
-    tag:   "Wedding",
-    desc:  "Elegant Wedding Story",
+    tag: "Wedding",
+    desc: "Elegant Wedding Story",
     color: "#FF4D6D",
-    url:   "https://nazurul-sajida.netlify.app/",
+    url: "https://nazurul-sajida.netlify.app/",
 
     about:
       "An elegant digital invitation for Nazurul & Sajida — warm, intimate, and deeply personal, designed to make every guest feel genuinely welcomed.",
@@ -75,13 +75,13 @@ export const PROJECTS = [
     ],
   },
   {
-    id:    3,
-    num:   "04",
+    id: 3,
+    num: "04",
     title: "Venkat × Nandini",
-    tag:   "Wedding",
-    desc:  "Interactive Wedding Keepsake",
+    tag: "Wedding",
+    desc: "Interactive Wedding Keepsake",
     color: "#FF4D6D",
-    url:   "https://venkat-nandini.netlify.app/",
+    url: "https://venkat-nandini.netlify.app/",
 
     about:
       "A beautifully crafted wedding site for Venkat & Nandini — capturing their love story, ceremony details, and a live countdown to the big day.",
@@ -95,15 +95,15 @@ export const PROJECTS = [
       "Venue info & event timeline",
     ],
   },
-  
+
   {
-    id:    4,
-    num:   "05",
+    id: 4,
+    num: "05",
     title: "Valentine Week",
-    tag:   "Valentine",
-    desc:  "Live Countdown Experience",
+    tag: "Valentine",
+    desc: "Live Countdown Experience",
     color: "#FFB547",
-    url:   "https://mavi-valentine-week.vercel.app/",
+    url: "https://mavi-valentine-week.vercel.app/",
 
     about:
       "A lively, animated Valentine Week countdown page that builds anticipation day-by-day — a digital surprise that makes love feel like a celebration.",
@@ -118,13 +118,13 @@ export const PROJECTS = [
     ],
   },
   {
-    id:    5,
-    num:   "06",
+    id: 5,
+    num: "06",
     title: "Viswanath",
-    tag:   "Portfolio",
-    desc:  "Personal Portfolio Showcase",
+    tag: "Portfolio",
+    desc: "Personal Portfolio Showcase",
     color: "#00F5FF",
-    url:   "https://viswabnath.github.io/portfolio/",
+    url: "https://viswabnath.github.io/portfolio/",
 
     about:
       "A sleek personal portfolio for Viswanath — showcasing his work, skills, and story in a way that makes recruiters and clients stop scrolling and start reading.",
@@ -139,24 +139,21 @@ export const PROJECTS = [
     ],
   },
   {
-    id:    6,
-    num:   "07",
-    title: "Family Wall",
-    tag:   "Community",
-    desc:  "Community Memory Platform",
-    color: "#00F5FF",
-    url:   "https://familywall.in/",
-
+    id: 6,
+    num: "07",
+    title: "Srinu × Sai",
+    tag: "Wedding",
+    desc: "An Uptime Love Story",
+    color: "#FF4D6D",
+    url: "https://srinu-sree.netlify.app",
     about:
-      "A private digital space where families come together to share memories, milestones, and messages — a living wall that grows with every generation.",
-
+      "A cinematic wedding story for Srinu & Sai — their entire journey from engagement to wedding told as a live system uptime log, chapter by chapter.",
     importance:
-      "Photo albums fade. WhatsApp groups get chaotic. Family Wall is a dedicated, beautiful space where your family's most precious moments are preserved forever — accessible to everyone, owned by no one platform.",
-
+      "Their story deserved more than a WhatsApp forward. This page lives forever, plays like a film, and lets every guest relive the magic — anytime, anywhere.",
     features: [
-      "Shared family memory board",
-      "Photo & milestone sharing",
-      "Private, family-only access",
+      "Live uptime counter since 18 Feb 2024",
+      "Full chapter journey: Engagement → Haldi → Marriage → Reception → Post-wedding",
+      "Cinematic photo galleries with captions",
     ],
   },
 ];

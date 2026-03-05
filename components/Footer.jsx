@@ -117,8 +117,7 @@ export default function Footer() {
             <div className="footer__nav-heading">Navigate</div>
             <div className="footer__nav-links">
               {[
-                { label: "Our Work",      href: "#work" },
-                { label: "About",         href: "#about" },
+                { label: "Our Work",      href: "#works" },
                 { label: "Studio",        href: "https://onemark.digital", ext: true },
               ].map(({ label, href, ext }) => (
                 <a key={href} href={href}

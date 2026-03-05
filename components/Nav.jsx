@@ -62,14 +62,14 @@ export default function Nav() {
       <nav className={`nav${scrolled ? " nav--scrolled" : ""}`}>
         {/* Logo — always left */}
         <Link href="/" className="nav__logo" onClick={close}>
-          <Image src={logoSrc} alt="OneMark Stories" width={130} height={32} priority
+          <Image src={logoSrc} alt="OneMark Stories" width={155} height={38} priority
             style={{ objectFit: "contain", objectPosition: "left" }} />
         </Link>
 
         {/* Right cluster */}
         <div className="nav__right">
-          <a href="#work"  className="nav__link nav__link--desktop" data-hover>Work</a>
-          <a href="#about" className="nav__link nav__link--desktop" data-hover>About</a>
+          <Link href="/works" className="nav__link nav__link--desktop" data-hover>Works</Link>
+          {/* <a href="/#about" className="nav__link nav__link--desktop" data-hover>About</a> */}
 
           <button onClick={toggleTheme} className="nav__toggle" aria-label="Toggle theme" data-hover>
             {theme === "dark" ? "☀️" : "🌙"}
@@ -116,8 +116,8 @@ export default function Nav() {
         
         {/* NOTE: The separate close button (<button className="nav__drawer-close">) has been removed from here! */}
         
-        <a href="#work"  className="nav__drawer-link" ref={link1Ref} onClick={close} data-hover>Work</a>
-        <a href="#about" className="nav__drawer-link" ref={link2Ref} onClick={close} data-hover>About</a>
+        <Link href="/works" className="nav__drawer-link" ref={link1Ref} onClick={close} data-hover>Works</Link>
+        {/* <a href="/#about" className="nav__drawer-link" ref={link2Ref} onClick={close} data-hover>About</a> */}
         <a href="https://onemark.digital" target="_blank" rel="noopener noreferrer"
           className="nav__drawer-link nav__drawer-link--sm" ref={link3Ref} onClick={close} data-hover>
           onemark.digital ↗
