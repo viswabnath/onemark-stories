@@ -156,4 +156,24 @@ export const PROJECTS = [
       "Cinematic photo galleries with captions",
     ],
   },
+  {
+    id: 7,
+    num: "08",
+    title: "Ganesh × Srija",
+    tag: "Wedding",
+    desc: "A Wedding Story Kept Alive",
+    color: "#FF4D6D",
+    url: "https://ganesh-srija.netlify.app",
+    about:
+  "A premium digital wedding invitation for Ganesh Reddy & Srija — capturing their sacred Telugu union in Bhadrachalam with an interactive countdown to their Muhurtham.",
+importance:
+  "Their sacred union deserved more than a standard WhatsApp forward. This digital invitation acts as a permanent keepsake, featuring rich social previews, installable PWA capabilities, and interactive elements that let every guest feel the magic of the celebration.",
+features: [
+  "Dynamic 4-state live timer (Countdown to Count-up) anchored to the Muhurth on 12 March 2026",
+  "Triggered digital fireworks and celebration sparks tied exactly to the wedding time",
+  "Progressive Web App (PWA) support for native home screen installation on mobile",
+  "Fully optimized SEO & Open Graph data for rich, beautiful WhatsApp and social media previews",
+  "Smooth GSAP scroll animations and interactive lightbox photo galleries"
+],
+  },
 ];
