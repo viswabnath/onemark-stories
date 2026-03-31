@@ -1,5 +1,6 @@
 /**
  * Showcase — IframeScreen handles all scaling via ResizeObserver.
+ * DeviceFrame is declared outside Showcase to avoid re-creation on render.
  */
 import { useState, useCallback, useEffect, useRef } from "react";
 import { PROJECTS } from "../../data/projects";
@@ -13,8 +14,6 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 const SWITCH_MS = 260;
-
-// Native viewport dimensions for each device
 const IPHONE_W  = 390;
 const IPHONE_H  = 844;
 const DESKTOP_W = 1440;
@@ -26,7 +25,8 @@ function ProjectCard({ project, isActive, onSelect, children }) {
       <button
         onClick={() => onSelect(project.id)}
         className={`project-card-header${isActive ? " active" : ""}`}
-        data-hover aria-expanded={isActive}
+        data-hover
+        aria-expanded={isActive}
       >
         <div className="project-card__meta">
           <span className="project-card__tag" style={{ color: project.color }}>{project.tag}</span>
@@ -43,11 +43,39 @@ function ProjectCard({ project, isActive, onSelect, children }) {
             <p className="project-card-importance__text">{project.importance}</p>
           </div>
           <div className="project-card-features">
-            {project.features.map(f => <span key={f} className="feature-pill">✦ {f}</span>)}
+            {project.features.map((f) => (
+              <span key={f} className="feature-pill">&#10022; {f}</span>
+            ))}
           </div>
           {children}
         </div>
       </div>
+    </div>
+  );
+}
+
+function DeviceFrame({ switching, isMobile, currentUrl, activeProject }) {
+  return (
+    <div className={`device-frame${switching ? " switching" : ""}`}>
+      {isMobile ? (
+        <IPhone>
+          <IframeScreen
+            src={currentUrl}
+            nativeWidth={IPHONE_W}
+            nativeHeight={IPHONE_H}
+            title={`${activeProject?.title} \u2014 Mobile`}
+          />
+        </IPhone>
+      ) : (
+        <MacBook>
+          <IframeScreen
+            src={currentUrl}
+            nativeWidth={DESKTOP_W}
+            nativeHeight={DESKTOP_H}
+            title={`${activeProject?.title} \u2014 Desktop`}
+          />
+        </MacBook>
+      )}
     </div>
   );
 }
@@ -73,20 +101,29 @@ export default function Showcase() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.fromTo(".showcase__heading, .showcase__sub",
+      gsap.fromTo(
+        ".showcase__heading, .showcase__sub",
         { opacity: 0, y: 40 },
-        { opacity: 1, y: 0, stagger: 0.12, duration: 0.8, ease: "power3.out",
-          scrollTrigger: { trigger: ".showcase__header", start: "top 85%" } }
+        {
+          opacity: 1, y: 0, stagger: 0.12, duration: 0.8, ease: "power3.out",
+          scrollTrigger: { trigger: ".showcase__header", start: "top 85%" },
+        }
       );
-      gsap.fromTo(".project-list-cards .project-card",
+      gsap.fromTo(
+        ".project-list-cards .project-card",
         { opacity: 0, x: -30 },
-        { opacity: 1, x: 0, stagger: 0.08, duration: 0.6, ease: "power3.out",
-          scrollTrigger: { trigger: ".project-list-cards", start: "top 85%" } }
+        {
+          opacity: 1, x: 0, stagger: 0.08, duration: 0.6, ease: "power3.out",
+          scrollTrigger: { trigger: ".project-list-cards", start: "top 85%" },
+        }
       );
-      gsap.fromTo(".showcase__device-col",
+      gsap.fromTo(
+        ".showcase__device-col",
         { opacity: 0, x: 40 },
-        { opacity: 1, x: 0, duration: 0.9, ease: "power3.out",
-          scrollTrigger: { trigger: ".showcase__device-col", start: "top 88%" } }
+        {
+          opacity: 1, x: 0, duration: 0.9, ease: "power3.out",
+          scrollTrigger: { trigger: ".showcase__device-col", start: "top 88%" },
+        }
       );
     }, sectionRef);
     return () => ctx.revert();
@@ -104,36 +141,10 @@ export default function Showcase() {
 
   const handleToggle = useCallback(() => {
     setSwitching(true);
-    setTimeout(() => { setIsMobile(p => !p); setSwitching(false); }, SWITCH_MS);
+    setTimeout(() => { setIsMobile((p) => !p); setSwitching(false); }, SWITCH_MS);
   }, []);
 
-  const activeProject = PROJECTS.find(p => p.id === activeId);
-
-  function DeviceFrame() {
-    return (
-      <div className={`device-frame${switching ? " switching" : ""}`}>
-        {isMobile ? (
-          <IPhone>
-            <IframeScreen
-              src={currentUrl}
-              nativeWidth={IPHONE_W}
-              nativeHeight={IPHONE_H}
-              title={`${activeProject?.title} — Mobile`}
-            />
-          </IPhone>
-        ) : (
-          <MacBook>
-            <IframeScreen
-              src={currentUrl}
-              nativeWidth={DESKTOP_W}
-              nativeHeight={DESKTOP_H}
-              title={`${activeProject?.title} — Desktop`}
-            />
-          </MacBook>
-        )}
-      </div>
-    );
-  }
+  const activeProject = PROJECTS.find((p) => p.id === activeId);
 
   return (
     <section id="work" className="showcase" ref={sectionRef}>
@@ -147,24 +158,38 @@ export default function Showcase() {
             <span>Built by Us.</span>
           </h2>
           <p className="showcase__sub">
-            These are actual live websites we've built for couples, families, and events.
-            Click any project to preview it — or open it directly.
+            These are actual live websites we&rsquo;ve built for couples, families, and events.
+            Click any project to preview it &mdash; or open it directly.
           </p>
         </div>
 
         {/* Mobile layout */}
         {isSmallScreen && (
           <div className="showcase__mobile-list">
-            {PROJECTS.map(project => (
-              <ProjectCard key={project.id} project={project}
-                isActive={project.id === activeId} onSelect={selectProject}>
+            {PROJECTS.map((project) => (
+              <ProjectCard
+                key={project.id}
+                project={project}
+                isActive={project.id === activeId}
+                onSelect={selectProject}
+              >
                 {project.id === activeId && (
                   <>
                     <div className="showcase__mobile-device">
-                      <DeviceFrame />
+                      <DeviceFrame
+                        switching={switching}
+                        isMobile={isMobile}
+                        currentUrl={currentUrl}
+                        activeProject={activeProject}
+                      />
                     </div>
-                    <a href={currentUrl} target="_blank" rel="noopener noreferrer"
-                      className="mag-btn showcase__open-link" data-hover>
+                    <a
+                      href={currentUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mag-btn showcase__open-link"
+                      data-hover
+                    >
                       Open Live Site ↗
                     </a>
                   </>
@@ -179,16 +204,25 @@ export default function Showcase() {
           <div className="showcase__desktop-layout">
             <div className="project-list-col">
               <div className="project-list-cards">
-                {PROJECTS.map(project => (
-                  <ProjectCard key={project.id} project={project}
-                    isActive={project.id === activeId} onSelect={selectProject} />
+                {PROJECTS.map((project) => (
+                  <ProjectCard
+                    key={project.id}
+                    project={project}
+                    isActive={project.id === activeId}
+                    onSelect={selectProject}
+                  />
                 ))}
               </div>
             </div>
 
             <div className="showcase__device-col">
               <ViewToggle isMobile={isMobile} onToggle={handleToggle} />
-              <DeviceFrame />
+              <DeviceFrame
+                switching={switching}
+                isMobile={isMobile}
+                currentUrl={currentUrl}
+                activeProject={activeProject}
+              />
               <div className="showcase__info-bar glass">
                 <div>
                   <div className="showcase__info-title">{activeProject?.title}</div>
@@ -198,8 +232,13 @@ export default function Showcase() {
                   {activeProject?.num} / {String(PROJECTS.length).padStart(2, "0")}
                 </div>
               </div>
-              <a href={activeProject?.url} target="_blank" rel="noopener noreferrer"
-                className="mag-btn showcase__open-link" data-hover>
+              <a
+                href={activeProject?.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mag-btn showcase__open-link"
+                data-hover
+              >
                 Open Live Site ↗
               </a>
             </div>

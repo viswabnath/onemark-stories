@@ -6,16 +6,16 @@ import Image from "next/image";
 import { gsap } from "gsap";
 
 export default function Loader({ onDone }) {
-  const [percent,   setPercent]   = useState(0);
+  const [percent, setPercent] = useState(0);
   const [unmounted, setUnmounted] = useState(false);
-  const loaderRef  = useRef(null);
-  const barRef     = useRef(null);
+  const loaderRef = useRef(null);
+  const barRef = useRef(null);
 
   useEffect(() => {
     // Entrance animation
     const tl = gsap.timeline();
-    tl.fromTo(".loader__logo",         { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" })
-      .fromTo(".loader__progress-wrap", { opacity: 0 },         { opacity: 1, duration: 0.5 }, "-=0.3");
+    tl.fromTo(".loader__logo", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" })
+      .fromTo(".loader__progress-wrap", { opacity: 0 }, { opacity: 1, duration: 0.5 }, "-=0.3");
   }, []);
 
   useEffect(() => {
@@ -48,7 +48,7 @@ export default function Loader({ onDone }) {
       <div className="loader__logo">
         <Image src="/stories-logo-white-resized.png" alt="OneMark Stories"
           width={200} height={80}
-          style={{ objectFit: "contain", filter: "drop-shadow(0 0 20px rgba(41,171,226,0.3))" }}
+          style={{ objectFit: "contain", filter: "drop-shadow(0 0 24px rgba(212,117,140,0.35))" }}
           priority />
       </div>
       <div className="loader__progress-wrap">

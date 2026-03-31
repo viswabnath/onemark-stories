@@ -23,9 +23,9 @@ export default function Maintenance() {
 
       {/* Inline styles — no external CSS dependency needed for this page */}
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Plus+Jakarta+Sans:wght@400;500&family=Space+Mono:wght@400&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800&family=Plus+Jakarta+Sans:wght@400;500&family=Space+Mono:wght@400&display=swap');
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background: #080809; color: #EDEDF2; font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { background: #1A1520; color: #EDEDF2; font-family: 'Plus Jakarta Sans', sans-serif; }
         @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
         @keyframes spin   { to { transform: rotate(360deg); } }
         @keyframes pulse  { 0%,100% { opacity: .4; } 50% { opacity: 1; } }
@@ -36,7 +36,7 @@ export default function Maintenance() {
       `}</style>
 
       <div style={{
-        minHeight: "100vh", background: "#080809",
+        minHeight: "100vh", background: "#1A1520",
         display: "flex", alignItems: "center", justifyContent: "center",
         flexDirection: "column", textAlign: "center", padding: "40px 24px",
         position: "relative", overflow: "hidden",
@@ -79,23 +79,23 @@ export default function Maintenance() {
           }}>
             <div style={{
               width: 7, height: 7, borderRadius: "50%",
-              background: "#FFB547",
+              background: "#C9A96E",
               animation: "pulse 1.5s ease-in-out infinite",
             }} />
             <span style={{
               fontFamily: "'Space Mono', monospace", fontSize: 10,
-              letterSpacing: ".15em", color: "#FFB547", textTransform: "uppercase",
+              letterSpacing: ".15em", color: "#C9A96E", textTransform: "uppercase",
             }}>
               Under Maintenance
             </span>
           </div>
 
           <h1 style={{
-            fontFamily: "'Syne', sans-serif", fontWeight: 800,
+            fontFamily: "'Playfair Display', serif", fontWeight: 800,
             fontSize: "clamp(2.5rem, 8vw, 6rem)", lineHeight: .95,
             letterSpacing: "-.03em", marginBottom: 20,
           }}>
-            We're polishing<br />
+            We&rsquo;re polishing<br />
             <span style={{
               background: "linear-gradient(135deg, #00BFFF, #0055FF)",
               WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
@@ -108,7 +108,7 @@ export default function Maintenance() {
             fontSize: 15, color: "#5A5A6E", lineHeight: 1.8,
             maxWidth: 440, margin: "0 auto 36px",
           }}>
-            OneMark Stories is currently undergoing scheduled maintenance. We'll be back very shortly with something even better.
+            OneMark Stories is currently undergoing scheduled maintenance. We&rsquo;ll be back very shortly with something even better.
           </p>
 
           {/* Spinning gear indicator */}

@@ -2,8 +2,8 @@
  * components/About.jsx
  * Native BEM classes utilized to prevent layout stretching.
  */
-import { q } from "framer-motion/client";
 import { useState } from "react";
+import Link from "next/link";
 
 const WA_NUMBER = "919392704742";
 const WA_MSG = encodeURIComponent(
@@ -15,13 +15,13 @@ const SERVICES = [
   {
     emoji: "💍",
     title: "Weddings & Milestones",
-    color: "#FF4D6D",
+    color: "#D4758C",
     desc: "Interactive invites for weddings, birthdays, and housewarmings. Complete with countdowns, love stories, and venue navigation.",
   },
   {
     emoji: "🎬",
     title: "Entertainment Launches",
-    color: "#FFB547",
+    color: "#C9A96E",
     desc: "High-impact landing pages for movie teasers, music releases, and trailer drops. Designed to handle massive traffic spikes.",
   },
   {
@@ -33,7 +33,7 @@ const SERVICES = [
   {
     emoji: "🖥️",
     title: "Premium Portfolios",
-    color: "#00E5FF",
+    color: "#29ABE2",
     desc: "Stand out to clients and recruiters. A bespoke, animated showcase of your individual skills or your agency's best work.",
   },
 ];
@@ -109,11 +109,11 @@ const FAQS = [
     a: "Forever. Long after the party is over, your OneMark Story remains live online as a digital keepsake for you to revisit whenever you want.",
   },
   {
-    q: "what if i want to make changes after it's published?",
+    q: "What if I want to make changes after it's published?",
     a: "No problem! Just send us a message on WhatsApp with the changes you want, and we'll update your OneMark Story for you. It's that easy.",
   },
   {
-    q: "what if i want to add more sections or features later on?",
+    q: "What if I want to add more sections or features later on?",
     a: "We offer additional customization options! If you want to add more sections, features, or even a custom domain later on, just reach out to us on WhatsApp and we can discuss the options and pricing.",
   },
   {
@@ -222,9 +222,9 @@ export default function About() {
                 </svg>
                 Ask Us Anything
               </a>
-              <a href="#work" className="mag-btn" data-hover>
+              <Link href="/#work" className="mag-btn" data-hover>
                 See Examples
-              </a>
+              </Link>
             </div>
           </div>
           <div className="services-grid">
@@ -249,13 +249,14 @@ export default function About() {
             Why a <span>OneMark Story</span> is the ultimate invite.
           </h3>
 
-          <div className="glass-panel">
+          {/* Desktop: table */}
+          <div className="glass-panel comp-table-wrap">
             <table className="comp-table">
               <thead>
                 <tr>
                   <th
                     style={{
-                      fontFamily: "'Space Mono', monospace",
+                      fontFamily: "'DM Mono', monospace",
                       fontSize: "11px",
                       letterSpacing: ".1em",
                       textTransform: "uppercase",
@@ -286,6 +287,27 @@ export default function About() {
                 ))}
               </tbody>
             </table>
+          </div>
+
+          {/* Mobile: stacked cards */}
+          <div className="comp-cards">
+            {COMPARISON.map((row, i) => (
+              <div key={i} className="comp-card">
+                <div className="comp-card__feature">{row.feature}</div>
+                <div className="comp-card__row">
+                  <span className="comp-card__label">💌 Print</span>
+                  <span className="comp-card__value">{row.print}</span>
+                </div>
+                <div className="comp-card__row">
+                  <span className="comp-card__label">📱 WhatsApp</span>
+                  <span className="comp-card__value">{row.wa}</span>
+                </div>
+                <div className="comp-card__row comp-card__row--us">
+                  <span className="comp-card__label">🌟 OneMark</span>
+                  <span className="comp-card__value">{row.us}</span>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
 

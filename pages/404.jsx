@@ -3,6 +3,7 @@
  */
 import Head from "next/head";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function NotFound() {
   return (
@@ -14,15 +15,15 @@ export default function NotFound() {
       </Head>
 
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Plus+Jakarta+Sans:wght@400;500&family=Space+Mono:wght@400&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800&family=Plus+Jakarta+Sans:wght@400;500&family=Space+Mono:wght@400&display=swap');
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background: #080809; color: #EDEDF2; font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { background: #1A1520; color: #EDEDF2; font-family: 'Plus Jakarta Sans', sans-serif; }
         @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
         @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
       `}</style>
 
       <div style={{
-        minHeight: "100vh", background: "#080809",
+        minHeight: "100vh", background: "#1A1520",
         display: "flex", alignItems: "center", justifyContent: "center",
         flexDirection: "column", textAlign: "center", padding: "40px 24px",
         position: "relative", overflow: "hidden",
@@ -33,7 +34,7 @@ export default function NotFound() {
           backgroundSize: "64px 64px", zIndex: 0,
         }} />
         <div style={{
-          position: "absolute", fontFamily: "'Syne',sans-serif", fontWeight: 800,
+          position: "absolute", fontFamily: "'Playfair Display', serif", fontWeight: 800,
           fontSize: "clamp(10rem, 30vw, 28rem)", color: "rgba(0,191,255,.03)",
           userSelect: "none", zIndex: 0, lineHeight: 1,
           top: "50%", left: "50%", transform: "translate(-50%,-50%)",
@@ -54,7 +55,7 @@ export default function NotFound() {
           <div style={{ fontSize: "5rem", marginBottom: 12 }}>🔍</div>
 
           <h1 style={{
-            fontFamily: "'Syne', sans-serif", fontWeight: 800,
+            fontFamily: "'Playfair Display', serif", fontWeight: 800,
             fontSize: "clamp(2rem, 6vw, 4rem)", lineHeight: 1.05,
             letterSpacing: "-.025em", marginBottom: 14,
           }}>
@@ -64,18 +65,18 @@ export default function NotFound() {
             fontSize: 14, color: "#5A5A6E", lineHeight: 1.8,
             maxWidth: 380, margin: "0 auto 32px",
           }}>
-            The page you're looking for doesn't exist or may have moved.
+            The page you&rsquo;re looking for doesn&rsquo;t exist or may have moved.
           </p>
 
           <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
-            <a href="/" style={{
+            <Link href="/" style={{
               padding: "12px 28px", borderRadius: 100,
               background: "linear-gradient(135deg, #00BFFF, rgba(0,100,255,.85))",
               color: "#000", textDecoration: "none",
               fontFamily: "'Space Mono', monospace", fontSize: 11, fontWeight: 700,
             }}>
               ← Back Home
-            </a>
+            </Link>
             <a href="https://onemark.digital" target="_blank" rel="noopener noreferrer"
                style={{
                  padding: "12px 28px", borderRadius: 100,

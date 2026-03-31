@@ -3,9 +3,16 @@
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://stories.onemark.co.in/</loc>
-    <lastmod>2025-02-24</lastmod>
+    <lastmod>2026-03-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="en-in" href="https://stories.onemark.co.in/"/>
+  </url>
+  <url>
+    <loc>https://stories.onemark.co.in/works</loc>
+    <lastmod>2026-03-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en-in" href="https://stories.onemark.co.in/works"/>
   </url>
 </urlset>

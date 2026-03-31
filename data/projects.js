@@ -15,7 +15,7 @@ export const PROJECTS = [
     title: "Vijay × Rashmika",
     tag: "Wedding",
     desc: "Wedding Celebration Site",
-    color: "#FF4D6D",
+    color: "#D4758C",
     url: "https://vijay-rashmika.netlify.app/",
 
     about:
@@ -38,7 +38,7 @@ export const PROJECTS = [
     title: "Anil × Eswari",
     tag: "Wedding",
     desc: "Wedding Celebration Site",
-    color: "#FF4D6D",
+    color: "#D4758C",
     url: "https://anil-eswari.netlify.app/",
 
     about:
@@ -59,7 +59,7 @@ export const PROJECTS = [
     title: "Nazurul × Sajida",
     tag: "Wedding",
     desc: "Elegant Wedding Story",
-    color: "#FF4D6D",
+    color: "#D4758C",
     url: "https://nazurul-sajida.netlify.app/",
 
     about:
@@ -80,7 +80,7 @@ export const PROJECTS = [
     title: "Venkat × Nandini",
     tag: "Wedding",
     desc: "Interactive Wedding Keepsake",
-    color: "#FF4D6D",
+    color: "#D4758C",
     url: "https://venkat-nandini.netlify.app/",
 
     about:
@@ -102,7 +102,7 @@ export const PROJECTS = [
     title: "Valentine Week",
     tag: "Valentine",
     desc: "Live Countdown Experience",
-    color: "#FFB547",
+    color: "#C9A96E",
     url: "https://mavi-valentine-week.vercel.app/",
 
     about:
@@ -144,7 +144,7 @@ export const PROJECTS = [
     title: "Srinu × Sai",
     tag: "Wedding",
     desc: "An Uptime Love Story",
-    color: "#FF4D6D",
+    color: "#D4758C",
     url: "https://srinu-sree.netlify.app",
     about:
       "A cinematic wedding story for Srinu & Sai — their entire journey from engagement to wedding told as a live system uptime log, chapter by chapter.",
@@ -162,7 +162,7 @@ export const PROJECTS = [
     title: "Ganesh × Srija",
     tag: "Wedding",
     desc: "A Wedding Story Kept Alive",
-    color: "#FF4D6D",
+    color: "#D4758C",
     url: "https://ganesh-srija.netlify.app",
     about:
       "A premium digital wedding invitation for Ganesh Reddy & Srija — capturing their sacred Telugu union in Bhadrachalam with an interactive countdown to their Muhurtham.",
@@ -182,7 +182,7 @@ export const PROJECTS = [
     title: "Arun × Spandana",
     tag: "Wedding",
     desc: "A Global Love Story",
-    color: "#FF4D6D",
+    color: "#D4758C",
     url: "https://arun-spandana.netlify.app",
     about:
       "From the peaks of Ladakh to the streets of London — an immersive digital experience capturing the cross-continental love story of Arun & Spandana.",

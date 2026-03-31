@@ -13,7 +13,6 @@ export default function Nav() {
   const { theme, toggleTheme }      = useTheme();
   const drawerRef  = useRef(null);
   const link1Ref   = useRef(null);
-  const link2Ref   = useRef(null);
   const link3Ref   = useRef(null);
 
   // Scroll listener
@@ -33,7 +32,7 @@ export default function Nav() {
   useEffect(() => {
     const el = drawerRef.current;
     if (!el) return;
-    const links = [link1Ref.current, link2Ref.current, link3Ref.current].filter(Boolean);
+    const links = [link1Ref.current, link3Ref.current].filter(Boolean);
 
     if (menuOpen) {
       gsap.set(el, { display: "flex", opacity: 0 });
@@ -68,8 +67,7 @@ export default function Nav() {
 
         {/* Right cluster */}
         <div className="nav__right">
-          <Link href="/works" className="nav__link nav__link--desktop" data-hover>Works</Link>
-          {/* <a href="/#about" className="nav__link nav__link--desktop" data-hover>About</a> */}
+          <Link href="/#work" className="nav__link nav__link--desktop" data-hover>Works</Link>
 
           <button onClick={toggleTheme} className="nav__toggle" aria-label="Toggle theme" data-hover>
             {theme === "dark" ? "☀️" : "🌙"}
@@ -84,27 +82,29 @@ export default function Nav() {
             data-hover
             style={{
               position: "relative",
-              width: "24px",
-              height: "24px",
+              width: "44px",
+              height: "44px",
+              alignItems: "center",
+              justifyContent: "center",
               gap: 0 // Overrides the global CSS gap so absolute positioning works
             }}
           >
             <span style={{
-              position: "absolute", left: 0, right: 0, 
-              top: menuOpen ? "11px" : "5px",
-              transform: menuOpen ? "rotate(45deg)" : "none", 
+              position: "absolute", left: "10px", right: "10px",
+              top: menuOpen ? "21px" : "15px",
+              transform: menuOpen ? "rotate(45deg)" : "none",
               transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
             }} />
             <span style={{
-              position: "absolute", left: 0, right: 0, 
-              top: "11px",
-              opacity: menuOpen ? 0 : 1, 
+              position: "absolute", left: "10px", right: "10px",
+              top: "21px",
+              opacity: menuOpen ? 0 : 1,
               transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
             }} />
             <span style={{
-              position: "absolute", left: 0, right: 0, 
-              top: menuOpen ? "11px" : "17px",
-              transform: menuOpen ? "rotate(-45deg)" : "none", 
+              position: "absolute", left: "10px", right: "10px",
+              top: menuOpen ? "21px" : "27px",
+              transform: menuOpen ? "rotate(-45deg)" : "none",
               transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
             }} />
           </button>
@@ -116,8 +116,7 @@ export default function Nav() {
         
         {/* NOTE: The separate close button (<button className="nav__drawer-close">) has been removed from here! */}
         
-        <Link href="/works" className="nav__drawer-link" ref={link1Ref} onClick={close} data-hover>Works</Link>
-        {/* <a href="/#about" className="nav__drawer-link" ref={link2Ref} onClick={close} data-hover>About</a> */}
+        <Link href="/#work" className="nav__drawer-link" ref={link1Ref} onClick={close} data-hover>Works</Link>
         <a href="https://onemark.digital" target="_blank" rel="noopener noreferrer"
           className="nav__drawer-link nav__drawer-link--sm" ref={link3Ref} onClick={close} data-hover>
           onemark.digital ↗

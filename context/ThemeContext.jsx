@@ -21,9 +21,12 @@ export function ThemeProvider({ children }) {
     const saved = localStorage.getItem("om-theme");
     const system = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
     const initial = saved || system;
-    setTheme(initial);
     document.documentElement.setAttribute("data-theme", initial);
-    setMounted(true);
+    // Batch both state updates to avoid cascading renders
+    Promise.resolve().then(() => {
+      setTheme(initial);
+      setMounted(true);
+    });
   }, []);
 
   const toggleTheme = () => {

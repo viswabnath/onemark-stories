@@ -12,6 +12,7 @@
 
 import Head from "next/head";
 import Image from "next/image";
+import Link from "next/link";
 
 function ErrorPage({ statusCode, message }) {
   const isTimeout = statusCode === 504 || statusCode === 408;
@@ -20,7 +21,7 @@ function ErrorPage({ statusCode, message }) {
   const config = isTimeout ? {
     emoji:    "⏱️",
     badge:    "Request Timed Out",
-    badgeColor: "#FF4D6D",
+    badgeColor: "#D4758C",
     title:    "Took too long.",
     sub:      "The request timed out. This is usually temporary — please try again in a moment.",
     cta:      "Try Again",
@@ -28,7 +29,7 @@ function ErrorPage({ statusCode, message }) {
   } : isUnavailable ? {
     emoji:    "🔧",
     badge:    "Service Unavailable",
-    badgeColor: "#FFB547",
+    badgeColor: "#C9A96E",
     title:    "Briefly unavailable.",
     sub:      "We're experiencing high demand or quick maintenance. Should be back any moment.",
     cta:      "Refresh",
@@ -36,7 +37,7 @@ function ErrorPage({ statusCode, message }) {
   } : {
     emoji:    "💫",
     badge:    `Error ${statusCode || "Unknown"}`,
-    badgeColor: "#FF4D6D",
+    badgeColor: "#D4758C",
     title:    "Something went wrong.",
     sub:      message || "An unexpected error occurred. Our team has been notified and is working on a fix.",
     cta:      "Go Home",
@@ -52,9 +53,9 @@ function ErrorPage({ statusCode, message }) {
       </Head>
 
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Plus+Jakarta+Sans:wght@400;500&family=Space+Mono:wght@400&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800&family=Plus+Jakarta+Sans:wght@400;500&family=Space+Mono:wght@400&display=swap');
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background: #080809; color: #EDEDF2; font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { background: #1A1520; color: #EDEDF2; font-family: 'Plus Jakarta Sans', sans-serif; }
         @keyframes float { 0%,100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-10px) rotate(5deg); } }
         @keyframes spin   { to { transform: rotate(360deg); } }
         @keyframes pulse  { 0%,100% { opacity: .4; box-shadow: 0 0 0 0 rgba(255,77,109,.4); } 50% { opacity: 1; box-shadow: 0 0 0 6px rgba(255,77,109,0); } }
@@ -62,7 +63,7 @@ function ErrorPage({ statusCode, message }) {
       `}</style>
 
       <div style={{
-        minHeight: "100vh", background: "#080809",
+        minHeight: "100vh", background: "#1A1520",
         display: "flex", alignItems: "center", justifyContent: "center",
         flexDirection: "column", textAlign: "center", padding: "40px 24px",
         position: "relative", overflow: "hidden",
@@ -121,7 +122,7 @@ function ErrorPage({ statusCode, message }) {
           </div>
 
           <h1 style={{
-            fontFamily: "'Syne', sans-serif", fontWeight: 800,
+            fontFamily: "'Playfair Display', serif", fontWeight: 800,
             fontSize: "clamp(2rem, 6vw, 4rem)", lineHeight: 1.05,
             letterSpacing: "-.025em", marginBottom: 16, color: "#EDEDF2",
           }}>
@@ -150,7 +151,7 @@ function ErrorPage({ statusCode, message }) {
                 {config.cta}
               </button>
             ) : (
-              <a href="/" style={{
+              <Link href="/" style={{
                 padding: "12px 28px", borderRadius: 100,
                 background: "linear-gradient(135deg, #00BFFF, rgba(0,100,255,.85))",
                 color: "#000", textDecoration: "none",
@@ -158,7 +159,7 @@ function ErrorPage({ statusCode, message }) {
                 fontWeight: 700, letterSpacing: ".06em",
               }}>
                 {config.cta}
-              </a>
+              </Link>
             )}
             <a href="https://onemark.digital" target="_blank" rel="noopener noreferrer"
                style={{
