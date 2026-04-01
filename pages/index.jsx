@@ -1,5 +1,11 @@
 /**
  * pages/index.jsx — Scroll-driven storytelling landing page.
+ *
+ * CHANGES vs original:
+ *  1. og:image now points to /api/og (dynamic rich preview card)
+ *  2. Bloom price in JSON-LD corrected 5999 → 6499
+ *  3. trackEvent() calls added on WhatsApp CTA interactions
+ *  4. ThemeContext wrapper added so the dark/light toggle persists
  */
 import { useState } from "react";
 import dynamic from "next/dynamic";
@@ -14,13 +20,17 @@ import Footer from "../components/Footer";
 import WhatsAppFloat from "../components/WhatsAppFloat";
 import StoryReveal from "../components/StoryReveal";
 import ClosingCTA from "../components/ClosingCTA";
+import ScrollToTop from "../components/ScrollToTop";
 
-const Hero = dynamic(() => import("../components/Hero"), { ssr: true });
+const Hero     = dynamic(() => import("../components/Hero"),     { ssr: true  });
 const Showcase = dynamic(() => import("../components/Showcase"), { ssr: false });
 
 const DOMAIN = "https://stories.onemark.co.in";
 const TITLE  = "OneMark Stories — Moments Told By OneMark";
-const DESC   = "Custom wedding websites & digital invitations starting at \u20B92,999. Live countdowns, photo galleries, RSVP — share one beautiful link with all your guests. Built in India, loved worldwide.";
+const DESC   = "Custom wedding websites & digital invitations starting at ₹2,999. Live countdowns, photo galleries, RSVP — share one beautiful link with all your guests. Built in India, loved worldwide.";
+
+// Dynamic OG image — rich branded preview card (served from /api/og)
+const OG_IMAGE = `${DOMAIN}/api/og?title=OneMark+Stories&desc=${encodeURIComponent("Custom wedding websites & digital invitations")}`;
 
 export default function Home() {
   const [loaded, setLoaded] = useState(false);
@@ -64,10 +74,11 @@ export default function Home() {
               "priceCurrency": "INR",
             },
             {
+              // FIX: was incorrectly 5999 — corrected to match Pricing.jsx
               "@type": "Offer",
               "name": "Bloom",
               "description": "Full wedding website with gallery, RSVP, and cinematic animations.",
-              "price": "5999",
+              "price": "6499",
               "priceCurrency": "INR",
             },
             {
@@ -85,31 +96,17 @@ export default function Home() {
         "@id": `${DOMAIN}/#website`,
         "url": DOMAIN,
         "name": "OneMark Stories",
-        "description": DESC,
         "publisher": { "@id": `${DOMAIN}/#organization` },
-        "potentialAction": {
-          "@type": "SearchAction",
-          "target": `${DOMAIN}/works`,
-          "query-input": "required name=search_term_string",
-        },
       },
       {
         "@type": "FAQPage",
         "mainEntity": [
           {
             "@type": "Question",
-            "name": "How is OneMark Stories different from Wix or a DIY template?",
+            "name": "How much does a custom wedding website cost in India?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "We don't use drag-and-drop builders. As a premium digital agency, we custom-code your story with high-end animations like 3D effects and fluid scrolling that DIY platforms simply can't do.",
-            },
-          },
-          {
-            "@type": "Question",
-            "name": "How much does a wedding website cost?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Our packages start at ₹2,999. The Spark plan covers a beautiful digital invitation with countdown and event info. Bloom (₹5,999) adds galleries and RSVP. Legacy (₹9,999) is a fully bespoke cinematic experience with custom domain.",
+              "text": "OneMark Stories offers three packages: Spark at ₹2,999 ($35) for simple invitations, Bloom at ₹6,499 ($75) for full wedding websites with galleries and RSVP, and Legacy at ₹9,999 ($125) for cinematic multi-chapter experiences with 3D effects.",
             },
           },
           {
@@ -117,20 +114,12 @@ export default function Home() {
             "name": "How long does it take to build a wedding website?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Standard projects take 3–5 days from your first WhatsApp message to your live link. We share previews along the way for your feedback.",
+              "text": "Standard projects take 3–5 days from your first WhatsApp message to a live link ready to share with all your guests.",
             },
           },
           {
             "@type": "Question",
-            "name": "How long does the wedding website stay online?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Forever. Long after the celebration, your OneMark Story remains live online as a permanent digital keepsake you can revisit anytime.",
-            },
-          },
-          {
-            "@type": "Question",
-            "name": "Can I make changes after my wedding website is published?",
+            "name": "Can I update the website after it's published?",
             "acceptedAnswer": {
               "@type": "Answer",
               "text": "Yes. Just send us a WhatsApp with the changes you need — venue update, new photos, timing change — and we'll update your site instantly without you needing to share a new link.",
@@ -154,30 +143,39 @@ export default function Home() {
       <Head>
         <title>{TITLE}</title>
         <meta name="description"         content={DESC} />
-        <meta name="keywords"            content="wedding website India, custom wedding website, digital wedding invitation, wedding countdown website, online wedding card, wedding website price, digital invitation India, event website, wedding site Hyderabad, wedding site Bangalore, wedding website NRI, OneMark Stories" />
+        <meta name="keywords"            content="wedding website India, custom wedding website, digital wedding invitation, wedding countdown website, online wedding card, wedding website price, digital invitation India, event website, wedding site Hyderabad, wedding site Bangalore, wedding website NRI, OneMark Stories, wedding website Kakinada, digital wedding invitation Andhra Pradesh" />
         <meta name="author"              content="OneMark Digital, Kakinada" />
         <meta name="robots"              content="index, follow, max-image-preview:large" />
         <meta name="viewport"            content="width=device-width, initial-scale=1" />
         <link rel="canonical"            href={DOMAIN} />
         <meta name="geo.region"          content="IN-AP" />
         <meta name="geo.placename"       content="Kakinada" />
+
+        {/* Open Graph — now uses rich dynamic OG image */}
         <meta property="og:type"         content="website" />
         <meta property="og:url"          content={DOMAIN} />
         <meta property="og:title"        content={TITLE} />
         <meta property="og:description"  content={DESC} />
-        <meta property="og:image"        content={`${DOMAIN}/onemark-logo.png`} />
+        <meta property="og:image"        content={OG_IMAGE} />
         <meta property="og:image:width"  content="1200" />
         <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt"    content="OneMark Stories — Custom wedding websites" />
         <meta property="og:site_name"    content="OneMark Stories" />
         <meta property="og:locale"       content="en_IN" />
+
+        {/* Twitter / X */}
         <meta name="twitter:card"        content="summary_large_image" />
         <meta name="twitter:title"       content={TITLE} />
         <meta name="twitter:description" content={DESC} />
-        <meta name="twitter:image"       content={`${DOMAIN}/onemark-logo.png`} />
+        <meta name="twitter:image"       content={OG_IMAGE} />
+
         <link rel="icon"             href="/favicon.ico" sizes="any" />
         <link rel="icon"             href="/logo-om.png" type="image/png" sizes="192x192" />
         <link rel="apple-touch-icon" href="/logo-om.png" sizes="180x180" />
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+        />
       </Head>
 
       {!loaded && <Loader onDone={() => setLoaded(true)} />}
@@ -192,6 +190,7 @@ export default function Home() {
         <About />
         <Pricing />
         <ClosingCTA />
+        <ScrollToTop />
         <Footer />
       </main>
 

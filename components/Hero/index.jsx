@@ -1,41 +1,149 @@
 /**
- * Hero — Editorial bottom-left layout. Cormorant Garamond display type.
- * Text is SSR'd for SEO. Decorative wedding-ring ornament in background.
+ * Hero — Animated canvas particle field + GSAP text entrance.
+ *
+ * Canvas draws floating glowing particles that drift and pulse.
+ * Particles form loose "rings" matching the wedding ring motif.
+ * Pure canvas — no Three.js dependency needed.
  */
 import { useEffect, useRef } from "react";
 import Link from "next/link";
 import { gsap } from "gsap";
 
 const WA_NUMBER = "919392704742";
-const WA_MSG = encodeURIComponent("Hi OneMark Stories! 👋 I'd love to get a custom digital experience made. Can we talk?");
-const WA_LINK = `https://wa.me/${WA_NUMBER}?text=${WA_MSG}`;
+const WA_MSG    = encodeURIComponent("Hi OneMark Stories! 👋 I'd love to get a custom digital experience made. Can we talk?");
+const WA_LINK   = `https://wa.me/${WA_NUMBER}?text=${WA_MSG}`;
 
+/* ── Particle canvas ──────────────────────────────────────────── */
+function useParticleCanvas(canvasRef) {
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    let raf;
+    let W, H, particles;
+
+    const COLORS = ["#D4758C", "#C9A96E", "#29ABE2", "#F5EEF0"];
+
+    function resize() {
+      W = canvas.width  = canvas.offsetWidth;
+      H = canvas.height = canvas.offsetHeight;
+      init();
+    }
+
+    function rand(min, max) { return min + Math.random() * (max - min); }
+
+    function init() {
+      const count = Math.floor((W * H) / 8000);
+      particles = Array.from({ length: count }, () => {
+        // Bias particles to right half (where ornament used to be)
+        const side = Math.random() > 0.35;
+        return {
+          x:     side ? rand(W * 0.45, W * 0.98) : rand(0, W),
+          y:     rand(0, H),
+          r:     rand(1, 3.5),
+          color: COLORS[Math.floor(Math.random() * COLORS.length)],
+          vx:    rand(-0.25, 0.25),
+          vy:    rand(-0.18, 0.18),
+          alpha: rand(0.08, 0.55),
+          pulse: rand(0, Math.PI * 2),   // phase offset
+          pulseSpeed: rand(0.008, 0.022),
+        };
+      });
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+
+      // Faint connecting lines between nearby particles
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 90) {
+            ctx.beginPath();
+            ctx.strokeStyle = `rgba(212,117,140,${0.06 * (1 - dist / 90)})`;
+            ctx.lineWidth = 0.5;
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.stroke();
+          }
+        }
+      }
+
+      // Particles
+      for (const p of particles) {
+        p.pulse += p.pulseSpeed;
+        const alpha = p.alpha * (0.6 + 0.4 * Math.sin(p.pulse));
+
+        // Glow
+        const grd = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * 5);
+        grd.addColorStop(0, p.color + Math.round(alpha * 255).toString(16).padStart(2,"0"));
+        grd.addColorStop(1, "transparent");
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r * 5, 0, Math.PI * 2);
+        ctx.fillStyle = grd;
+        ctx.fill();
+
+        // Core dot
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = p.color + Math.round(Math.min(alpha * 1.8, 1) * 255).toString(16).padStart(2,"0");
+        ctx.fill();
+
+        // Move
+        p.x += p.vx;
+        p.y += p.vy;
+        if (p.x < -10) p.x = W + 10;
+        if (p.x > W + 10) p.x = -10;
+        if (p.y < -10) p.y = H + 10;
+        if (p.y > H + 10) p.y = -10;
+      }
+
+      raf = requestAnimationFrame(draw);
+    }
+
+    resize();
+    draw();
+
+    const ro = new ResizeObserver(resize);
+    ro.observe(canvas);
+
+    return () => {
+      cancelAnimationFrame(raf);
+      ro.disconnect();
+    };
+  }, [canvasRef]);
+}
+
+/* ── Component ────────────────────────────────────────────────── */
 export default function Hero() {
   const sectionRef = useRef(null);
-  const tlRef = useRef(null);
+  const canvasRef  = useRef(null);
+  const tlRef      = useRef(null);
+
+  useParticleCanvas(canvasRef);
 
   useEffect(() => {
     if (tlRef.current) tlRef.current.kill();
     const section = sectionRef.current;
     if (!section) return;
 
-    const words = section.querySelectorAll(".hero__word");
-    const top = section.querySelector(".hero__top");
-    const sub = section.querySelector(".hero__sub");
-    const btns = section.querySelectorAll(".hero__ctas > *");
+    const words  = section.querySelectorAll(".hero__word");
+    const sub    = section.querySelector(".hero__sub");
+    const btns   = section.querySelectorAll(".hero__ctas > *");
     const scroll = section.querySelector(".hero__scroll");
 
-    gsap.set([top, sub, btns, scroll], { opacity: 0, y: 16 });
+    gsap.set([sub, btns, scroll], { opacity: 0, y: 16 });
     gsap.set(words, { yPercent: 115 });
 
-    const tl = gsap.timeline({ delay: 0.1 });
+    const tl = gsap.timeline({ delay: 0.2 });
     tlRef.current = tl;
 
     tl
-      .to(top, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" })
-      .to(words, { yPercent: 0, stagger: 0.13, duration: 1.1, ease: "power4.out" }, "-=0.3")
-      .to(sub, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, "-=0.5")
-      .to(btns, { opacity: 1, y: 0, stagger: 0.1, duration: 0.5, ease: "back.out(1.4)" }, "-=0.4")
+      .to(words,  { yPercent: 0, stagger: 0.13, duration: 1.1, ease: "power4.out" })
+      .to(sub,    { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, "-=0.5")
+      .to(btns,   { opacity: 1, y: 0, stagger: 0.1, duration: 0.5, ease: "back.out(1.4)" }, "-=0.4")
       .to(scroll, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, "-=0.3");
 
     return () => { tl.kill(); };
@@ -44,46 +152,38 @@ export default function Hero() {
   return (
     <section id="hero" className="hero" ref={sectionRef}>
 
-      {/* Decorative wedding-ring ornament — elegant, on-brand, no Three.js */}
-      <svg className="hero__bg-ornament" viewBox="0 0 500 500" fill="none" aria-hidden="true">
-        <circle cx="210" cy="250" r="168" stroke="currentColor" strokeWidth="1.2" />
-        <circle cx="290" cy="250" r="168" stroke="currentColor" strokeWidth="1.2" />
-        <circle cx="210" cy="250" r="126" stroke="currentColor" strokeWidth="0.6" strokeDasharray="5 14" />
-        <circle cx="290" cy="250" r="126" stroke="currentColor" strokeWidth="0.6" strokeDasharray="5 14" />
-        <circle cx="250" cy="215" r="6" fill="currentColor" fillOpacity="0.6" />
-        <circle cx="250" cy="285" r="6" fill="currentColor" fillOpacity="0.6" />
-      </svg>
+      {/* Particle canvas — fills hero */}
+      <canvas
+        ref={canvasRef}
+        aria-hidden="true"
+        style={{
+          position: "absolute",
+          inset: 0,
+          width: "100%",
+          height: "100%",
+          zIndex: 0,
+          pointerEvents: "none",
+        }}
+      />
 
+      {/* Ambient blobs */}
       <div className="blob hero__blob-tl" />
       <div className="blob hero__blob-br" />
 
-      {/* Top bar — label left, index right */}
-      <div className="hero__top">
-        <div className="sec-label hero__label">Moments Told By OneMark</div>
-        <span className="hero__index">01 / WEB EXPERIENCES</span>
-      </div>
-
-      {/* Editorial content — bottom-left anchored */}
+      {/* Content */}
       <div className="hero__content">
         <h1 className="hero__headline">
-          <div className="hero__line">
-            <span className="hero__word">Your</span>
-          </div>
-          <div className="hero__line">
-            <span className="hero__word hero__word--outline">Story</span>
-          </div>
-          <div className="hero__line">
-            <span className="hero__word">Deserves</span>
-          </div>
-          <div className="hero__line">
-            <span className="hero__word hero__word--gradient">a Page.</span>
-          </div>
+          <div className="hero__line"><span className="hero__word">Your</span></div>
+          <div className="hero__line"><span className="hero__word hero__word--outline">Story</span></div>
+          <div className="hero__line"><span className="hero__word">Deserves</span></div>
+          <div className="hero__line"><span className="hero__word hero__word--gradient">a Page.</span></div>
         </h1>
 
         <div className="hero__bottom-row">
           <p className="hero__sub">
-            Getting married? Planning an event? We build a beautiful custom website just for you —
-            your guests open one link and feel the magic before the day even arrives.
+            Getting married? Planning an event? We build a beautiful custom website
+            just for you — your guests open one link and feel the magic before the
+            day even arrives.
           </p>
           <div className="hero__ctas">
             <a href={WA_LINK} target="_blank" rel="noopener noreferrer"
@@ -103,7 +203,6 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Vertical scroll indicator */}
       <div className="hero__scroll">
         <div className="hero__scroll-line" />
         <span className="hero__scroll-label">SCROLL</span>

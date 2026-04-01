@@ -1,251 +1,200 @@
 /**
- * Showcase — IframeScreen handles all scaling via ResizeObserver.
- * DeviceFrame is declared outside Showcase to avoid re-creation on render.
+ * components/Showcase/index.jsx
+ *
+ * Sticky horizontal scroll — like StoryReveal but for projects.
+ *
+ * HOW IT WORKS (same pattern as Testimonials desktop scroll):
+ *  - Outer div height = 100vh * number_of_projects  (gives scroll room)
+ *  - Inner div is position:sticky, height:100vh
+ *  - A horizontal track holds one full-viewport "slide" per project
+ *  - On scroll, we read how far into the outer div we are and
+ *    translateX the track by that amount — each slide snaps into view
+ *
+ * Each slide = left info panel + MacBook (right) + iPhone overlapping
+ *
+ * Mobile: same outer/sticky structure but track stacks vertically,
+ *         MacBook hidden, iPhone shown alone. No JS height needed on mobile.
  */
-import { useState, useCallback, useEffect, useRef } from "react";
+import { useRef, useEffect } from "react";
 import { PROJECTS } from "../../data/projects";
-import ViewToggle   from "./ViewToggle";
-import MacBook      from "./MacBook";
-import IPhone       from "./IPhone";
 import IframeScreen from "./IframeScreen";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import MacBook from "./MacBook";
+import IPhone from "./IPhone";
 
-gsap.registerPlugin(ScrollTrigger);
-
-const SWITCH_MS = 260;
 const IPHONE_W  = 390;
 const IPHONE_H  = 844;
 const DESKTOP_W = 1440;
 const DESKTOP_H = 900;
 
-function ProjectCard({ project, isActive, onSelect, children }) {
+function ProjectSlide({ project }) {
   return (
-    <div className="project-card">
-      <button
-        onClick={() => onSelect(project.id)}
-        className={`project-card-header${isActive ? " active" : ""}`}
-        data-hover
-        aria-expanded={isActive}
-      >
-        <div className="project-card__meta">
-          <span className="project-card__tag" style={{ color: project.color }}>{project.tag}</span>
-          <span className="project-card__num">{project.num}</span>
-        </div>
-        <div className="project-card__title">{project.title}</div>
-        <div className="project-card__desc">{project.desc}</div>
-      </button>
-      <div className="project-card-body" style={{ maxHeight: isActive ? 1400 : 0 }}>
-        <div className="project-card-body-inner">
-          <p className="project-card-about">{project.about}</p>
-          <div className="project-card-importance">
-            <div className="project-card-importance__label">Why it matters</div>
-            <p className="project-card-importance__text">{project.importance}</p>
+    <div className="phs-slide">
+      {/* Background glow */}
+      <div
+        className="phs-slide__glow"
+        style={{ background: `radial-gradient(ellipse 60% 70% at 75% 50%, ${project.color}18 0%, transparent 70%)` }}
+      />
+
+      <div className="phs-slide__inner">
+        {/* ── Left: info ── */}
+        <div className="phs-slide__info">
+          <div className="phs-slide__meta">
+            <span className="phs-slide__tag" style={{ color: project.color }}>{project.tag}</span>
+            <span className="phs-slide__num">{project.num} / {String(PROJECTS.length).padStart(2,"0")}</span>
           </div>
-          <div className="project-card-features">
-            {project.features.map((f) => (
-              <span key={f} className="feature-pill">&#10022; {f}</span>
+
+          <h3 className="phs-slide__title">{project.title}</h3>
+          <p className="phs-slide__tagline">{project.desc}</p>
+          <p className="phs-slide__about">{project.about}</p>
+
+          <div className="phs-slide__features">
+            {project.features.slice(0, 3).map((f) => (
+              <span key={f} className="phs-slide__pill"
+                style={{ borderColor: `${project.color}33`, color: project.color, background: `${project.color}12` }}>
+                ✦ {f}
+              </span>
             ))}
           </div>
-          {children}
+
+          <a
+            href={project.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mag-btn phs-slide__cta"
+            style={{ borderColor: project.color, color: project.color }}
+            data-hover
+            onClick={() => window.trackEvent?.("showcase_open", { title: project.title })}
+          >
+            Open live site
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
+              <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/>
+            </svg>
+          </a>
+        </div>
+
+        {/* ── Right: devices ── */}
+        <div className="phs-slide__devices">
+          {/* MacBook — desktop only */}
+          <div className="phs-slide__macbook">
+            <MacBook>
+              <IframeScreen
+                src={project.url}
+                nativeWidth={DESKTOP_W}
+                nativeHeight={DESKTOP_H}
+                title={`${project.title} — Desktop`}
+              />
+            </MacBook>
+          </div>
+
+          {/* iPhone overlapping bottom-left of MacBook */}
+          <div className="phs-slide__iphone">
+            <IPhone>
+              <IframeScreen
+                src={project.url}
+                nativeWidth={IPHONE_W}
+                nativeHeight={IPHONE_H}
+                title={`${project.title} — Mobile`}
+              />
+            </IPhone>
+          </div>
         </div>
       </div>
-    </div>
-  );
-}
 
-function DeviceFrame({ switching, isMobile, currentUrl, activeProject }) {
-  return (
-    <div className={`device-frame${switching ? " switching" : ""}`}>
-      {isMobile ? (
-        <IPhone>
-          <IframeScreen
-            src={currentUrl}
-            nativeWidth={IPHONE_W}
-            nativeHeight={IPHONE_H}
-            title={`${activeProject?.title} \u2014 Mobile`}
+      {/* Progress dots at bottom */}
+      <div className="phs-slide__dots" aria-hidden="true">
+        {PROJECTS.map((p) => (
+          <div
+            key={p.id}
+            className={`phs-slide__dot${p.id === project.id ? " active" : ""}`}
+            style={p.id === project.id ? { background: project.color } : {}}
           />
-        </IPhone>
-      ) : (
-        <MacBook>
-          <IframeScreen
-            src={currentUrl}
-            nativeWidth={DESKTOP_W}
-            nativeHeight={DESKTOP_H}
-            title={`${activeProject?.title} \u2014 Desktop`}
-          />
-        </MacBook>
-      )}
+        ))}
+      </div>
     </div>
   );
 }
 
 export default function Showcase() {
-  const [activeId,      setActiveId]      = useState(0);
-  const [isMobile,      setIsMobile]      = useState(false);
-  const [switching,     setSwitching]     = useState(false);
-  const [currentUrl,    setCurrentUrl]    = useState(PROJECTS[0]?.url);
-  const [isSmallScreen, setIsSmallScreen] = useState(false);
-  const sectionRef = useRef(null);
+  const outerRef = useRef(null);
+  const trackRef = useRef(null);
 
   useEffect(() => {
-    const check = () => {
-      const small = window.innerWidth < 768;
-      setIsSmallScreen(small);
-      if (small) setIsMobile(true);
+    const outer = outerRef.current;
+    const track = trackRef.current;
+    if (!outer || !track) return;
+
+    // Mobile: no JS needed — CSS handles stacked layout
+    if (window.innerWidth < 900) return;
+
+    const slideCount = PROJECTS.length;
+    const getSlideWidth = () => window.innerWidth;
+
+    // Outer height = one viewport per project slide
+    const setHeight = () => {
+      if (window.innerWidth < 900) { outer.style.height = ""; return; }
+      outer.style.height = `${slideCount * 100}vh`;
     };
-    check();
-    window.addEventListener("resize", check, { passive: true });
-    return () => window.removeEventListener("resize", check);
+    setHeight();
+    window.addEventListener("resize", setHeight, { passive: true });
+
+    const onScroll = () => {
+      if (window.innerWidth < 900) return;
+      const rect     = outer.getBoundingClientRect();
+      const totalScroll = outer.offsetHeight - window.innerHeight;
+      if (totalScroll <= 0) return;
+      const scrolled = Math.max(0, Math.min(totalScroll, -rect.top));
+      // Translate track left by scrolled proportion
+      const maxX = getSlideWidth() * (slideCount - 1);
+      const x    = (scrolled / totalScroll) * maxX;
+      track.style.transform = `translateX(-${x}px)`;
+    };
+
+    let active = false;
+    const io = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting && !active) {
+        active = true;
+        window.addEventListener("scroll", onScroll, { passive: true });
+        window.trackEvent?.("showcase_viewed");
+      } else if (!entry.isIntersecting && active) {
+        active = false;
+        window.removeEventListener("scroll", onScroll);
+      }
+    }, { threshold: 0 });
+    io.observe(outer);
+
+    return () => {
+      io.disconnect();
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", setHeight);
+      if (track) track.style.transform = "";
+      if (outer) outer.style.height = "";
+    };
   }, []);
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        ".showcase__heading, .showcase__sub",
-        { opacity: 0, y: 40 },
-        {
-          opacity: 1, y: 0, stagger: 0.12, duration: 0.8, ease: "power3.out",
-          scrollTrigger: { trigger: ".showcase__header", start: "top 85%" },
-        }
-      );
-      gsap.fromTo(
-        ".project-list-cards .project-card",
-        { opacity: 0, x: -30 },
-        {
-          opacity: 1, x: 0, stagger: 0.08, duration: 0.6, ease: "power3.out",
-          scrollTrigger: { trigger: ".project-list-cards", start: "top 85%" },
-        }
-      );
-      gsap.fromTo(
-        ".showcase__device-col",
-        { opacity: 0, x: 40 },
-        {
-          opacity: 1, x: 0, duration: 0.9, ease: "power3.out",
-          scrollTrigger: { trigger: ".showcase__device-col", start: "top 88%" },
-        }
-      );
-    }, sectionRef);
-    return () => ctx.revert();
-  }, [isSmallScreen]);
-
-  const selectProject = useCallback((id) => {
-    if (id === activeId) return;
-    setSwitching(true);
-    setTimeout(() => {
-      setActiveId(id);
-      setCurrentUrl(PROJECTS[id]?.url);
-      setSwitching(false);
-    }, SWITCH_MS);
-  }, [activeId]);
-
-  const handleToggle = useCallback(() => {
-    setSwitching(true);
-    setTimeout(() => { setIsMobile((p) => !p); setSwitching(false); }, SWITCH_MS);
-  }, []);
-
-  const activeProject = PROJECTS.find((p) => p.id === activeId);
 
   return (
-    <section id="work" className="showcase" ref={sectionRef}>
-      <div className="blob showcase__blob" />
-      <div className="showcase__inner">
+    <div id="work" className="phs-outer" ref={outerRef}>
+      <div className="phs-sticky">
 
-        <div className="showcase__header">
-          <div className="sec-label showcase-sec-label-margin">See It Live</div>
-          <h2 className="showcase__heading">
-            Real Sites. Real People.<br />
-            <span>Built by Us.</span>
-          </h2>
-          <p className="showcase__sub">
-            These are actual live websites we&rsquo;ve built for couples, families, and events.
-            Click any project to preview it &mdash; or open it directly.
-          </p>
+        {/* Section label — top left */}
+        <div className="phs-label">
+          <span className="sec-label">See It Live</span>
+          <h2 className="phs-heading">Real Sites. <span>Real People.</span></h2>
         </div>
 
-        {/* Mobile layout */}
-        {isSmallScreen && (
-          <div className="showcase__mobile-list">
-            {PROJECTS.map((project) => (
-              <ProjectCard
-                key={project.id}
-                project={project}
-                isActive={project.id === activeId}
-                onSelect={selectProject}
-              >
-                {project.id === activeId && (
-                  <>
-                    <div className="showcase__mobile-device">
-                      <DeviceFrame
-                        switching={switching}
-                        isMobile={isMobile}
-                        currentUrl={currentUrl}
-                        activeProject={activeProject}
-                      />
-                    </div>
-                    <a
-                      href={currentUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="mag-btn showcase__open-link"
-                      data-hover
-                    >
-                      Open Live Site ↗
-                    </a>
-                  </>
-                )}
-              </ProjectCard>
-            ))}
-          </div>
-        )}
+        {/* Horizontal track */}
+        <div className="phs-track" ref={trackRef}>
+          {PROJECTS.map((project) => (
+            <ProjectSlide key={project.id} project={project} />
+          ))}
+        </div>
 
-        {/* Desktop layout */}
-        {!isSmallScreen && (
-          <div className="showcase__desktop-layout">
-            <div className="project-list-col">
-              <div className="project-list-cards">
-                {PROJECTS.map((project) => (
-                  <ProjectCard
-                    key={project.id}
-                    project={project}
-                    isActive={project.id === activeId}
-                    onSelect={selectProject}
-                  />
-                ))}
-              </div>
-            </div>
-
-            <div className="showcase__device-col">
-              <ViewToggle isMobile={isMobile} onToggle={handleToggle} />
-              <DeviceFrame
-                switching={switching}
-                isMobile={isMobile}
-                currentUrl={currentUrl}
-                activeProject={activeProject}
-              />
-              <div className="showcase__info-bar glass">
-                <div>
-                  <div className="showcase__info-title">{activeProject?.title}</div>
-                  <div className="showcase__info-desc">{activeProject?.desc}</div>
-                </div>
-                <div className="showcase__info-num">
-                  {activeProject?.num} / {String(PROJECTS.length).padStart(2, "0")}
-                </div>
-              </div>
-              <a
-                href={activeProject?.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mag-btn showcase__open-link"
-                data-hover
-              >
-                Open Live Site ↗
-              </a>
-            </div>
-          </div>
-        )}
-
+        {/* Scroll hint */}
+        <div className="phs-scroll-hint" aria-hidden="true">
+          <span>Scroll</span>
+          <div className="phs-scroll-line" />
+        </div>
       </div>
-    </section>
+    </div>
   );
 }

@@ -1,18 +1,114 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+  public/sitemap.xml
+  Run `npm run build` then deploy — Vercel serves this statically.
+  Update <lastmod> whenever content changes significantly.
+  Add a new <url> block for every new project or blog post.
+-->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+  <!-- ── Core pages ──────────────────────────────────────────── -->
   <url>
     <loc>https://stories.onemark.co.in/</loc>
-    <lastmod>2026-03-30</lastmod>
-    <changefreq>monthly</changefreq>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="en-in" href="https://stories.onemark.co.in/"/>
   </url>
+
   <url>
     <loc>https://stories.onemark.co.in/works</loc>
-    <lastmod>2026-03-30</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="en-in" href="https://stories.onemark.co.in/works"/>
   </url>
+
+  <!-- ── Project detail pages (add pages/works/[slug].jsx) ───── -->
+  <url>
+    <loc>https://stories.onemark.co.in/works/vijay-rashmika</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://stories.onemark.co.in/works/anil-eswari</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://stories.onemark.co.in/works/nazurul-sajida</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://stories.onemark.co.in/works/venkat-nandini</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://stories.onemark.co.in/works/valentine-week</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://stories.onemark.co.in/works/viswanath-portfolio</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://stories.onemark.co.in/works/srinu-sai</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://stories.onemark.co.in/works/ganesh-srija</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://stories.onemark.co.in/works/arun-spandana</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- ── Location SEO landing pages (create pages/weddings/[city].jsx) -->
+  <url>
+    <loc>https://stories.onemark.co.in/weddings/kakinada</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://stories.onemark.co.in/weddings/hyderabad</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://stories.onemark.co.in/weddings/bangalore</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
 </urlset>
