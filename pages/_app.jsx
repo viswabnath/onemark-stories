@@ -18,6 +18,7 @@
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { Analytics, track } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 import "../styles/globals.css";
 
 export default function App({ Component, pageProps }) {
@@ -45,6 +46,8 @@ export default function App({ Component, pageProps }) {
       <Component {...pageProps} />
       {/* Vercel Analytics — automatically active on vercel.com deployments */}
       <Analytics />
+      {/* Vercel Speed Insights — tracks Web Vitals and performance metrics */}
+      <SpeedInsights />
     </>
   );
 }
