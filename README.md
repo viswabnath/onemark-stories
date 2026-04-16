@@ -50,10 +50,11 @@ onemark-stories/
 │   ├── Showcase/          # Sticky horizontal scroll — one project per viewport
 │   ├── StoryReveal.jsx    # Apple-style 4-beat scroll sequence (desktop + mobile)
 │   ├── Testimonials.jsx   # Sticky horizontal scroll (desktop) / snap scroll (mobile)
+│   ├── HowItWorks.jsx     # 3-step process cards (Send → Build → Share)
 │   ├── Pricing.jsx        # 3-tier pricing with analytics tracking
 │   ├── About.jsx          # SVG service icons, comparison table, editorial FAQ
 │   ├── ClosingCTA.jsx     # Lead capture form + WhatsApp fallback
-│   ├── LeadForm.jsx       # Enquiry form — saves to localStorage, opens WA
+│   ├── LeadForm.jsx       # 2-field form (name + phone) — saves to localStorage, opens WA
 │   ├── ScrollToTop.jsx    # Fixed scroll-to-top button (appears after 400px)
 │   ├── HeroErrorBoundary.jsx  # WebGL/canvas error fallback
 │   ├── Footer.jsx         # Editorial minimal footer
@@ -61,8 +62,6 @@ onemark-stories/
 │   ├── Cursor.jsx         # Custom rose cursor (desktop only)
 │   ├── Loader.jsx         # Page load animation
 │   └── WhatsAppFloat.jsx  # Floating WhatsApp button
-├── context/
-│   └── ThemeContext.jsx   # Light / Dark mode (localStorage + system pref)
 ├── data/
 │   ├── projects.js        # All project entries — ordered by design quality
 │   └── socials.js         # Social media links
@@ -88,11 +87,12 @@ The homepage is a scroll-driven story — everything flows:
 1. **Hero** — Animated canvas particle field + GSAP word entrance
 2. **StoryReveal** — 4 full-screen beats with animated SVG visuals (desktop & mobile)
 3. **Showcase** — Sticky horizontal scroll: each project is a full-viewport slide with MacBook + iPhone
-4. **Testimonials** — Horizontal scroll (desktop) / native snap scroll (mobile) — 8 testimonials across Wedding, Portfolio, Corporate, Birthday
-5. **About** — SVG service icons, CSS Grid comparison table (mobile: stacked cards), editorial two-column FAQ
-6. **Pricing** — Spark / Bloom / Legacy with analytics on every CTA click
-7. **ClosingCTA** — Lead capture form (name, event type, date, package) + WhatsApp fallback
-8. **Footer** — Logo, links, socials
+4. **About** — SVG service icons, CSS Grid comparison table (mobile: stacked cards), editorial two-column FAQ
+5. **Testimonials** — Horizontal scroll (desktop) / native snap scroll (mobile) — 9 testimonials across Wedding, Housewarming, Portfolio, Corporate, Birthday
+6. **HowItWorks** — 3 glass cards: Send a message → We build your page → Share one link
+7. **Pricing** — Spark / Bloom / Legacy with analytics on every CTA click
+8. **ClosingCTA** — 2-field lead capture form (name + phone) + WhatsApp fallback
+9. **Footer** — Logo, links, socials
 
 ---
 
@@ -110,8 +110,8 @@ The homepage is a scroll-driven story — everything flows:
 - Events fire on: pricing CTA clicks, showcase opens, testimonials viewed, hero WebGL errors
 
 ### Lead Capture
-- `LeadForm` component embedded in `ClosingCTA` — captures name, phone, event type, date, package
-- Leads saved to `localStorage` (ready to swap for a backend/Google Sheet webhook)
+- `LeadForm` embedded in `ClosingCTA` — 2 fields: name + WhatsApp number
+- Saves to `localStorage` (ready to swap for a backend/Google Sheet webhook)
 - Submitting pre-fills a WhatsApp message and opens it in a new tab
 
 ### Hero

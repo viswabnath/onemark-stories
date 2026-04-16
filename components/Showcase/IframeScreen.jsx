@@ -1,15 +1,14 @@
 /**
  * components/Showcase/IframeScreen.jsx
  *
- * CHANGES vs original:
- *  - Detects blocked iframes via a timeout heuristic (onLoad never fires
- *    if the frame is blocked by X-Frame-Options / CSP).
- *  - Shows a graceful fallback card instead of an infinite spinner.
- *  - Adds an "Open site" button in the fallback so the user can still visit.
+ * Only starts the blocked-detection timer once the iframe container
+ * is actually visible in the viewport (IntersectionObserver). This
+ * prevents the "Preview blocked" flash on slides the user hasn't
+ * scrolled to yet — those slides mount immediately but are off-screen.
  */
 import { useState, useEffect, useRef } from "react";
 
-const BLOCKED_TIMEOUT_MS = 8000; // if onLoad hasn't fired in 8s, assume blocked
+const BLOCKED_TIMEOUT_MS = 8000;
 
 export default function IframeScreen({
   src,
@@ -19,9 +18,11 @@ export default function IframeScreen({
 }) {
   const wrapRef    = useRef(null);
   const timerRef   = useRef(null);
+  const loadedRef  = useRef(false); // tracks if onLoad ever fired
   const [scale,    setScale]   = useState(1);
   const [loading,  setLoading] = useState(true);
   const [blocked,  setBlocked] = useState(false);
+  const [inView,   setInView]  = useState(false);
 
   // Reset state when src changes
   const [prevSrc, setPrevSrc] = useState(src);
@@ -29,6 +30,8 @@ export default function IframeScreen({
     setPrevSrc(src);
     setLoading(true);
     setBlocked(false);
+    setInView(false);
+    loadedRef.current = false;
     clearTimeout(timerRef.current);
   }
 
@@ -44,19 +47,33 @@ export default function IframeScreen({
     return () => ro.disconnect();
   }, [nativeWidth]);
 
-  // Blocked-iframe timeout
+  // Watch visibility — only mark inView once (no need to reset after load)
   useEffect(() => {
-    if (!loading) return;
+    const el = wrapRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) setInView(true);
+      },
+      { threshold: 0.1 }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  // Start blocked-detection timer only after the slide is in view
+  useEffect(() => {
+    if (!loading || !inView || loadedRef.current) return;
     timerRef.current = setTimeout(() => {
-      // Still loading after BLOCKED_TIMEOUT_MS → assume blocked
       setLoading(false);
       setBlocked(true);
     }, BLOCKED_TIMEOUT_MS);
     return () => clearTimeout(timerRef.current);
-  }, [src, loading]);
+  }, [src, loading, inView]);
 
   function handleLoad() {
     clearTimeout(timerRef.current);
+    loadedRef.current = true;
     setLoading(false);
     setBlocked(false);
   }
@@ -74,15 +91,15 @@ export default function IframeScreen({
         borderRadius:  "inherit",
       }}
     >
-      {/* Loading spinner */}
-      {loading && !blocked && (
+      {/* Loading spinner — only when in view and still loading */}
+      {loading && !blocked && inView && (
         <div className="iframe-loading">
           <div className="iframe-spinner" />
           <span className="iframe-loading-text">Loading preview…</span>
         </div>
       )}
 
-      {/* Fallback for blocked iframes */}
+      {/* Fallback for truly blocked iframes */}
       {blocked && (
         <div className="iframe-loading" style={{ gap: "16px", padding: "24px", textAlign: "center" }}>
           <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--rose)" strokeWidth="1.5" aria-hidden="true">
@@ -132,7 +149,6 @@ export default function IframeScreen({
           transformOrigin: "top left",
           transform:       `scale(${scale})`,
           pointerEvents:   "all",
-          // Hide iframe visually when blocked/loading (but keep it in DOM for onLoad)
           opacity:         loading || blocked ? 0 : 1,
           transition:      "opacity 0.4s ease",
         }}

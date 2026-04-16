@@ -15,6 +15,7 @@ import Loader from "../components/Loader";
 import Nav from "../components/Nav";
 import About from "../components/About";
 import Testimonials from "../components/Testimonials";
+import HowItWorks from "../components/HowItWorks";
 import Pricing from "../components/Pricing";
 import Footer from "../components/Footer";
 import WhatsAppFloat from "../components/WhatsAppFloat";
@@ -186,8 +187,9 @@ export default function Home() {
         <Hero />
         <StoryReveal />
         <Showcase />
-        <Testimonials />
         <About />
+        <Testimonials />
+        <HowItWorks />
         <Pricing />
         <ClosingCTA />
         <ScrollToTop />

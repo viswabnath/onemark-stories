@@ -16,17 +16,17 @@ import { gsap } from "gsap";
 const BEATS = [
   {
     chapter:  "01",
+    headline: ["Every moment", "deserves", "a page."],
+    sub:      "Weddings, birthdays, housewarmings, launches — whatever it is, we build the experience your guests remember.",
+    color:    "#C9A96E",
+    bg:       "radial-gradient(ellipse 80% 60% at 70% 50%, rgba(201,169,110,0.18) 0%, transparent 70%)",
+  },
+  {
+    chapter:  "02",
     headline: ["Getting", "married?"],
     sub:      "We build a custom website your guests open before the day even arrives.",
     color:    "#D4758C",
     bg:       "radial-gradient(ellipse 80% 60% at 70% 50%, rgba(212,117,140,0.18) 0%, transparent 70%)",
-  },
-  {
-    chapter:  "02",
-    headline: ["Something", "to celebrate?"],
-    sub:      "Birthdays, launches, milestones — every moment deserves its own page.",
-    color:    "#C9A96E",
-    bg:       "radial-gradient(ellipse 80% 60% at 70% 50%, rgba(201,169,110,0.18) 0%, transparent 70%)",
   },
   {
     chapter:  "03",
@@ -184,7 +184,7 @@ const BuildVisual = ({ color }) => (
   </div>
 );
 
-const VISUALS = [WeddingVisual, CelebrationVisual, ShareVisual, BuildVisual];
+const VISUALS = [CelebrationVisual, WeddingVisual, ShareVisual, BuildVisual];
 
 /* ── Component ──────────────────────────────────────────────────── */
 export default function StoryReveal() {

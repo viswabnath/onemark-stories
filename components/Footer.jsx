@@ -5,7 +5,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { MAIN_SOCIALS } from "../data/socials";
-import { useTheme } from "../context/ThemeContext";
 
 function SocialPill({ label, href, icon }) {
   return (
@@ -23,11 +22,6 @@ function SocialPill({ label, href, icon }) {
 }
 
 export default function Footer() {
-  const { theme } = useTheme();
-  const logoSrc = theme === "light"
-    ? "/stories-logo-blue-resized.png"
-    : "/stories-logo-white-resized.png";
-
   return (
     <footer className="footer">
       <div className="footer__watermark" aria-hidden="true">stories</div>
@@ -39,7 +33,7 @@ export default function Footer() {
         <div className="footer__top">
           <Link href="/" className="footer__logo-link">
             <Image
-              src={logoSrc}
+              src="/stories-logo-white-resized.png"
               alt="OneMark Stories"
               width={150}
               height={44}
