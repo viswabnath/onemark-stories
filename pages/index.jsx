@@ -20,6 +20,7 @@ import Pricing from "../components/Pricing";
 import Footer from "../components/Footer";
 import WhatsAppFloat from "../components/WhatsAppFloat";
 import StoryReveal from "../components/StoryReveal";
+import AlbumsTeaser from "../components/AlbumsTeaser";
 import ClosingCTA from "../components/ClosingCTA";
 import ScrollToTop from "../components/ScrollToTop";
 
@@ -48,7 +49,7 @@ export default function Home() {
         "image": `${DOMAIN}/onemark-logo.png`,
         "description": DESC,
         "priceRange": "₹₹",
-        "telephone": "+919392704742",
+        "telephone": "+918331978532",
         "email": "hello@onemark.digital",
         "address": {
           "@type": "PostalAddress",
@@ -187,6 +188,7 @@ export default function Home() {
         <Hero />
         <StoryReveal />
         <Showcase />
+        <AlbumsTeaser />
         <About />
         <Testimonials />
         <HowItWorks />

@@ -37,17 +37,35 @@ const nextConfig: NextConfig = {
   async headers() {
     return [
       {
+        // Security header for every route. IMPORTANT: do NOT put a long-lived
+        // `immutable` Cache-Control here — it would apply to HTML documents too,
+        // freezing pages (and shared album links) in browsers for a year.
         source: "/(.*)",
+        headers: [{ key: "X-Frame-Options", value: "SAMEORIGIN" }],
+      },
+      {
+        // Fingerprinted build output — safe to cache forever.
+        source: "/_next/static/:path*",
         headers: [
-          { key: "X-Frame-Options", value: "SAMEORIGIN" },
-          // Cache static assets
           { key: "Cache-Control", value: "public, max-age=31536000, immutable" },
         ],
       },
       {
-        source: "/:path*(js|css|png|jpg|jpeg|webp|avif|svg|woff2)",
+        // Fonts rarely change — long cache, immutable.
+        source: "/:path*(woff2|woff|ttf)",
         headers: [
           { key: "Cache-Control", value: "public, max-age=31536000, immutable" },
+        ],
+      },
+      {
+        // Static media (incl. album photos, which may be swapped) — cache a day
+        // but revalidate so replacements/updates appear without a year's wait.
+        source: "/:path*(png|jpg|jpeg|webp|avif|svg|gif|ico)",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=86400, stale-while-revalidate=604800",
+          },
         ],
       },
     ];

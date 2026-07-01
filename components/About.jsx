@@ -11,7 +11,7 @@
 import { useState } from "react";
 import Link from "next/link";
 
-const WA_NUMBER = "919392704742";
+const WA_NUMBER = "918331978532";
 const WA_MSG    = encodeURIComponent("Hi OneMark Stories! 👋 I'd like to know more about pricing and what's included.");
 const WA_LINK   = `https://wa.me/${WA_NUMBER}?text=${WA_MSG}`;
 

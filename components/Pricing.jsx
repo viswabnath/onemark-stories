@@ -8,7 +8,7 @@
  *  3. Removed "RSVP dashboard" reference from About FAQ — that feature
  *     doesn't exist yet. Pricing features are honest about what's delivered.
  */
-const WA_NUMBER = "919392704742";
+const WA_NUMBER = "918331978532";
 const makeWA = (plan) =>
   `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(
     `Hi OneMark Stories! 👋 I'm interested in the ${plan} package. Can we discuss?`
@@ -29,6 +29,7 @@ const TIERS = [
       "Up to 6 photos or media items",
       "Custom color & branding",
       "WhatsApp & Instagram share-optimized",
+      "Digital album — up to 15 pages",
       "Mobile-first design",
       "1 round of revisions",
     ],
@@ -48,6 +49,7 @@ const TIERS = [
       "3 event galleries with lightbox",
       "Event schedule & venue cards",
       "PWA — installs like an app",
+      "Digital album — up to 30 pages",
       "Background music player",
       "Multilingual (English + 1 language)",
       "2 rounds of revisions",
@@ -65,6 +67,7 @@ const TIERS = [
       "5–6 cinematic chapters",
       "3D elements & WebGL backgrounds",
       "Interactive galleries & flip-card reveals",
+      "Digital album — up to 60 pages",
       "Event-time triggered celebrations",
       "Unlimited photo galleries + video",
       "Custom domain setup",
@@ -148,7 +151,11 @@ export default function Pricing() {
 
         <p className="pricing__note">
           All prices are one-time. GST applicable for Indian invoices.
-          Need something custom?{" "}
+          Every plan includes a{" "}
+          <a href="/albums" style={{ color: "var(--rose)" }} data-hover>
+            digital album ↗
+          </a>{" "}
+          — need more pages, or just the album on its own?{" "}
           <a
             href={`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent("Hi! I need a custom quote.")}`}
             target="_blank"

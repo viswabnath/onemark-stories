@@ -45,7 +45,7 @@ export async function getStaticProps({ params }) {
   return { props: { project } };
 }
 
-const WA_NUMBER = "919392704742";
+const WA_NUMBER = "918331978532";
 
 export default function ProjectPage({ project }) {
   const waText = encodeURIComponent(

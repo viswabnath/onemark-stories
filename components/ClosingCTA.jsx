@@ -12,7 +12,7 @@ import LeadForm from "./LeadForm";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const WA_LINK = `https://wa.me/919392704742?text=${encodeURIComponent("Hi OneMark Stories! 👋 I'm ready to start my story. Can we discuss?")}`;
+const WA_LINK = `https://wa.me/918331978532?text=${encodeURIComponent("Hi OneMark Stories! 👋 I'm ready to start my story. Can we discuss?")}`;
 
 export default function ClosingCTA() {
   const ref = useRef(null);

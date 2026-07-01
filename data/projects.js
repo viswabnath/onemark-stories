@@ -39,7 +39,7 @@ export const PROJECTS = [
     tag: "Portfolio",
     desc: "Personal Portfolio Showcase",
     color: "#29ABE2",
-    url: "https://viswabnath.github.io/portfolio/",
+    url: "https://viswabnath.vercel.app/",
     about:
       "A sleek personal portfolio for Viswanath — showcasing 9 years of frontend engineering across 4 industries with a terminal-inspired UI that makes recruiters stop scrolling.",
     importance:

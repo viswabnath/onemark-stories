@@ -5,7 +5,7 @@
  */
 import { useState } from "react";
 
-const WA_NUMBER = "919392704742";
+const WA_NUMBER = "918331978532";
 
 export default function LeadForm({ onSuccess }) {
   const [name,   setName]   = useState("");

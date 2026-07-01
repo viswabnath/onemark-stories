@@ -39,6 +39,8 @@ export default function handler(req) {
   const tagColor = tag === "Wedding" ? ROSE
     : tag === "Corporate" ? CYAN
     : tag === "Portfolio"  ? CYAN
+    : tag === "Wedding Album" ? ROSE
+    : tag === "Digital Album" ? ROSE
     : GOLD;
 
   return new ImageResponse(

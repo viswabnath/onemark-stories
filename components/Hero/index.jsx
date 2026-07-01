@@ -9,7 +9,7 @@ import { useEffect, useRef } from "react";
 import Link from "next/link";
 import { gsap } from "gsap";
 
-const WA_NUMBER = "919392704742";
+const WA_NUMBER = "918331978532";
 const WA_MSG    = encodeURIComponent("Hi OneMark Stories! 👋 I'd love to get a custom digital experience made. Can we talk?");
 const WA_LINK   = `https://wa.me/${WA_NUMBER}?text=${WA_MSG}`;
 
