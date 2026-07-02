@@ -15,7 +15,7 @@
  * Mobile: same outer/sticky structure but track stacks vertically,
  *         MacBook hidden, iPhone shown alone. No JS height needed on mobile.
  */
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import { PROJECTS } from "../../data/projects";
 import IframeScreen from "./IframeScreen";
 import MacBook from "./MacBook";
@@ -26,9 +26,41 @@ const IPHONE_H = 844;
 const DESKTOP_W = 1440;
 const DESKTOP_H = 900;
 
-function ProjectSlide({ project }) {
+/**
+ * DevicePreview — renders the live iframe only when its slide is in (or near)
+ * the viewport; otherwise a lightweight static placeholder. This keeps at most
+ * a few live external sites mounted at once instead of all 20, which is what
+ * caused the pinned-scroll to freeze on lower-end machines.
+ */
+function DevicePreview({ project, live, nativeWidth, nativeHeight, title }) {
+  if (live) {
+    return <IframeScreen src={project.url} nativeWidth={nativeWidth} nativeHeight={nativeHeight} title={title} />;
+  }
   return (
-    <div className="phs-slide">
+    <div style={{ position: "relative", width: "100%", height: 0, paddingBottom: `${(nativeHeight / nativeWidth) * 100}%`, overflow: "hidden", borderRadius: "inherit" }}>
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: "8%",
+          textAlign: "center",
+          background: `radial-gradient(120% 100% at 50% 0%, ${project.color}33, transparent 60%), linear-gradient(160deg, #150f21 0%, #08060d 100%)`,
+        }}
+      >
+        <span style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: `${nativeWidth * 0.07}px`, color: "#F5EEF0", opacity: 0.85 }}>
+          {project.title}
+        </span>
+      </div>
+    </div>
+  );
+}
+
+function ProjectSlide({ project, live, slideRef }) {
+  return (
+    <div className="phs-slide" ref={slideRef}>
       {/* Background glow */}
       <div
         className="phs-slide__glow"
@@ -78,8 +110,9 @@ function ProjectSlide({ project }) {
           {/* MacBook — desktop only */}
           <div className="phs-slide__macbook">
             <MacBook>
-              <IframeScreen
-                src={project.url}
+              <DevicePreview
+                project={project}
+                live={live}
                 nativeWidth={DESKTOP_W}
                 nativeHeight={DESKTOP_H}
                 title={`${project.title} — Desktop`}
@@ -90,8 +123,9 @@ function ProjectSlide({ project }) {
           {/* iPhone overlapping bottom-left of MacBook */}
           <div className="phs-slide__iphone">
             <IPhone>
-              <IframeScreen
-                src={project.url}
+              <DevicePreview
+                project={project}
+                live={live}
                 nativeWidth={IPHONE_W}
                 nativeHeight={IPHONE_H}
                 title={`${project.title} — Mobile`}
@@ -118,6 +152,40 @@ function ProjectSlide({ project }) {
 export default function Showcase() {
   const outerRef = useRef(null);
   const trackRef = useRef(null);
+  const slideRefs = useRef([]);
+  const [liveSet, setLiveSet] = useState(() => new Set([0]));
+
+  // Mount live iframes only for slides within ~one viewport of the screen
+  // (horizontally on desktop, vertically on mobile). Keeps at most a handful
+  // of external sites embedded at once instead of all 20. Driven by scroll
+  // position (works reliably regardless of tab visibility).
+  useEffect(() => {
+    let raf = 0;
+    const compute = () => {
+      raf = 0;
+      const vw = window.innerWidth, vh = window.innerHeight;
+      const next = new Set();
+      slideRefs.current.forEach((el, i) => {
+        if (!el) return;
+        const r = el.getBoundingClientRect();
+        // expand the viewport by one screen on every side to preload neighbours
+        if (r.right > -vw && r.left < vw * 2 && r.bottom > -vh && r.top < vh * 2) next.add(i);
+      });
+      setLiveSet((prev) => {
+        if (prev.size === next.size && [...next].every((i) => prev.has(i))) return prev;
+        return next;
+      });
+    };
+    const onChange = () => { if (!raf) raf = requestAnimationFrame(compute); };
+    compute();
+    window.addEventListener("scroll", onChange, { passive: true });
+    window.addEventListener("resize", onChange, { passive: true });
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("scroll", onChange);
+      window.removeEventListener("resize", onChange);
+    };
+  }, []);
 
   useEffect(() => {
     const outer = outerRef.current;
@@ -184,8 +252,13 @@ export default function Showcase() {
 
         {/* Horizontal track */}
         <div className="phs-track" ref={trackRef}>
-          {PROJECTS.map((project) => (
-            <ProjectSlide key={project.id} project={project} />
+          {PROJECTS.map((project, i) => (
+            <ProjectSlide
+              key={project.id}
+              project={project}
+              live={liveSet.has(i)}
+              slideRef={(el) => { slideRefs.current[i] = el; }}
+            />
           ))}
         </div>
 

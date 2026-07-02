@@ -100,7 +100,7 @@ const CanvasParticles = () => {
 // Photos cycled in the hero stack (front-most flips to the back in turn).
 const POLAROIDS = [
   { photo: "/showcase/vijay-rashmika-desktop.png", caption: "Vijay × Rashmika Wedding Counter" },
-  { photo: "/albums/srinu-sai/cover-front.jpg",    caption: "Srinu & Sri Digital Album" },
+  { photo: "/albums/srinu-sai/cover-front.webp",    caption: "Srinu & Sri Digital Album" },
   { photo: "/showcase/nazurul-sajida-desktop.png", caption: "Nazurul & Sajida Love Story" },
   { photo: "/showcase/yadlapalli-desktop.png",     caption: "Yadlapalli's Gruha Pravesam" },
 ];
