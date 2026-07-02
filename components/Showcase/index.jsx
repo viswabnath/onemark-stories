@@ -50,7 +50,7 @@ function DevicePreview({ project, live, nativeWidth, nativeHeight, title }) {
           background: `radial-gradient(120% 100% at 50% 0%, ${project.color}33, transparent 60%), linear-gradient(160deg, #150f21 0%, #08060d 100%)`,
         }}
       >
-        <span style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: `${nativeWidth * 0.07}px`, color: "#F5EEF0", opacity: 0.85 }}>
+        <span style={{ fontFamily: "var(--font-display)", fontSize: `${nativeWidth * 0.07}px`, color: "#F5EEF0", opacity: 0.85 }}>
           {project.title}
         </span>
       </div>

@@ -1,6 +1,6 @@
 /**
- * Nav.jsx — Fixed nav with GSAP mobile drawer and Theme Toggle Switcher.
- * Desktop: Works · Albums · Pricing · Theme Toggle · WhatsApp icon
+ * Nav.jsx — Fixed nav with GSAP mobile drawer.
+ * Desktop: Works · Albums · Pricing · WhatsApp icon
  * Mobile drawer: Works · Albums · Pricing · onemark.digital
  */
 import { useState, useEffect, useRef } from "react";
@@ -13,11 +13,8 @@ const NAV_WA = `https://wa.me/918331978532?text=${encodeURIComponent("Hi OneMark
 export default function Nav() {
   const [scrolled,  setScrolled]  = useState(false);
   const [menuOpen,  setMenuOpen]  = useState(false);
-  const [theme, setTheme] = useState("dark");
-  const logoSrc = theme === "light"
-    ? "/stories-logo-blue-resized.png"
-    : "/stories-logo-white-resized.png";
-  
+  const logoSrc = "/stories-logo-blue-resized.png";
+
   const drawerRef = useRef(null);
   const link1Ref  = useRef(null);
   const link2Ref  = useRef(null);
@@ -29,30 +26,6 @@ export default function Nav() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-
-  // Initialize theme from localStorage safely on mount (asynchronous to satisfy linter)
-  useEffect(() => {
-    const stored = localStorage.getItem("onemark-theme") || "dark";
-    const timer = setTimeout(() => {
-      setTheme(stored);
-    }, 0);
-    return () => clearTimeout(timer);
-  }, []);
-
-  // Synchronize body class on state updates
-  useEffect(() => {
-    if (theme === "light") {
-      document.body.classList.add("light");
-    } else {
-      document.body.classList.remove("light");
-    }
-  }, [theme]);
-
-  const toggleTheme = () => {
-    const next = theme === "dark" ? "light" : "dark";
-    setTheme(next);
-    localStorage.setItem("onemark-theme", next);
-  };
 
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
@@ -95,40 +68,6 @@ export default function Nav() {
           <Link href="/#work"    className="nav__link nav__link--desktop" data-hover>Works</Link>
           <Link href="/albums"   className="nav__link nav__link--desktop" data-hover>Albums</Link>
           <Link href="/#pricing" className="nav__link nav__link--desktop" data-hover>Pricing</Link>
-
-          {/* Theme Toggle Button */}
-          <button
-            onClick={toggleTheme}
-            className="theme-toggle-btn"
-            aria-label="Toggle light/dark theme"
-            style={{
-              background: "none",
-              border: "none",
-              cursor: "pointer",
-              color: "var(--text)",
-              padding: "8px",
-              display: "inline-flex",
-              alignItems: "center",
-              justifyContent: "center",
-              marginRight: "4px",
-              opacity: 0.85,
-              transition: "opacity 0.2s ease"
-            }}
-            data-hover
-          >
-            {theme === "dark" ? (
-              // Sun icon for dark mode (click to toggle light)
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <circle cx="12" cy="12" r="5" />
-                <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
-              </svg>
-            ) : (
-              // Moon icon for light mode (click to toggle dark)
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
-              </svg>
-            )}
-          </button>
 
           {/* WhatsApp icon — desktop only */}
           <a

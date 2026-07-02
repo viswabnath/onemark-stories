@@ -7,15 +7,15 @@
 
 
 const TESTIMONIALS = [
-  { name: "Sindhu Kethan", tag: "Housewarming", color: "#E5C583", quote: "We didn't want a plain WhatsApp message for our Gruha Pravesam — we wanted something as auspicious as the occasion itself. They built a webpage that felt sacred. Every elder who opened it called to say how beautiful it was." },
-  { name: "Ganesh & Srija", tag: "Wedding", color: "#4EC2F7", quote: "The countdown timer that turned into fireworks at our Muhurtham time was magical. Our families in the US felt like they were right there with us." },
-  { name: "Viswanath B.", tag: "Portfolio", color: "#4EC2F7", quote: "I'd been putting off building a portfolio for two years. OneMark had mine live in four days — and I landed my first freelance client the week after." },
-  { name: "Bride & Groom", tag: "Wedding", color: "#E05A7F", quote: "From Ladakh to London — they captured our entire journey in one beautiful page. It's been months and relatives still share the link." },
-  { name: "Meghana R.", tag: "Birthday", color: "#E05A7F", quote: "My dad's 60th birthday page had a countdown, photo gallery, and a surprise video message section. He cried. Worth every rupee." },
-  { name: "Nazurul & Sajida", tag: "Wedding", color: "#E5C583", quote: "Our guests couldn't stop talking about the website. It felt like a mini movie of our love story — everyone knew exactly where to go and when to arrive." },
-  { name: "Priya Events Co.", tag: "Corporate", color: "#E5C583", quote: "We used the Grand tier for a product launch and had over 3,000 visitors on day one without the site even hiccupping. The interactive gallery was a showstopper." },
-  { name: "Srinu & Sai", tag: "Wedding", color: "#E05A7F", quote: "They turned our wedding into chapters — like a film. The photo galleries for each event made it so easy to relive every moment afterwards." },
-  { name: "Venkat & Nandini", tag: "Wedding", color: "#E5C583", quote: "We replaced 500 printed cards with one link. Saved money, saved time, and honestly it looked a hundred times better than any paper invite could." }
+  { name: "Sindhu Kethan", tag: "Housewarming", color: "#B9832B", quote: "We didn't want a plain WhatsApp message for our Gruha Pravesam — we wanted something as auspicious as the occasion itself. They built a webpage that felt sacred. Every elder who opened it called to say how beautiful it was." },
+  { name: "Ganesh & Srija", tag: "Wedding", color: "#145A50", quote: "The countdown timer that turned into fireworks at our Muhurtham time was magical. Our families in the US felt like they were right there with us." },
+  { name: "Viswanath B.", tag: "Portfolio", color: "#145A50", quote: "I'd been putting off building a portfolio for two years. OneMark had mine live in four days — and I landed my first freelance client the week after." },
+  { name: "Bride & Groom", tag: "Wedding", color: "#96222B", quote: "From Ladakh to London — they captured our entire journey in one beautiful page. It's been months and relatives still share the link." },
+  { name: "Meghana R.", tag: "Birthday", color: "#96222B", quote: "My dad's 60th birthday page had a countdown, photo gallery, and a surprise video message section. He cried. Worth every rupee." },
+  { name: "Nazurul & Sajida", tag: "Wedding", color: "#B9832B", quote: "Our guests couldn't stop talking about the website. It felt like a mini movie of our love story — everyone knew exactly where to go and when to arrive." },
+  { name: "Priya Events Co.", tag: "Corporate", color: "#B9832B", quote: "We used the Grand tier for a product launch and had over 3,000 visitors on day one without the site even hiccupping. The interactive gallery was a showstopper." },
+  { name: "Srinu & Sai", tag: "Wedding", color: "#96222B", quote: "They turned our wedding into chapters — like a film. The photo galleries for each event made it so easy to relive every moment afterwards." },
+  { name: "Venkat & Nandini", tag: "Wedding", color: "#B9832B", quote: "We replaced 500 printed cards with one link. Saved money, saved time, and honestly it looked a hundred times better than any paper invite could." }
 ];
 
 export default function Testimonials() {
@@ -31,7 +31,7 @@ export default function Testimonials() {
 
       <div style={{ textAlign: "center", marginBottom: "3rem", padding: "0 1.5rem" }}>
         <span className="sec-label" style={{ color: "var(--gold)" }}>What Clients Say</span>
-        <h2 style={{ fontSize: "clamp(28px, 4vw, 48px)", fontWeight: 500, color: "var(--text)", fontFamily: "'Cormorant Garamond', Georgia, serif", marginTop: "0.5rem" }}>
+        <h2 style={{ fontSize: "clamp(28px, 4vw, 48px)", fontWeight: 500, color: "var(--text)", fontFamily: "var(--font-display)", marginTop: "0.5rem" }}>
           Heard from <span>real people.</span>
         </h2>
       </div>

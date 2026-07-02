@@ -175,7 +175,7 @@ Total estimated cost: ₹${total.toLocaleString()}`;
                     gap: "1rem",
                     padding: "1rem",
                     borderRadius: "14px",
-                    background: checkedAddons.includes(addon.id) ? "rgba(224, 90, 127, 0.05)" : "rgba(255,255,255,0.01)",
+                    background: checkedAddons.includes(addon.id) ? "rgba(150,34,43,0.07)" : "transparent",
                     border: checkedAddons.includes(addon.id) ? "1px solid var(--border-2)" : "1px solid var(--border)",
                     cursor: "pointer",
                     transition: "all 0.25s ease"
@@ -217,7 +217,7 @@ Total estimated cost: ₹${total.toLocaleString()}`;
                   justifyContent: "space-between",
                   padding: "1rem",
                   borderRadius: "14px",
-                  background: extraPages > 0 ? "rgba(229, 197, 131, 0.05)" : "rgba(255,255,255,0.01)",
+                  background: extraPages > 0 ? "rgba(185,131,43,0.10)" : "transparent",
                   border: extraPages > 0 ? "1px solid var(--border-2)" : "1px solid var(--border)",
                   marginTop: "0.5rem"
                 }}
@@ -234,7 +234,7 @@ Total estimated cost: ₹${total.toLocaleString()}`;
                       height: "30px",
                       borderRadius: "50%",
                       border: "1px solid var(--border)",
-                      background: "rgba(255,255,255,0.03)",
+                      background: "var(--surface)",
                       color: "var(--text)",
                       fontWeight: "bold",
                       fontSize: "16px",
@@ -251,7 +251,7 @@ Total estimated cost: ₹${total.toLocaleString()}`;
                       height: "30px",
                       borderRadius: "50%",
                       border: "1px solid var(--border)",
-                      background: "rgba(255,255,255,0.03)",
+                      background: "var(--surface)",
                       color: "var(--text)",
                       fontWeight: "bold",
                       fontSize: "16px",
@@ -269,32 +269,33 @@ Total estimated cost: ₹${total.toLocaleString()}`;
           {/* Right Side: Total Summary */}
           <div className="pricing-summary" style={{ display: "flex", flexDirection: "column" }}>
             <div
-              className="pricing-summary-card glass"
+              className="pricing-summary-card"
               style={{
                 position: "sticky",
                 top: "6rem",
                 padding: "2.5rem",
-                borderRadius: "24px",
-                border: "1px solid var(--border-2)",
-                boxShadow: "0 25px 70px rgba(0,0,0,0.3)",
+                borderRadius: "4px",
+                border: "1px solid color-mix(in srgb, var(--gold) 45%, transparent)",
+                boxShadow: "0 24px 60px rgba(58,16,22,0.22)",
                 display: "flex",
                 flexDirection: "column",
                 gap: "1.75rem",
-                background: "linear-gradient(160deg, rgba(30, 20, 48, 0.7) 0%, rgba(11, 5, 22, 0.7) 100%)"
+                background: "#3A1016",
+                color: "#F4ECDB"
               }}
             >
               <div>
-                <div style={{ fontSize: "10px", textTransform: "uppercase", letterSpacing: "0.2em", color: "var(--gold)", fontWeight: 600 }}>Checkout Summary</div>
-                <h3 style={{ fontSize: "28px", color: "var(--text)", fontFamily: "'Cormorant Garamond', Georgia, serif", fontWeight: 500, marginTop: "0.5rem" }}>
+                <div style={{ fontFamily: "var(--font-mono)", fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.2em", color: "var(--gold)", fontWeight: 700 }}>Your order</div>
+                <h3 style={{ fontSize: "28px", color: "#F4ECDB", fontFamily: "var(--font-display)", fontWeight: 500, marginTop: "0.5rem" }}>
                   {selectedPack.name} Package
                 </h3>
-                <p style={{ fontSize: "12px", color: "var(--text-2)", marginTop: "4px" }}>{selectedPack.desc}</p>
+                <p style={{ fontSize: "12px", color: "rgba(244,236,219,0.62)", marginTop: "4px" }}>{selectedPack.desc}</p>
               </div>
 
               {/* Package features checklist */}
               <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "0.75rem", padding: 0, margin: 0 }}>
                 {selectedPack.features.map((feat) => (
-                  <li key={feat} style={{ fontSize: "13px", color: "var(--text-2)", display: "flex", alignItems: "center", gap: "8px" }}>
+                  <li key={feat} style={{ fontSize: "13px", color: "rgba(244,236,219,0.85)", display: "flex", alignItems: "center", gap: "8px" }}>
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" strokeWidth="3" style={{ flexShrink: 0 }}>
                       <polyline points="20 6 9 17 4 12" />
                     </svg>
@@ -311,17 +312,17 @@ Total estimated cost: ₹${total.toLocaleString()}`;
                 )}
               </ul>
 
-              <div style={{ height: "1px", background: "var(--border)", margin: "0.5rem 0" }} />
+              <div style={{ height: "1px", background: "rgba(244,236,219,0.18)", margin: "0.5rem 0" }} />
 
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end" }}>
                 <div>
-                  <div style={{ fontSize: "10px", textTransform: "uppercase", letterSpacing: "0.15em", color: "var(--muted)" }}>Total Cost</div>
-                  <div style={{ fontSize: "42px", fontWeight: 700, color: "var(--text)", textShadow: "0 0 20px rgba(255,255,255,0.1)", fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                  <div style={{ fontFamily: "var(--font-mono)", fontSize: "10px", textTransform: "uppercase", letterSpacing: "0.15em", color: "rgba(244,236,219,0.55)" }}>Total</div>
+                  <div style={{ fontSize: "42px", fontWeight: 500, color: "#F4ECDB", fontFamily: "var(--font-display)" }}>
                     ₹{total.toLocaleString()}
                   </div>
                 </div>
                 <div style={{ textAlign: "right" }}>
-                  <div style={{ fontSize: "11px", color: "var(--muted)", textTransform: "uppercase" }}>Global Price</div>
+                  <div style={{ fontFamily: "var(--font-mono)", fontSize: "10px", color: "rgba(244,236,219,0.55)", textTransform: "uppercase", letterSpacing: "0.1em" }}>Approx.</div>
                   <div style={{ fontSize: "16px", color: "var(--gold)", fontWeight: 600 }}>
                     ~${Math.round(total / 83)}
                   </div>
@@ -332,18 +333,16 @@ Total estimated cost: ₹${total.toLocaleString()}`;
                 href={getWhatsAppLink()}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="pricing-card__cta pricing-card__cta--best"
                 style={{
-                  background: "linear-gradient(135deg, var(--rose) 0%, var(--gold) 100%)",
-                  borderColor: "transparent",
-                  color: "#fff",
+                  background: "var(--gold)",
+                  border: "1px solid var(--gold)",
+                  color: "#3A1016",
                   padding: "1rem",
-                  borderRadius: "12px",
+                  borderRadius: "2px",
                   textAlign: "center",
                   textDecoration: "none",
-                  fontWeight: 600,
+                  fontWeight: 700,
                   fontSize: "14px",
-                  boxShadow: "0 8px 30px rgba(224, 90, 127, 0.25)",
                   display: "block"
                 }}
                 onClick={() => window.trackEvent?.("pricing_cta_click", { tier: selectedPack.name, total })}
