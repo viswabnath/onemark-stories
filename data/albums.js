@@ -19,14 +19,14 @@
  *   absolute /public paths. Each sheet is one landscape page (half the open
  *   width); shown two-up as an open-book spread on desktop, one page on mobile.
  *
- * The .svg files under public/albums/arun-spandana/ are placeholders — replace
+ * The .svg files under public/albums/bride-groom/ are placeholders — replace
  * them with the real designed sheets (see public/albums/README.md).
  */
 export const ALBUMS = [
   {
     id: 0,
     num: "01",
-    title: "Arun × Spandana",
+    title: "Srinu × Sai",
     tag: "Wedding Album",
     desc: "A 12×36 panoramic wedding album",
     color: "#D4758C",
@@ -34,17 +34,19 @@ export const ALBUMS = [
     size: "12x36", // landscape flagship
     about:
       "A hand-designed 12×36 landscape wedding album, reimagined as a living book — turn each spread the way you would the printed keepsake, then share the whole story with one link.",
-    coverFront: "/albums/arun-spandana/cover-front.svg",
-    coverBack: "/albums/arun-spandana/cover-back.svg",
+    coverFront: "/albums/srinu-sai/cover-front.jpg",
+    coverBack: "/albums/srinu-sai/cover-back.jpg",
     pages: [
-      "/albums/arun-spandana/p01.svg",
-      "/albums/arun-spandana/p02.svg",
-      "/albums/arun-spandana/p03.svg",
-      "/albums/arun-spandana/p04.svg",
-      "/albums/arun-spandana/p05.svg",
-      "/albums/arun-spandana/p06.svg",
-      "/albums/arun-spandana/p07.svg",
-      "/albums/arun-spandana/p08.svg",
+      "/albums/srinu-sai/p01.jpg",
+      "/albums/srinu-sai/p02.jpg",
+      "/albums/srinu-sai/p03.jpg",
+      "/albums/srinu-sai/p04.jpg",
+      "/albums/srinu-sai/p05.jpg",
+      "/albums/srinu-sai/p06.jpg",
+      "/albums/srinu-sai/p07.jpg",
+      "/albums/srinu-sai/p08.jpg",
+      "/albums/srinu-sai/p09.jpg",
+      "/albums/srinu-sai/p10.jpg",
     ],
   },
 ];

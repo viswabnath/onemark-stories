@@ -1,7 +1,7 @@
 /**
  * pages/albums/[slug].jsx — immersive digital-album flipbook viewer.
  *
- * Routes: /albums/arun-spandana, etc. Slugs auto-derived from album titles.
+ * Routes: /albums/bride-groom, etc. Slugs auto-derived from album titles.
  * The flipbook is loaded client-side only (react-pageflip needs the DOM).
  *
  * Adding an album to data/albums.js automatically creates its page.
@@ -35,7 +35,7 @@ export default function AlbumPage({ album }) {
   return (
     <>
       <Head>
-        <title>{album.title} — Digital Album · OneMark Stories</title>
+        <title>{`${album.title} — Digital Album · OneMark Stories`}</title>
         <meta name="description" content={album.about} />
         <meta name="robots"      content="index, follow" />
         <link rel="canonical"    href={url} />

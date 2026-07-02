@@ -18,7 +18,7 @@ export default function LeadForm({ onSuccess }) {
     setStatus("sending");
 
     const msg = [
-      `Hi OneMark Stories! 👋`,
+      `Hi OneMark Stories! `,
       ``,
       `My name is *${name.trim()}* and I'd love to get a custom digital experience made.`,
       phone.trim() ? `My WhatsApp number: *${phone.trim()}*` : "",

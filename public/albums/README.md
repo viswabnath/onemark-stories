@@ -12,7 +12,7 @@ public/albums/<slug>/
 ```
 
 `<slug>` is auto-derived from the album `title` in `data/albums.js`
-(e.g. `"Arun × Spandana"` → `arun-spandana`).
+(e.g. `"Bride × Groom"` → `bride-groom`).
 
 ## Sizes
 
@@ -33,5 +33,5 @@ preset (`"12x36"`, `"14x40"`, …) or explicit `{ h, w }` open inches — see
 3. Add an entry to `ALBUMS` in `data/albums.js` with the right `size` and the
    `coverFront`, `coverBack`, and `pages[]` paths.
 
-The `arun-spandana/*.svg` files are throwaway placeholders — replace them with
+The `bride-groom/*.svg` files are throwaway placeholders — replace them with
 real photos and update the file extensions in `data/albums.js`.

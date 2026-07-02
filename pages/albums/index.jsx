@@ -6,10 +6,12 @@
  */
 import Head from "next/head";
 import Link from "next/link";
+import Image from "next/image";
 import Nav    from "../../components/Nav";
 import Footer from "../../components/Footer";
 import Cursor from "../../components/Cursor";
 import WhatsAppFloat from "../../components/WhatsAppFloat";
+import Icon from "../../components/Icon";
 import { ALBUMS } from "../../data/albums";
 import { toSlug } from "../../lib/slug";
 import { albumSize, sizeLabel, OFFERED_SIZES } from "../../lib/albumSize";
@@ -20,32 +22,24 @@ const DESC   = "Turn any printed album — wedding, birthday, housewarming, any 
 const OG_IMAGE = `${DOMAIN}/api/og?title=${encodeURIComponent("Digital Albums")}&tag=${encodeURIComponent("Digital Album")}&desc=${encodeURIComponent(DESC)}`;
 
 const WA = `https://wa.me/918331978532?text=${encodeURIComponent(
-  "Hi OneMark Stories! 👋 I'd like to turn my album into a digital flipbook. Can we talk?"
+  "Hi OneMark Stories! I'd like to turn my album into a digital flipbook. Can we talk?"
 )}`;
 
 const OCCASIONS = [
-  { emoji: "💍", label: "Weddings" },
-  { emoji: "💐", label: "Engagements" },
-  { emoji: "🎂", label: "Birthdays" },
-  { emoji: "🏡", label: "Housewarming" },
-  { emoji: "👶", label: "Naming Ceremony" },
-  { emoji: "🍼", label: "Baby Shower" },
-  { emoji: "❤️", label: "Anniversaries" },
-  { emoji: "🎉", label: "Any Function" },
+  { icon: "rings", label: "Weddings" },
+  { icon: "gem", label: "Engagements" },
+  { icon: "cake", label: "Birthdays" },
+  { icon: "house", label: "Housewarming" },
+  { icon: "tag", label: "Naming Ceremony" },
+  { icon: "gift", label: "Baby Shower" },
+  { icon: "heart", label: "Anniversaries" },
+  { icon: "sparkle", label: "Any Function" },
 ];
 
 const STEPS = [
-  { n: "01", title: "Send us your sheets", text: "Share the print-ready spreads your photographer or designer made — in any of our sizes." },
-  { n: "02", title: "We digitise it", text: "We rebuild it as a realistic, tap-to-flip book — front & back covers, every page in order." },
-  { n: "03", title: "Share one link", text: "You get a single link to send on WhatsApp. Family and friends flip through it from anywhere." },
-];
-
-/* Page allowances per plan — mirrors the tiers in the homepage Pricing section. */
-const PLANS = [
-  { name: "Spark",  pages: "Up to 15 pages", color: "#C9A96E" },
-  { name: "Bloom",  pages: "Up to 30 pages", color: "#29ABE2" },
-  { name: "Legacy", pages: "Up to 60 pages", color: "#D4758C" },
-  { name: "Custom", pages: "More pages? We tailor it", color: "#B8A0B8" },
+  { icon: "send", title: "Send us your sheets", text: "Share the print-ready spreads your photographer or designer made — in any of our sizes." },
+  { icon: "book", title: "We digitise it", text: "We rebuild it as a realistic, tap-to-flip book — front & back covers, every page in order." },
+  { icon: "link", title: "Share one link", text: "You get a single link to send on WhatsApp. Family and friends flip through it from anywhere." },
 ];
 
 export default function AlbumsPage() {
@@ -98,7 +92,7 @@ export default function AlbumsPage() {
               <div className="albums-occasions">
                 {OCCASIONS.map((o) => (
                   <div key={o.label} className="occasion-chip">
-                    <span className="occasion-chip__emoji" aria-hidden="true">{o.emoji}</span>
+                    <span className="occasion-chip__icon"><Icon name={o.icon} size={20} /></span>
                     <span className="occasion-chip__label">{o.label}</span>
                   </div>
                 ))}
@@ -121,7 +115,14 @@ export default function AlbumsPage() {
                       onClick={() => window.trackEvent?.("album_card_click", { title: album.title })}
                     >
                       <div className="album-card__cover" style={{ aspectRatio: String(aspect) }}>
-                        <img src={album.coverFront} alt={`${album.title} — cover`} className="album-card__img" />
+                        <Image
+                          src={album.coverFront}
+                          alt={`${album.title} — cover`}
+                          className="album-card__img"
+                          fill
+                          sizes="(max-width: 767px) 92vw, 460px"
+                          style={{ objectFit: "cover" }}
+                        />
                         <span className="album-card__spine" style={{ background: album.color }} />
                       </div>
                       <div className="album-card__meta">
@@ -140,9 +141,10 @@ export default function AlbumsPage() {
             <div className="albums-block">
               <h2 className="albums-block__heading">How it works</h2>
               <div className="albums-how">
-                {STEPS.map((s) => (
-                  <div key={s.n} className="album-step">
-                    <span className="album-step__num">{s.n}</span>
+                {STEPS.map((s, i) => (
+                  <div key={s.title} className="album-step">
+                    <span className="album-step__icon"><Icon name={s.icon} size={24} /></span>
+                    <span className="album-step__num">{String(i + 1).padStart(2, "0")}</span>
                     <h3 className="album-step__title">{s.title}</h3>
                     <p className="album-step__text">{s.text}</p>
                   </div>
@@ -150,25 +152,16 @@ export default function AlbumsPage() {
               </div>
             </div>
 
-            {/* Plans / pages */}
+            {/* Pages note — plans live in the homepage pricing section */}
             <div className="albums-block">
-              <h2 className="albums-block__heading">Pages &amp; pricing</h2>
+              <h2 className="albums-block__heading">Priced by the page</h2>
               <p className="albums-block__sub">
-                You choose how many pages to digitise — the more spreads, the richer the book. Each
-                plan includes a page allowance, and we can always add more.
+                You choose how many spreads to digitise — the more pages, the richer the book.
+                Every plan includes a page allowance and we can always add more.
               </p>
-              <div className="albums-plans">
-                {PLANS.map((p) => (
-                  <div key={p.name} className="plan-chip">
-                    <span className="plan-chip__name" style={{ color: p.color }}>{p.name}</span>
-                    <span className="plan-chip__pages">{p.pages}</span>
-                  </div>
-                ))}
-              </div>
-              <p className="albums-block__note">
-                See full details in{" "}
-                <Link href="/#pricing" style={{ color: "var(--cyan)" }} data-hover>pricing</Link>.
-              </p>
+              <Link href="/#pricing" className="mag-btn" data-hover>
+                View plans &amp; pricing
+              </Link>
             </div>
 
             {/* CTA */}

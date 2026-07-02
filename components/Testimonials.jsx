@@ -1,122 +1,114 @@
 /**
  * components/Testimonials.jsx
  *
- * Single DOM tree — no conditional JSX branching based on window width.
- * CSS handles mobile vs desktop layout. JS height only runs on desktop.
+ * Implements a dual opposing infinite marquee scrolling track system in pure CSS.
+ * Tracks automatically pause on mouse hover and feature rich hover effects.
  */
-import { useRef, useEffect } from "react";
+
 
 const TESTIMONIALS = [
-  { name: "Sindhu Kethan",      tag: "Housewarming", color: "#C9A96E", quote: "We didn't want a plain WhatsApp message for our Gruha Pravesam — we wanted something as auspicious as the occasion itself. They built a webpage that felt sacred. Every elder who opened it called to say how beautiful it was." },
-  { name: "Ganesh & Srija",    tag: "Wedding",      color: "#29ABE2", quote: "The countdown timer that turned into fireworks at our Muhurtham time was magical. Our families in the US felt like they were right there with us." },
-  { name: "Viswanath B.",      tag: "Portfolio",    color: "#29ABE2", quote: "I'd been putting off building a portfolio for two years. OneMark had mine live in four days — and I landed my first freelance client the week after." },
-  { name: "Arun & Spandana",   tag: "Wedding",      color: "#D4758C", quote: "From Ladakh to London — they captured our entire journey in one beautiful page. It's been months and relatives still share the link." },
-  { name: "Meghana R.",        tag: "Birthday",     color: "#D4758C", quote: "My dad's 60th birthday page had a countdown, photo gallery, and a surprise video message section. He cried. Worth every rupee." },
-  { name: "Nazurul & Sajida",  tag: "Wedding",      color: "#C9A96E", quote: "Our guests couldn't stop talking about the website. It felt like a mini movie of our love story — everyone knew exactly where to go and when to arrive." },
-  { name: "Priya Events Co.",  tag: "Corporate",    color: "#C9A96E", quote: "We used the Legacy tier for a product launch and had over 3,000 visitors on day one without the site even hiccupping. The 3D hero section was a showstopper." },
-  { name: "Srinu & Sai",       tag: "Wedding",      color: "#D4758C", quote: "They turned our wedding into chapters — like a film. The photo galleries for each event made it so easy to relive every moment afterwards." },
-  { name: "Venkat & Nandini",  tag: "Wedding",      color: "#C9A96E", quote: "We replaced 500 printed cards with one link. Saved money, saved time, and honestly it looked a hundred times better than any paper invite could." },
+  { name: "Sindhu Kethan", tag: "Housewarming", color: "#E5C583", quote: "We didn't want a plain WhatsApp message for our Gruha Pravesam — we wanted something as auspicious as the occasion itself. They built a webpage that felt sacred. Every elder who opened it called to say how beautiful it was." },
+  { name: "Ganesh & Srija", tag: "Wedding", color: "#4EC2F7", quote: "The countdown timer that turned into fireworks at our Muhurtham time was magical. Our families in the US felt like they were right there with us." },
+  { name: "Viswanath B.", tag: "Portfolio", color: "#4EC2F7", quote: "I'd been putting off building a portfolio for two years. OneMark had mine live in four days — and I landed my first freelance client the week after." },
+  { name: "Bride & Groom", tag: "Wedding", color: "#E05A7F", quote: "From Ladakh to London — they captured our entire journey in one beautiful page. It's been months and relatives still share the link." },
+  { name: "Meghana R.", tag: "Birthday", color: "#E05A7F", quote: "My dad's 60th birthday page had a countdown, photo gallery, and a surprise video message section. He cried. Worth every rupee." },
+  { name: "Nazurul & Sajida", tag: "Wedding", color: "#E5C583", quote: "Our guests couldn't stop talking about the website. It felt like a mini movie of our love story — everyone knew exactly where to go and when to arrive." },
+  { name: "Priya Events Co.", tag: "Corporate", color: "#E5C583", quote: "We used the Grand tier for a product launch and had over 3,000 visitors on day one without the site even hiccupping. The interactive gallery was a showstopper." },
+  { name: "Srinu & Sai", tag: "Wedding", color: "#E05A7F", quote: "They turned our wedding into chapters — like a film. The photo galleries for each event made it so easy to relive every moment afterwards." },
+  { name: "Venkat & Nandini", tag: "Wedding", color: "#E5C583", quote: "We replaced 500 printed cards with one link. Saved money, saved time, and honestly it looked a hundred times better than any paper invite could." }
 ];
 
 export default function Testimonials() {
-  const outerRef = useRef(null);
-  const trackRef = useRef(null);
+  const firstGroup = TESTIMONIALS.slice(0, 5);
+  const secondGroup = TESTIMONIALS.slice(5);
 
-  useEffect(() => {
-    const outer = outerRef.current;
-    const track = trackRef.current;
-    if (!outer || !track) return;
-
-    // Never run sticky-height logic on mobile — prevents the giant spacer bug
-    if (window.innerWidth < 768) return;
-
-    const getOverflow = () => Math.max(0, track.scrollWidth - window.innerWidth);
-
-    const setHeight = () => {
-      if (window.innerWidth < 768) { outer.style.height = ""; return; }
-      const overflow = getOverflow();
-      outer.style.height = overflow > 0 ? `calc(100vh + ${overflow}px)` : "";
-    };
-    setHeight();
-    window.addEventListener("resize", setHeight, { passive: true });
-
-    const onScroll = () => {
-      if (window.innerWidth < 768) return;
-      const rect = outer.getBoundingClientRect();
-      const overflow = getOverflow();
-      if (overflow <= 0) return;
-      const scrolled = Math.max(0, Math.min(overflow, -rect.top));
-      track.style.transform = `translateX(-${scrolled}px)`;
-    };
-
-    let active = false;
-    const io = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting && !active) {
-        active = true;
-        window.addEventListener("scroll", onScroll, { passive: true });
-        window.trackEvent?.("testimonials_viewed");
-      } else if (!entry.isIntersecting && active) {
-        active = false;
-        window.removeEventListener("scroll", onScroll);
-      }
-    }, { threshold: 0 });
-    io.observe(outer);
-
-    return () => {
-      io.disconnect();
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", setHeight);
-      if (track) track.style.transform = "";
-      if (outer) outer.style.height = "";
-    };
-  }, []);
+  const leftGroup = [...firstGroup, ...firstGroup];
+  const rightGroup = [...secondGroup, ...secondGroup];
 
   return (
-    <div className="hs-outer" ref={outerRef}>
-      <div className="hs-sticky">
-        <div className="qs__header">
-          <span className="sec-label">What Clients Say</span>
-          <h2 className="quotes-section__heading">
-            Heard from <span>real people.</span>
-          </h2>
-        </div>
+    <section id="testimonials" className="testimonials-section" style={{ position: "relative", overflow: "hidden", padding: "6rem 0" }}>
+      <div className="ambient-glow" style={{ top: "20%", right: "10%", width: "400px", opacity: 0.08 }} />
 
-        <div className="hs-track" ref={trackRef}>
-          {TESTIMONIALS.map((t, i) => (
-            <div key={t.name} className="hs-card glass" style={{ "--qp-color": t.color }}>
-              <div className="hs-card__index sec-label">
-                {String(i + 1).padStart(2, "0")} / {String(TESTIMONIALS.length).padStart(2, "0")}
-              </div>
+      <div style={{ textAlign: "center", marginBottom: "3rem", padding: "0 1.5rem" }}>
+        <span className="sec-label" style={{ color: "var(--gold)" }}>What Clients Say</span>
+        <h2 style={{ fontSize: "clamp(28px, 4vw, 48px)", fontWeight: 500, color: "var(--text)", fontFamily: "'Cormorant Garamond', Georgia, serif", marginTop: "0.5rem" }}>
+          Heard from <span>real people.</span>
+        </h2>
+      </div>
+
+      <div className="marquee-container">
+        {/* Track 1: Leftward motion */}
+        <div className="marquee-track marquee-track--left">
+          {leftGroup.map((t, idx) => (
+            <div key={`${t.name}-left-${idx}`} className="marquee-card" style={{ borderLeft: `3px solid ${t.color}` }}>
               <div style={{
                 display: "inline-flex", alignItems: "center",
                 padding: "3px 10px", borderRadius: "100px",
-                border: `1px solid ${t.color}44`, background: `${t.color}18`,
+                border: `1px solid ${t.color}22`, background: `${t.color}11`,
                 fontSize: "10px", color: t.color,
-                fontFamily: "Inter, sans-serif",
                 letterSpacing: "0.12em", marginBottom: "12px", width: "fit-content",
+                fontWeight: 600,
+                textTransform: "uppercase"
               }}>
                 {t.tag}
               </div>
-              <blockquote className="hs-card__quote">{t.quote}</blockquote>
-              <div className="hs-card__attr">
-                <div className="hs-card__avatar" style={{
-                  color: t.color,
-                  background: `color-mix(in srgb, ${t.color} 15%, transparent)`,
+              <p style={{ fontSize: "14px", lineHeight: "1.7", color: "var(--text-2)", fontStyle: "italic", marginBottom: "1.5rem" }}>
+                &ldquo;{t.quote}&rdquo;
+              </p>
+              <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                <div style={{
+                  width: "32px", height: "32px", borderRadius: "50%",
+                  background: `${t.color}22`, color: t.color,
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  fontSize: "12px", fontWeight: "bold"
                 }}>
                   {t.name[0]}
                 </div>
                 <div>
-                  <div className="hs-card__name">{t.name}</div>
-                  <div className="hs-card__tag">{t.tag}</div>
+                  <h4 style={{ fontSize: "13px", fontWeight: 700, color: "var(--text)", margin: 0 }}>{t.name}</h4>
+                  <span style={{ fontSize: "11px", color: "var(--muted)" }}>{t.tag} Guest</span>
                 </div>
               </div>
             </div>
           ))}
         </div>
 
-        {/* Swipe hint — shown on mobile only via CSS (.hs-swipe-hint) */}
-        <p className="hs-swipe-hint">Swipe to see more →</p>
+        {/* Track 2: Rightward motion */}
+        <div className="marquee-track marquee-track--right">
+          {rightGroup.map((t, idx) => (
+            <div key={`${t.name}-right-${idx}`} className="marquee-card" style={{ borderLeft: `3px solid ${t.color}` }}>
+              <div style={{
+                display: "inline-flex", alignItems: "center",
+                padding: "3px 10px", borderRadius: "100px",
+                border: `1px solid ${t.color}22`, background: `${t.color}11`,
+                fontSize: "10px", color: t.color,
+                letterSpacing: "0.12em", marginBottom: "12px", width: "fit-content",
+                fontWeight: 600,
+                textTransform: "uppercase"
+              }}>
+                {t.tag}
+              </div>
+              <p style={{ fontSize: "14px", lineHeight: "1.7", color: "var(--text-2)", fontStyle: "italic", marginBottom: "1.5rem" }}>
+                &ldquo;{t.quote}&rdquo;
+              </p>
+              <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                <div style={{
+                  width: "32px", height: "32px", borderRadius: "50%",
+                  background: `${t.color}22`, color: t.color,
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  fontSize: "12px", fontWeight: "bold"
+                }}>
+                  {t.name[0]}
+                </div>
+                <div>
+                  <h4 style={{ fontSize: "13px", fontWeight: 700, color: "var(--text)", margin: 0 }}>{t.name}</h4>
+                  <span style={{ fontSize: "11px", color: "var(--muted)" }}>{t.tag} Guest</span>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
+    </section>
   );
 }

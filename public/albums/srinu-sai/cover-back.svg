@@ -14,11 +14,10 @@
   <rect x="30" y="30" width="1440" height="940" fill="none" stroke="#D4758C" stroke-opacity="0.35" stroke-width="1.5" rx="10"/>
   
   <g font-family="Georgia, 'Times New Roman', serif" text-anchor="middle">
-    <circle cx="750" cy="430" r="72" fill="none" stroke="#C9A96E" stroke-opacity="0.5" stroke-width="1.5"/>
-    <text x="750" y="450" fill="#C9A96E" font-size="72" font-weight="700">06</text>
-    <text x="750" y="560" fill="#F5EEF0" font-size="38" letter-spacing="2">Spread 06</text>
-    <text x="750" y="608" fill="#B8A0B8" font-size="20" letter-spacing="4">PLACEHOLDER · 12 × 36″</text>
-    <text x="750" y="646" fill="#B8A0B8" font-size="16">Replace with the photographer's designed sheet</text>
-    <text x="750" y="930" fill="#B8A0B8" font-size="16" letter-spacing="5">ARUN &#215; SPANDANA</text>
+    <text x="750" y="310" fill="#D4758C" font-size="24" letter-spacing="10">ONEMARK STORIES</text>
+    <line x1="640" y1="350" x2="860" y2="350" stroke="#D4758C" stroke-opacity="0.6" stroke-width="1"/>
+    <text x="750" y="470" fill="#F5EEF0" font-size="76" font-weight="700">Bride <tspan fill="#D4758C" font-style="italic" font-size="52">&#215;</tspan> Groom</text>
+    <text x="750" y="570" fill="#B8A0B8" font-size="24" letter-spacing="4">Made with love · onemark.digital</text>
+    <text x="750" y="920" fill="#B8A0B8" font-size="19" letter-spacing="4">THANK YOU</text>
   </g>
 </svg>

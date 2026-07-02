@@ -24,17 +24,17 @@ export default function handler(req) {
 
   const title   = searchParams.get("title")   || "OneMark Stories";
   const tag     = searchParams.get("tag")     || "";
-  const desc    = searchParams.get("desc")    || "Custom wedding websites & digital invitations starting at ₹2,999";
+  const desc    = searchParams.get("desc")    || "Event websites & interactive digital albums, from ₹4,999";
   const num     = searchParams.get("num")     || "";
 
-  // Rose / Gold / Cyan brand palette
-  const ROSE  = "#D4758C";
-  const GOLD  = "#C9A96E";
-  const CYAN  = "#29ABE2";
-  const BG    = "#1A1118";
-  const SURF  = "#251C30";
-  const TEXT  = "#F5EEF0";
-  const MUTED = "#7A6E7E";
+  // Light editorial palette
+  const ROSE  = "#BE5E77";
+  const GOLD  = "#A67C3D";
+  const CYAN  = "#2C7DA0";
+  const BG    = "#F6F1E9";
+  const SURF  = "#FFFFFF";
+  const TEXT  = "#2A211C";
+  const MUTED = "#6E625A";
 
   const tagColor = tag === "Wedding" ? ROSE
     : tag === "Corporate" ? CYAN
@@ -143,18 +143,19 @@ export default function handler(req) {
           alignItems: "center",
           justifyContent: "space-between",
           paddingTop: "32px",
-          borderTop: `1px solid ${SURF}`,
+          borderTop: `1px solid rgba(42,33,28,0.12)`,
           marginTop: "32px",
         }}>
           <div style={{ fontSize: "15px", color: MUTED }}>
             stories.onemark.co.in
           </div>
           <div style={{ display: "flex", gap: "8px" }}>
-            {["₹2,999", "3–5 days", "Forever online"].map((pill) => (
+            {["From ₹4,999", "Website + album", "Forever online"].map((pill) => (
               <div key={pill} style={{
                 padding: "6px 14px",
                 borderRadius: "100px",
                 background: SURF,
+                border: "1px solid rgba(42,33,28,0.12)",
                 fontSize: "13px",
                 color: TEXT,
               }}>

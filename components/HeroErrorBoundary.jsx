@@ -64,7 +64,7 @@ function HeroFallback() {
           </p>
           <div className="hero__ctas">
             <a
-              href="https://wa.me/918331978532?text=Hi%20OneMark%20Stories!%20👋"
+              href="https://wa.me/918331978532?text=Hi%20OneMark%20Stories!%20"
               target="_blank"
               rel="noopener noreferrer"
               className="whatsapp-btn"

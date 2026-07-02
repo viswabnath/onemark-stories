@@ -21,8 +21,8 @@ import IframeScreen from "./IframeScreen";
 import MacBook from "./MacBook";
 import IPhone from "./IPhone";
 
-const IPHONE_W  = 390;
-const IPHONE_H  = 844;
+const IPHONE_W = 390;
+const IPHONE_H = 844;
 const DESKTOP_W = 1440;
 const DESKTOP_H = 900;
 
@@ -40,7 +40,7 @@ function ProjectSlide({ project }) {
         <div className="phs-slide__info">
           <div className="phs-slide__meta">
             <span className="phs-slide__tag" style={{ color: project.color }}>{project.tag}</span>
-            <span className="phs-slide__num">{project.num} / {String(PROJECTS.length).padStart(2,"0")}</span>
+            <span className="phs-slide__num">{project.num} / {String(PROJECTS.length).padStart(2, "0")}</span>
           </div>
 
           <h3 className="phs-slide__title">{project.title}</h3>
@@ -68,7 +68,7 @@ function ProjectSlide({ project }) {
             Open live site
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none"
               stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
-              <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/>
+              <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3" />
             </svg>
           </a>
         </div>
@@ -140,13 +140,13 @@ export default function Showcase() {
 
     const onScroll = () => {
       if (window.innerWidth < 900) return;
-      const rect     = outer.getBoundingClientRect();
+      const rect = outer.getBoundingClientRect();
       const totalScroll = outer.offsetHeight - window.innerHeight;
       if (totalScroll <= 0) return;
       const scrolled = Math.max(0, Math.min(totalScroll, -rect.top));
       // Translate track left by scrolled proportion
       const maxX = getSlideWidth() * (slideCount - 1);
-      const x    = (scrolled / totalScroll) * maxX;
+      const x = (scrolled / totalScroll) * maxX;
       track.style.transform = `translateX(-${x}px)`;
     };
 
