@@ -1,11 +1,10 @@
 /**
  * data/projects.js
  *
- * Ordered for variety — non-wedding projects are interleaved early so
- * visitors see the full range of work (portfolio, specials, events)
- * rather than a wall of wedding countdowns.
- *
- * Within each tier, best design quality comes first.
+ * Ordered for impact + variety — the strongest, most distinctive builds come
+ * first, and non-wedding occasions (birthday, housewarming, surprise) are
+ * interleaved early so visitors see the full range rather than a wall of
+ * wedding countdowns.
  */
 
 export const PROJECTS = [
@@ -31,50 +30,31 @@ export const PROJECTS = [
     ],
   },
 
-  // ── 2. PORTFOLIO — immediately shows we do more than weddings ──────
+  // ── 2. BIRTHDAY — premium personal gift, shows we do more than weddings
   {
     id: 1,
     num: "02",
-    title: "Viswanath",
-    tag: "Portfolio",
-    desc: "Personal Portfolio Showcase",
-    color: "#29ABE2",
-    url: "https://viswabnath.vercel.app/",
+    title: "Manojna",
+    tag: "Birthday",
+    desc: "A Birthday, Unwrapped",
+    color: "#C9A96E",
+    url: "https://manojna.digital/",
     about:
-      "A sleek personal portfolio for Viswanath — showcasing 9 years of frontend engineering across 4 industries with a terminal-inspired UI that makes recruiters stop scrolling.",
+      "A cinematic, chapter-by-chapter birthday greeting made just for Manojna — an envelope that opens into a heartfelt story, floating petals, its own soundtrack, and a personal message that unwraps as you scroll, all on a custom .digital domain.",
     importance:
-      "Your LinkedIn profile is one of thousands. A personal portfolio site is yours alone — your design, your story, your rules. It's the difference between being seen and being remembered.",
+      "Some people deserve more than a WhatsApp message. A personal birthday website turns 'happy birthday' into an experience they open, scroll through, and keep forever — a one-of-a-kind gift with their name on the door.",
     features: [
-      "Terminal-style interactive intro sequence",
-      "9-year career timeline with real metrics",
-      "Optimised for recruiters & clients",
+      "Cinematic 'open your story' envelope intro",
+      "Chapter-by-chapter story that unwraps as you scroll",
+      "Background music with a live audio player",
+      "Custom domain (manojna.digital) — a gift with its own address",
     ],
   },
 
-  // ── 3. SPECIAL — housewarming, different event type ───────────────
+  // ── 3. WEDDING — technically impressive (PWA, fireworks) ──────────
   {
     id: 2,
     num: "03",
-    title: "Yadlapalli Gruha Pravesam",
-    tag: "Housewarming",
-    desc: "A Sacred New Beginning",
-    color: "#C9A96E",
-    url: "https://yadlapalli-gruhapravesam.vercel.app",
-    about:
-      "A beautiful digital invitation for the Yadlapalli family's Gruha Pravesam — capturing the sanctity and joy of stepping into a new home with an elegant, shareable web experience.",
-    importance:
-      "A housewarming is a once-in-a-lifetime milestone. A dedicated digital invitation ensures every guest — near or far — arrives with the right details, the right spirit, and a moment to cherish forever.",
-    features: [
-      "Elegant event details and ceremony schedule",
-      "Live countdown to the Gruha Pravesam moment",
-      "Shareable across WhatsApp & Instagram",
-    ],
-  },
-
-  // ── 4. WEDDING — technically impressive (PWA, fireworks) ──────────
-  {
-    id: 3,
-    num: "04",
     title: "Ganesh × Srija",
     tag: "Wedding",
     desc: "A Wedding Story Kept Alive",
@@ -93,30 +73,30 @@ export const PROJECTS = [
     ],
   },
 
-  // ── 5. SPECIAL — Valentine, fun / different audience ─────────────
+  // ── 4. HOUSEWARMING — different event type ────────────────────────
   {
-    id: 4,
-    num: "05",
-    title: "Valentine Week",
-    tag: "Surprise",
-    desc: "Live Countdown Experience",
+    id: 3,
+    num: "04",
+    title: "Yadlapalli Gruha Pravesam",
+    tag: "Housewarming",
+    desc: "A Sacred New Beginning",
     color: "#C9A96E",
-    url: "https://mavi-valentine-week.vercel.app/",
+    url: "https://yadlapalli-gruhapravesam.vercel.app",
     about:
-      "A lively, animated Valentine Week countdown page that builds anticipation day-by-day — a digital surprise that makes love feel like a celebration.",
+      "A beautiful digital invitation for the Yadlapalli family's Gruha Pravesam — capturing the sanctity and joy of stepping into a new home with an elegant, shareable web experience.",
     importance:
-      "Saying 'I love you' with a custom-built page hits different than a text message. This is a gesture that shows effort — something they'll screenshot, share, and remember.",
+      "A housewarming is a once-in-a-lifetime milestone. A dedicated digital invitation ensures every guest — near or far — arrives with the right details, the right spirit, and a moment to cherish forever.",
     features: [
-      "Day-by-day Valentine countdown",
-      "Animated love messages",
-      "Shareable surprise link",
+      "Elegant event details and ceremony schedule",
+      "Live countdown to the Gruha Pravesam moment",
+      "Shareable across WhatsApp & Instagram",
     ],
   },
 
-  // ── 6. WEDDING — creative / genre-bending concept ─────────────────
+  // ── 5. WEDDING — creative / genre-bending concept ─────────────────
   {
-    id: 5,
-    num: "06",
+    id: 4,
+    num: "05",
     title: "Nazurul × Sajida",
     tag: "Wedding",
     desc: "Tech Meets Tradition",
@@ -133,10 +113,50 @@ export const PROJECTS = [
     ],
   },
 
-  // ── 7. WEDDING — cross-continental story ──────────────────────────
+  // ── 6. WEDDING — unique uptime concept (also our album demo couple) ─
+  {
+    id: 5,
+    num: "06",
+    title: "Srinu × Sai",
+    tag: "Wedding",
+    desc: "An Uptime Love Story",
+    color: "#D4758C",
+    url: "https://srinu-sree.netlify.app",
+    about:
+      "A cinematic wedding story for Srinu & Sai — their entire journey from engagement to wedding told as a live system uptime log, chapter by chapter.",
+    importance:
+      "Their story deserved more than a WhatsApp forward. This page lives forever, plays like a film, and lets every guest relive the magic — anytime, anywhere.",
+    features: [
+      "Live uptime counter since 18 Feb 2024",
+      "Full chapter journey: Engagement → Haldi → Marriage → Reception → Post-wedding",
+      "Cinematic photo galleries with captions",
+    ],
+  },
+
+  // ── 7. SURPRISE — fun / different audience ────────────────────────
   {
     id: 6,
     num: "07",
+    title: "Valentine Week",
+    tag: "Surprise",
+    desc: "Live Countdown Experience",
+    color: "#C9A96E",
+    url: "https://mavi-valentine-week.vercel.app/",
+    about:
+      "A lively, animated Valentine Week countdown page that builds anticipation day-by-day — a digital surprise that makes love feel like a celebration.",
+    importance:
+      "Saying 'I love you' with a custom-built page hits different than a text message. This is a gesture that shows effort — something they'll screenshot, share, and remember.",
+    features: [
+      "Day-by-day Valentine countdown",
+      "Animated love messages",
+      "Shareable surprise link",
+    ],
+  },
+
+  // ── 8. WEDDING — cross-continental story ──────────────────────────
+  {
+    id: 7,
+    num: "08",
     title: "Arun × Spandana",
     tag: "Wedding",
     desc: "A Global Love Story",
@@ -153,10 +173,10 @@ export const PROJECTS = [
     ],
   },
 
-  // ── 8. WEDDING — full love story ──────────────────────────────────
+  // ── 9. WEDDING — full love story ──────────────────────────────────
   {
-    id: 7,
-    num: "08",
+    id: 8,
+    num: "09",
     title: "Anil × Eswari",
     tag: "Wedding",
     desc: "A Love Story in Full",
@@ -170,26 +190,6 @@ export const PROJECTS = [
       "Full love story timeline with real photos",
       "Live countdown to the wedding day",
       "Shareable across WhatsApp & Instagram",
-    ],
-  },
-
-  // ── 9. WEDDING — unique uptime concept ───────────────────────────
-  {
-    id: 8,
-    num: "09",
-    title: "Srinu × Sai",
-    tag: "Wedding",
-    desc: "An Uptime Love Story",
-    color: "#D4758C",
-    url: "https://srinu-sree.netlify.app",
-    about:
-      "A cinematic wedding story for Srinu & Sai — their entire journey from engagement to wedding told as a live system uptime log, chapter by chapter.",
-    importance:
-      "Their story deserved more than a WhatsApp forward. This page lives forever, plays like a film, and lets every guest relive the magic — anytime, anywhere.",
-    features: [
-      "Live uptime counter since 18 Feb 2024",
-      "Full chapter journey: Engagement → Haldi → Marriage → Reception → Post-wedding",
-      "Cinematic photo galleries with captions",
     ],
   },
 

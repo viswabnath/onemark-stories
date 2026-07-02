@@ -179,6 +179,7 @@ const InteractivePolaroidStack = () => {
 export default function Hero() {
   const sectionRef = useRef(null);
   const tlRef = useRef(null);
+  const headlineRef = useRef(null);
   const [idx, setIdx] = useState(0);
 
   /* Rotate the occasion word */
@@ -186,6 +187,28 @@ export default function Hero() {
     const t = setInterval(() => setIdx((i) => (i + 1) % OCCASIONS.length), 2200);
     return () => clearInterval(t);
   }, []);
+
+  /* Auto-fit the rotating word to the headline column so long words
+     ("housewarming") shrink to fit instead of overflowing onto the photos.
+     The column width is fixed (minmax(0,…) in CSS), so this never moves the
+     photo stack — short words keep the full size, long ones scale down. */
+  useEffect(() => {
+    const fit = () => {
+      const head = headlineRef.current;
+      const word = head?.querySelector(".hero__rotate-word");
+      if (!head || !word) return;
+      word.style.fontSize = ""; // reset to the CSS size before measuring
+      const avail = head.clientWidth;
+      const natural = word.getBoundingClientRect().width;
+      if (natural > avail) {
+        const base = parseFloat(getComputedStyle(word).fontSize);
+        word.style.fontSize = `${Math.floor(base * (avail / natural) * 0.98)}px`;
+      }
+    };
+    fit();
+    window.addEventListener("resize", fit);
+    return () => window.removeEventListener("resize", fit);
+  }, [idx]);
 
   /* Entrance */
   useEffect(() => {
@@ -232,7 +255,7 @@ export default function Hero() {
         <div style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
           <span className="hero__eyebrow hero__line" style={{ color: "var(--gold)", letterSpacing: "0.4em" }}>OneMark Stories</span>
 
-          <h1 className="hero__headline">
+          <h1 className="hero__headline" ref={headlineRef}>
             <span className="hero__line">A website &amp; album</span>
             <span className="hero__line">
               for your{" "}

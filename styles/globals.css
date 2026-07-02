@@ -6036,7 +6036,9 @@ body.cursor-clicking .cursor-dot {
 /* ── Split Hero Layout & 3D Tilting Polaroid Stack ── */
 .hero__split-container {
   display: grid;
-  grid-template-columns: 1.15fr 0.85fr;
+  /* minmax(0, …) keeps tracks proportional so the rotating headline word
+     (e.g. "housewarming") can't widen the text column and shove the photos. */
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
   gap: 4rem;
   width: 100%;
   max-width: 1200px;
@@ -6130,7 +6132,9 @@ body.cursor-clicking .cursor-dot {
 
 @media (max-width: 900px) {
   .hero__split-container {
-    grid-template-columns: 1fr;
+    /* minmax(0, …) so a long occasion word can't widen the column past the
+       viewport on phones — the auto-fit then shrinks it to fit. */
+    grid-template-columns: minmax(0, 1fr);
     gap: 3.5rem;
     text-align: center;
     padding-top: 6rem;
