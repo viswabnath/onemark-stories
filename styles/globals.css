@@ -7010,25 +7010,26 @@ body.cursor-clicking .cursor-dot {
     right: 0;
     background: linear-gradient(to bottom, rgba(0,0,0,0.65), transparent);
     z-index: 10 !important;
-    padding: 0.5rem 1rem !important;
+    padding: max(0.5rem, env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right)) 0.5rem max(1rem, env(safe-area-inset-left)) !important;
     opacity: 0.2;
     transition: opacity 0.3s ease;
   }
-  
+
   .flipbook:hover .flipbook__bar,
   .flipbook__bar:hover {
     opacity: 1;
   }
-  
-  /* Reserve a bottom strip so the album pages never sit under the controls */
+
+  /* Reserve a bottom strip so the album pages never sit under the controls
+     (plus the home-indicator inset on notched phones) */
   .flipbook__stage {
-    padding-bottom: 4.5rem !important;
+    padding-bottom: calc(4.5rem + env(safe-area-inset-bottom)) !important;
   }
 
   .flipbook__controls {
     position: absolute !important;
-    bottom: 0.6rem;
-    left: 0.75rem;
+    bottom: max(0.6rem, env(safe-area-inset-bottom));
+    left: max(0.75rem, env(safe-area-inset-left));
     right: auto;
     transform: none;
     justify-content: flex-start;
@@ -7051,8 +7052,8 @@ body.cursor-clicking .cursor-dot {
   .flipbook__mobile-controls {
     flex-wrap: nowrap !important;
     position: absolute !important;
-    bottom: 0.6rem;
-    right: 0.75rem;
+    bottom: max(0.6rem, env(safe-area-inset-bottom));
+    right: max(0.75rem, env(safe-area-inset-right));
     background: rgba(15, 9, 34, 0.78);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
@@ -7099,7 +7100,7 @@ body.cursor-clicking .cursor-dot {
   right: 0;
   background: linear-gradient(to bottom, rgba(0,0,0,0.65), transparent);
   z-index: 10 !important;
-  padding: 0.5rem 1rem !important;
+  padding: max(0.5rem, env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right)) 0.5rem max(1rem, env(safe-area-inset-left)) !important;
   opacity: 0.2;
   transition: opacity 0.3s ease;
 }
@@ -7113,14 +7114,14 @@ body.cursor-clicking .cursor-dot {
 
 .flipbook:fullscreen .flipbook__stage,
 .flipbook--ios-fs .flipbook__stage {
-  padding-bottom: 4.5rem;
+  padding-bottom: calc(4.5rem + env(safe-area-inset-bottom));
 }
 
 .flipbook:fullscreen .flipbook__controls,
 .flipbook--ios-fs .flipbook__controls {
   position: absolute !important;
-  bottom: 0.6rem;
-  left: 0.75rem;
+  bottom: max(0.6rem, env(safe-area-inset-bottom));
+  left: max(0.75rem, env(safe-area-inset-left));
   right: auto;
   transform: none;
   justify-content: flex-start;
@@ -7140,8 +7141,8 @@ body.cursor-clicking .cursor-dot {
 .flipbook--ios-fs .flipbook__mobile-controls {
   flex-wrap: nowrap !important;
   position: absolute !important;
-  bottom: 0.6rem;
-  right: 0.75rem;
+  bottom: max(0.6rem, env(safe-area-inset-bottom));
+  right: max(0.75rem, env(safe-area-inset-right));
   background: rgba(15, 9, 34, 0.78);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
