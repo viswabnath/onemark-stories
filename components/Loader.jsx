@@ -46,9 +46,9 @@ export default function Loader({ onDone }) {
   return (
     <div className="loader" ref={loaderRef}>
       <div className="loader__logo">
-        <Image src="/stories-logo-white-resized.png" alt="OneMark Stories"
+        <Image src="/stories-logo-blue-resized.png" alt="OneMark Stories"
           width={200} height={80}
-          style={{ objectFit: "contain", filter: "drop-shadow(0 0 24px rgba(212,117,140,0.35))" }}
+          style={{ objectFit: "contain", filter: "drop-shadow(0 0 24px rgba(190,94,119,0.25))" }}
           priority />
       </div>
       <div className="loader__progress-wrap">

@@ -5,7 +5,7 @@
  */
 import { useState } from "react";
 
-const WA_NUMBER = "919392704742";
+const WA_NUMBER = "918331978532";
 
 export default function LeadForm({ onSuccess }) {
   const [name,   setName]   = useState("");
@@ -18,7 +18,7 @@ export default function LeadForm({ onSuccess }) {
     setStatus("sending");
 
     const msg = [
-      `Hi OneMark Stories! 👋`,
+      `Hi OneMark Stories! `,
       ``,
       `My name is *${name.trim()}* and I'd love to get a custom digital experience made.`,
       phone.trim() ? `My WhatsApp number: *${phone.trim()}*` : "",

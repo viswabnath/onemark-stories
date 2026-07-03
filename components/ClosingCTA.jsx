@@ -12,7 +12,7 @@ import LeadForm from "./LeadForm";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const WA_LINK = `https://wa.me/919392704742?text=${encodeURIComponent("Hi OneMark Stories! 👋 I'm ready to start my story. Can we discuss?")}`;
+const WA_LINK = `https://wa.me/918331978532?text=${encodeURIComponent("Hi OneMark Stories! I'm ready to start my story. Can we discuss?")}`;
 
 export default function ClosingCTA() {
   const ref = useRef(null);
@@ -58,8 +58,8 @@ export default function ClosingCTA() {
 
         {/* ── Embedded lead-capture form ───────────────────────── */}
         <div style={{
-          background: "rgba(255,255,255,0.03)",
-          border: "1px solid rgba(255,255,255,0.08)",
+          background: "var(--surface)",
+          border: "1px solid var(--border-2)",
           borderRadius: "20px",
           padding: "2rem",
           marginBottom: "1.5rem",

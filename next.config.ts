@@ -35,21 +35,34 @@ const nextConfig: NextConfig = {
   },
 
   async headers() {
+    // Only apply long-lived caching in production. In dev, caching /_next/static
+    // (stable Turbopack chunk URLs) breaks HMR/reloads with stale assets.
+    const isProd = process.env.NODE_ENV === "production";
+    const immutable = { key: "Cache-Control", value: "public, max-age=31536000, immutable" };
+
     return [
       {
+        // Security header for every route. IMPORTANT: no long-lived `immutable`
+        // Cache-Control here — it would freeze HTML pages (and shared album
+        // links) in browsers for a year.
         source: "/(.*)",
-        headers: [
-          { key: "X-Frame-Options", value: "SAMEORIGIN" },
-          // Cache static assets
-          { key: "Cache-Control", value: "public, max-age=31536000, immutable" },
-        ],
+        headers: [{ key: "X-Frame-Options", value: "SAMEORIGIN" }],
       },
-      {
-        source: "/:path*(js|css|png|jpg|jpeg|webp|avif|svg|woff2)",
-        headers: [
-          { key: "Cache-Control", value: "public, max-age=31536000, immutable" },
-        ],
-      },
+      // Fingerprinted build output & fonts — safe to cache forever (prod only).
+      ...(isProd
+        ? [
+            { source: "/_next/static/:path*", headers: [immutable] },
+            { source: "/:path*(woff2|woff|ttf)", headers: [immutable] },
+            {
+              // Static media (incl. album photos, which may be swapped) — cache
+              // a day but revalidate so updates appear without a year's wait.
+              source: "/:path*(png|jpg|jpeg|webp|avif|svg|gif|ico)",
+              headers: [
+                { key: "Cache-Control", value: "public, max-age=86400, stale-while-revalidate=604800" },
+              ],
+            },
+          ]
+        : []),
     ];
   },
 };

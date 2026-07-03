@@ -196,6 +196,6 @@ npm install @vercel/analytics @vercel/og
 
 ## Contact
 
-**WhatsApp** [+91 93927 04742](https://wa.me/919392704742) · **Instagram** [@stories.onemark](https://www.instagram.com/stories.onemark) · **Studio** [onemark.digital](https://onemark.digital)
+**WhatsApp** [+91 83319 78532](https://wa.me/918331978532) · **Instagram** [@stories.onemark](https://www.instagram.com/stories.onemark) · **Studio** [onemark.digital](https://onemark.digital)
 
 © 2026 [OneMark Digital](https://onemark.digital) — All rights reserved.

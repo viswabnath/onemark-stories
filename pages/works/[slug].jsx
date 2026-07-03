@@ -45,11 +45,11 @@ export async function getStaticProps({ params }) {
   return { props: { project } };
 }
 
-const WA_NUMBER = "919392704742";
+const WA_NUMBER = "918331978532";
 
 export default function ProjectPage({ project }) {
   const waText = encodeURIComponent(
-    `Hi OneMark Stories! 👋 I saw the ${project.title} project and I'd love something similar. Can we talk?`
+    `Hi OneMark Stories! I saw the ${project.title} project and I'd love something similar. Can we talk?`
   );
   const waUrl = `https://wa.me/${WA_NUMBER}?text=${waText}`;
 
@@ -58,7 +58,7 @@ export default function ProjectPage({ project }) {
   return (
     <>
       <Head>
-        <title>{project.title} — OneMark Stories</title>
+        <title>{`${project.title} — OneMark Stories`}</title>
         <meta name="description" content={project.about} />
         <meta name="robots"      content="index, follow" />
         <link rel="canonical"    href={`${DOMAIN}/works/${toSlug(project.title)}`} />

@@ -15,11 +15,11 @@ import Loader from "../components/Loader";
 import Nav from "../components/Nav";
 import About from "../components/About";
 import Testimonials from "../components/Testimonials";
-import HowItWorks from "../components/HowItWorks";
 import Pricing from "../components/Pricing";
 import Footer from "../components/Footer";
 import WhatsAppFloat from "../components/WhatsAppFloat";
-import StoryReveal from "../components/StoryReveal";
+import DuoShowcase from "../components/DuoShowcase";
+import AlbumsTeaser from "../components/AlbumsTeaser";
 import ClosingCTA from "../components/ClosingCTA";
 import ScrollToTop from "../components/ScrollToTop";
 
@@ -28,7 +28,7 @@ const Showcase = dynamic(() => import("../components/Showcase"), { ssr: false })
 
 const DOMAIN = "https://stories.onemark.co.in";
 const TITLE  = "OneMark Stories — Moments Told By OneMark";
-const DESC   = "Custom wedding websites & digital invitations starting at ₹2,999. Live countdowns, photo galleries, RSVP — share one beautiful link with all your guests. Built in India, loved worldwide.";
+const DESC   = "Event websites and interactive digital albums for weddings, birthdays, housewarmings and every celebration — from ₹4,999. One beautiful link, built in India.";
 
 // Dynamic OG image — rich branded preview card (served from /api/og)
 const OG_IMAGE = `${DOMAIN}/api/og?title=OneMark+Stories&desc=${encodeURIComponent("Custom wedding websites & digital invitations")}`;
@@ -48,7 +48,7 @@ export default function Home() {
         "image": `${DOMAIN}/onemark-logo.png`,
         "description": DESC,
         "priceRange": "₹₹",
-        "telephone": "+919392704742",
+        "telephone": "+918331978532",
         "email": "hello@onemark.digital",
         "address": {
           "@type": "PostalAddress",
@@ -70,23 +70,22 @@ export default function Home() {
             {
               "@type": "Offer",
               "name": "Spark",
-              "description": "Essential digital invitation — countdown, event info, one shareable link.",
-              "price": "2999",
-              "priceCurrency": "INR",
-            },
-            {
-              // FIX: was incorrectly 5999 — corrected to match Pricing.jsx
-              "@type": "Offer",
-              "name": "Bloom",
-              "description": "Full wedding website with gallery, RSVP, and cinematic animations.",
-              "price": "6499",
+              "description": "Event website plus a flip-through digital album (up to 15 pages).",
+              "price": "4999",
               "priceCurrency": "INR",
             },
             {
               "@type": "Offer",
-              "name": "Legacy",
-              "description": "Premium bespoke experience — 3D effects, custom domain, full post-event keepsake.",
+              "name": "Signature",
+              "description": "Multi-page website with galleries plus a 40-page digital album.",
               "price": "9999",
+              "priceCurrency": "INR",
+            },
+            {
+              "@type": "Offer",
+              "name": "Grand",
+              "description": "Cinematic website, own web address and an 80-page digital album.",
+              "price": "19999",
               "priceCurrency": "INR",
             },
           ],
@@ -104,10 +103,34 @@ export default function Home() {
         "mainEntity": [
           {
             "@type": "Question",
+            "name": "How do we send our wedding photos to compile the digital album?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "You can easily upload your designed album pages (as JPEG, PNG, or PDF) to Google Drive, Dropbox, or share them via WhatsApp. We handle all resizing, compression, and optimization to ensure pages load instantly while remaining crisp.",
+            },
+          },
+          {
+            "@type": "Question",
+            "name": "Can the digital album play background music?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Absolutely. We can integrate high-fidelity background music that plays softly as guests flip through your pages, with a clean mute/unmute speaker toggle in the top control bar.",
+            },
+          },
+          {
+            "@type": "Question",
+            "name": "Can guests download or share spreads from the album?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. The flipbook interface has a native share button that copies the direct link. We can also include a download button for the entire album, or lock it to view-only if you prefer to protect your photographer's high-res layout.",
+            },
+          },
+          {
+            "@type": "Question",
             "name": "How much does a custom wedding website cost in India?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "OneMark Stories offers three packages: Spark at ₹2,999 ($35) for simple invitations, Bloom at ₹6,499 ($75) for full wedding websites with galleries and RSVP, and Legacy at ₹9,999 ($125) for cinematic multi-chapter experiences with 3D effects.",
+              "text": "OneMark Stories offers three one-time packages, each pairing an event website with a digital album: Spark at ₹4,999, Signature at ₹9,999, and Grand at ₹19,999. Standalone digital albums are also available.",
             },
           },
           {
@@ -170,9 +193,8 @@ export default function Home() {
         <meta name="twitter:description" content={DESC} />
         <meta name="twitter:image"       content={OG_IMAGE} />
 
-        <link rel="icon"             href="/favicon.ico" sizes="any" />
-        <link rel="icon"             href="/logo-om.png" type="image/png" sizes="192x192" />
-        <link rel="apple-touch-icon" href="/logo-om.png" sizes="180x180" />
+        <link rel="icon"             href="/stories-logo-blue-resized.png" type="image/png" sizes="192x192" />
+        <link rel="apple-touch-icon" href="/stories-logo-blue-resized.png" sizes="180x180" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
@@ -185,11 +207,11 @@ export default function Home() {
 
       <main>
         <Hero />
-        <StoryReveal />
+        <DuoShowcase />
         <Showcase />
+        <AlbumsTeaser />
         <About />
         <Testimonials />
-        <HowItWorks />
         <Pricing />
         <ClosingCTA />
         <ScrollToTop />

@@ -33,7 +33,7 @@ export default function Footer() {
         <div className="footer__top">
           <Link href="/" className="footer__logo-link">
             <Image
-              src="/stories-logo-white-resized.png"
+              src="/stories-logo-blue-resized.png"
               alt="OneMark Stories"
               width={150}
               height={44}

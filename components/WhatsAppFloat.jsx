@@ -1,7 +1,7 @@
 /**
  * WhatsAppFloat.jsx — Persistent floating WhatsApp CTA button
  */
-const WA_NUMBER = "919392704742";
+const WA_NUMBER = "918331978532";
 const WA_MSG = encodeURIComponent(
   "Hi OneMark Stories! \u{1F44B} I'd love to get a custom digital experience made. Can we talk?"
 );

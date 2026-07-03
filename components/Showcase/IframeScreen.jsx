@@ -12,17 +12,17 @@ const BLOCKED_TIMEOUT_MS = 8000;
 
 export default function IframeScreen({
   src,
-  nativeWidth  = 390,
+  nativeWidth = 390,
   nativeHeight = 844,
-  title        = "Project Preview",
+  title = "Project Preview",
 }) {
-  const wrapRef    = useRef(null);
-  const timerRef   = useRef(null);
-  const loadedRef  = useRef(false); // tracks if onLoad ever fired
-  const [scale,    setScale]   = useState(1);
-  const [loading,  setLoading] = useState(true);
-  const [blocked,  setBlocked] = useState(false);
-  const [inView,   setInView]  = useState(false);
+  const wrapRef = useRef(null);
+  const timerRef = useRef(null);
+  const loadedRef = useRef(false); // tracks if onLoad ever fired
+  const [scale, setScale] = useState(1);
+  const [loading, setLoading] = useState(true);
+  const [blocked, setBlocked] = useState(false);
+  const [inView, setInView] = useState(false);
 
   // Reset state when src changes
   const [prevSrc, setPrevSrc] = useState(src);
@@ -31,9 +31,14 @@ export default function IframeScreen({
     setLoading(true);
     setBlocked(false);
     setInView(false);
-    loadedRef.current = false;
-    clearTimeout(timerRef.current);
   }
+
+  useEffect(() => {
+    loadedRef.current = false;
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+    }
+  }, [src]);
 
   // Scale to container via ResizeObserver
   useEffect(() => {
@@ -82,13 +87,13 @@ export default function IframeScreen({
     <div
       ref={wrapRef}
       style={{
-        position:      "relative",
-        width:         "100%",
-        height:        0,
+        position: "relative",
+        width: "100%",
+        height: 0,
         paddingBottom: `${(nativeHeight / nativeWidth) * 100}%`,
-        overflow:      "hidden",
-        background:    "#0a0a0a",
-        borderRadius:  "inherit",
+        overflow: "hidden",
+        background: "#0a0a0a",
+        borderRadius: "inherit",
       }}
     >
       {/* Loading spinner — only when in view and still loading */}
@@ -114,15 +119,15 @@ export default function IframeScreen({
             target="_blank"
             rel="noopener noreferrer"
             style={{
-              display:      "inline-flex",
-              alignItems:   "center",
-              gap:          "6px",
-              padding:      "8px 18px",
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "6px",
+              padding: "8px 18px",
               borderRadius: "100px",
-              border:       "1px solid var(--cyan)",
-              color:        "var(--cyan)",
-              fontSize:     "11px",
-              fontFamily:   "Outfit, sans-serif",
+              border: "1px solid var(--cyan)",
+              color: "var(--cyan)",
+              fontSize: "11px",
+              fontFamily: "Outfit, sans-serif",
               textDecoration: "none",
               letterSpacing: "0.06em",
             }}
@@ -140,17 +145,17 @@ export default function IframeScreen({
         sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
         loading="lazy"
         style={{
-          position:        "absolute",
-          top:             0,
-          left:            0,
-          width:           nativeWidth,
-          height:          nativeHeight,
-          border:          "none",
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: nativeWidth,
+          height: nativeHeight,
+          border: "none",
           transformOrigin: "top left",
-          transform:       `scale(${scale})`,
-          pointerEvents:   "all",
-          opacity:         loading || blocked ? 0 : 1,
-          transition:      "opacity 0.4s ease",
+          transform: `scale(${scale})`,
+          pointerEvents: "all",
+          opacity: loading || blocked ? 0 : 1,
+          transition: "opacity 0.4s ease",
         }}
       />
     </div>

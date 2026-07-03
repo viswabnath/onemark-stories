@@ -1,22 +1,25 @@
 /**
  * Nav.jsx — Fixed nav with GSAP mobile drawer.
- * Desktop: Works · Pricing · WhatsApp icon
- * Mobile drawer: Works · Pricing · onemark.digital
+ * Desktop: Works · Albums · Pricing · WhatsApp icon
+ * Mobile drawer: Works · Albums · Pricing · onemark.digital
  */
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { gsap } from "gsap";
 
-const NAV_WA = `https://wa.me/919392704742?text=${encodeURIComponent("Hi OneMark Stories! 👋 I'd love to get started.")}`;
+const NAV_WA = `https://wa.me/918331978532?text=${encodeURIComponent("Hi OneMark Stories! I'd love to get started.")}`;
 
 export default function Nav() {
   const [scrolled,  setScrolled]  = useState(false);
   const [menuOpen,  setMenuOpen]  = useState(false);
+  const logoSrc = "/stories-logo-blue-resized.png";
+
   const drawerRef = useRef(null);
   const link1Ref  = useRef(null);
   const link2Ref  = useRef(null);
   const link3Ref  = useRef(null);
+  const link4Ref  = useRef(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);
@@ -32,7 +35,7 @@ export default function Nav() {
   useEffect(() => {
     const el = drawerRef.current;
     if (!el) return;
-    const links = [link1Ref.current, link2Ref.current, link3Ref.current].filter(Boolean);
+    const links = [link1Ref.current, link2Ref.current, link3Ref.current, link4Ref.current].filter(Boolean);
 
     if (menuOpen) {
       gsap.set(el, { display: "flex", opacity: 0 });
@@ -55,7 +58,7 @@ export default function Nav() {
     <>
       <nav className={`nav${scrolled ? " nav--scrolled" : ""}`}>
         <Link href="/" className="nav__logo" onClick={close}>
-          <Image src="/stories-logo-white-resized.png" alt="OneMark Stories"
+          <Image src={logoSrc} alt="OneMark Stories"
             width={155} height={38} priority
             style={{ objectFit: "contain", objectPosition: "left" }} />
         </Link>
@@ -63,6 +66,7 @@ export default function Nav() {
         <div className="nav__right">
           {/* Desktop links */}
           <Link href="/#work"    className="nav__link nav__link--desktop" data-hover>Works</Link>
+          <Link href="/albums"   className="nav__link nav__link--desktop" data-hover>Albums</Link>
           <Link href="/#pricing" className="nav__link nav__link--desktop" data-hover>Pricing</Link>
 
           {/* WhatsApp icon — desktop only */}
@@ -107,9 +111,10 @@ export default function Nav() {
       {/* Full-screen mobile drawer */}
       <div ref={drawerRef} className="nav__drawer" role="dialog" aria-modal="true" style={{ display: "none" }}>
         <Link href="/#work"    className="nav__drawer-link" ref={link1Ref} onClick={close} data-hover>Works</Link>
-        <Link href="/#pricing" className="nav__drawer-link" ref={link2Ref} onClick={close} data-hover>Pricing</Link>
+        <Link href="/albums"   className="nav__drawer-link" ref={link2Ref} onClick={close} data-hover>Albums</Link>
+        <Link href="/#pricing" className="nav__drawer-link" ref={link3Ref} onClick={close} data-hover>Pricing</Link>
         <a href="https://onemark.digital" target="_blank" rel="noopener noreferrer"
-          className="nav__drawer-link nav__drawer-link--sm" ref={link3Ref} onClick={close} data-hover>
+          className="nav__drawer-link nav__drawer-link--sm" ref={link4Ref} onClick={close} data-hover>
           onemark.digital ↗
         </a>
       </div>
