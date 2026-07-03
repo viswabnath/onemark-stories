@@ -104,6 +104,56 @@ function playPageTurnSound() {
   osc.stop(now + 0.4);
 }
 
+let bgAudio = null;
+
+function startBackgroundMusic() {
+  if (typeof window === "undefined") return;
+  if (bgAudio) return; // Already playing
+
+  bgAudio = new Audio("/audio/bg-music.mp3");
+  bgAudio.loop = true;
+  bgAudio.volume = 0.0; // Start at 0 volume for smooth fade-in
+
+  bgAudio.play().then(() => {
+    // Fade in volume over 1.5 seconds
+    let vol = 0;
+    const interval = setInterval(() => {
+      if (!bgAudio) {
+        clearInterval(interval);
+        return;
+      }
+      vol += 0.04;
+      if (vol >= 0.35) {
+        bgAudio.volume = 0.35;
+        clearInterval(interval);
+      } else {
+        bgAudio.volume = vol;
+      }
+    }, 150);
+  }).catch((err) => {
+    console.warn("Failed to play background music (audio file not loaded or gesture required):", err);
+  });
+}
+
+function stopBackgroundMusic() {
+  if (!bgAudio) return;
+  const audioToStop = bgAudio;
+  bgAudio = null;
+
+  // Fade out volume over 1.0 second
+  let vol = audioToStop.volume;
+  const interval = setInterval(() => {
+    vol -= 0.05;
+    if (vol <= 0) {
+      audioToStop.volume = 0;
+      audioToStop.pause();
+      clearInterval(interval);
+    } else {
+      audioToStop.volume = vol;
+    }
+  }, 100);
+}
+
 const CanvasParticles = () => {
   const canvasRef = useRef(null);
 
@@ -225,7 +275,7 @@ const Page = forwardRef(function Page({ src, alt, hard, isLeft, splitSide, page,
           width: "100%",
           height: "100%",
           boxShadow: shadow,
-          transition: "box-shadow 0.6s ease"
+          transition: "box-shadow 0.6s ease, transform 0.15s cubic-bezier(0.25, 1, 0.5, 1)"
         }}
       >
         {splitSide ? (
@@ -279,12 +329,28 @@ function FlipViewer({ album }) {
 
   const [page, setPage]     = useState(0);
   const [copied, setCopied] = useState(false);
+  const [copyFailed, setCopyFailed] = useState(false);
+  const [iosFsTip, setIosFsTip] = useState(false);
   const [isFs, setIsFs]     = useState(false);
+  const [zoomScale, setZoomScale] = useState(1.0);
   const [isIosFs, setIsIosFs] = useState(false);
   const [box, setBox]       = useState(null); // measured { w, h } of the stage
   const [needRotate, setNeedRotate]     = useState(false); // landscape album on a portrait phone
   const [bypassRotate, setBypassRotate] = useState(false); // user chose "view anyway"
   const [orientation, setOrientation]   = useState("landscape");
+  const [pageInputValue, setPageInputValue] = useState("");
+
+  const N = album.pages.length;
+  const S = N * 2;
+  const middlePage = S / 2;
+  const midLeft = middlePage - (middlePage % 2 === 0 ? 1 : 0);
+  const middleLabel = orientation === "landscape" 
+    ? `Pages ${midLeft}-${midLeft + 1}` 
+    : `Page ${middlePage}`;
+
+  const isMiddleActive = orientation === "landscape"
+    ? (page > 0 && page < total - 1 && (page - (page % 2 === 0 ? 1 : 0) === midLeft))
+    : (page === middlePage);
 
   // 3D Rotatable closed cover states
   const [rotY, setRotY] = useState(-20);
@@ -403,6 +469,39 @@ function FlipViewer({ album }) {
   // Audio state
   const [muted, setMuted]   = useState(false);
   const mutedRef = useRef(muted);
+  const [musicMuted, setMusicMuted] = useState(false);
+
+  // Auto-fade controls state
+  const [controlsVisible, setControlsVisible] = useState(true);
+  const fadeTimeoutRef = useRef(null);
+
+  const resetControlsTimeout = useCallback(() => {
+    setControlsVisible(true);
+    if (fadeTimeoutRef.current) {
+      clearTimeout(fadeTimeoutRef.current);
+    }
+    fadeTimeoutRef.current = setTimeout(() => {
+      // Only auto-fade if the book is open (pages are showing)
+      const isBookOpen = page > 0 && page < total - 1;
+      if (isBookOpen) {
+        setControlsVisible(false);
+      }
+    }, 3500); // 3.5 seconds of inactivity
+  }, [page, total]);
+
+  // Trigger visibility reset on page/mode changes
+  useEffect(() => {
+    resetControlsTimeout();
+  }, [page, show3D, resetControlsTimeout]);
+
+  // Clean up timer on unmount
+  useEffect(() => {
+    return () => {
+      if (fadeTimeoutRef.current) {
+        clearTimeout(fadeTimeoutRef.current);
+      }
+    };
+  }, []);
 
   useEffect(() => {
     Promise.resolve().then(() => {
@@ -410,6 +509,10 @@ function FlipViewer({ album }) {
         const stored = localStorage.getItem("om_audio_muted");
         if (stored !== null) {
           setMuted(stored === "true");
+        }
+        const storedMusic = localStorage.getItem("om_music_muted");
+        if (storedMusic !== null) {
+          setMusicMuted(storedMusic === "true");
         }
       } catch {
         // LocalStorage blocked or unavailable
@@ -434,11 +537,56 @@ function FlipViewer({ album }) {
     };
   }, []);
 
+  // Handle background music automatic toggle based on page and mute state
+  const isOpen = page > 0 && page < total - 1;
+  useEffect(() => {
+    if (isOpen && !muted && !musicMuted && !show3D) {
+      startBackgroundMusic();
+    } else {
+      stopBackgroundMusic();
+    }
+    return () => {
+      stopBackgroundMusic();
+    };
+  }, [isOpen, muted, musicMuted, show3D]);
+
+  // Handle tab visibility change (stop background music when user minimizes or switches tabs)
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "hidden") {
+        stopBackgroundMusic();
+      } else {
+        // Resume if the book is open, not muted, and not in 3D mode
+        if (isOpen && !muted && !musicMuted && !show3D) {
+          startBackgroundMusic();
+        }
+      }
+    };
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, [isOpen, muted, musicMuted, show3D]);
+
   const toggleMuted = useCallback(() => {
     setMuted((prev) => {
       const next = !prev;
       try {
         localStorage.setItem("om_audio_muted", String(next));
+      } catch {
+        // LocalStorage blocked or unavailable
+      }
+      return next;
+    });
+    // Warm up the Web Audio context on user gesture
+    getAudioContext();
+  }, []);
+
+  const toggleMusicMuted = useCallback(() => {
+    setMusicMuted((prev) => {
+      const next = !prev;
+      try {
+        localStorage.setItem("om_music_muted", String(next));
       } catch {
         // LocalStorage blocked or unavailable
       }
@@ -498,6 +646,7 @@ function FlipViewer({ album }) {
             document.exitFullscreen?.catch(() => {});
           }
           setIsIosFs(false);
+          setZoomScale(1.0);
         }
       }
     };
@@ -562,6 +711,47 @@ function FlipViewer({ album }) {
     if (dir > 0) pf.flipNext(); else pf.flipPrev();
   }, [show3D, openBook]);
 
+  const jumpToPage = useCallback((p) => {
+    // Normalize target page to left page in landscape mode
+    const targetPage = (orientation === "landscape" && p > 0 && p < total - 1)
+      ? p - (p % 2 === 0 ? 1 : 0)
+      : p;
+
+    if (page === targetPage) return;
+    getAudioContext();
+    const pf = bookRef.current?.pageFlip?.();
+    if (pf) {
+      if (targetPage !== 0 && targetPage !== total - 1 && show3D) {
+        setShow3D(false);
+        // Delay page flipping slightly to allow HTMLFlipBook DOM element to display and initialize layout
+        setTimeout(() => {
+          const currentPf = bookRef.current?.pageFlip?.();
+          currentPf?.turnToPage(targetPage);
+        }, 150);
+      } else {
+        if (targetPage !== 0 && targetPage !== total - 1) {
+          setShow3D(false);
+        }
+        pf.turnToPage(targetPage);
+      }
+    } else {
+      setPage(targetPage);
+      if (targetPage === 0 || targetPage === total - 1) {
+        setShow3D(true);
+      } else {
+        setShow3D(false);
+      }
+    }
+  }, [page, total, orientation, show3D]);
+
+  const handlePageJump = useCallback(() => {
+    const p = parseInt(pageInputValue, 10);
+    if (!isNaN(p) && p >= 1 && p <= total - 2) {
+      jumpToPage(p);
+      setPageInputValue("");
+    }
+  }, [pageInputValue, total, jumpToPage]);
+
   /* Keyboard arrows for desktop */
   useEffect(() => {
     const onKey = (e) => {
@@ -590,9 +780,24 @@ function FlipViewer({ album }) {
         }
       } else {
         // iOS Safari iphone fallback
-        setIsIosFs((prev) => !prev);
+        setIsIosFs((prev) => {
+          const next = !prev;
+          if (next) {
+            setIosFsTip(true);
+            setTimeout(() => setIosFsTip(false), 4500);
+          }
+          return next;
+        });
       }
     }
+  }, []);
+
+  const zoomIn = useCallback(() => {
+    setZoomScale((prev) => Math.min(prev + 0.1, 1.5));
+  }, []);
+
+  const zoomOut = useCallback(() => {
+    setZoomScale((prev) => Math.max(prev - 0.1, 0.5));
   }, []);
 
   const share = useCallback(async () => {
@@ -615,11 +820,34 @@ function FlipViewer({ album }) {
     if (!shared) {
       // Fallback: copy to clipboard
       try {
-        await navigator.clipboard.writeText(url);
-        setCopied(true);
-        setTimeout(() => setCopied(false), 2200);
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          await navigator.clipboard.writeText(url);
+          setCopied(true);
+          setTimeout(() => setCopied(false), 2200);
+        } else {
+          // Fallback for older browsers / non-secure contexts / WebViews
+          const textArea = document.createElement("textarea");
+          textArea.value = url;
+          textArea.style.position = "fixed";
+          textArea.style.top = "0";
+          textArea.style.left = "0";
+          textArea.style.opacity = "0";
+          document.body.appendChild(textArea);
+          textArea.focus();
+          textArea.select();
+          const successful = document.execCommand("copy");
+          document.body.removeChild(textArea);
+          if (successful) {
+            setCopied(true);
+            setTimeout(() => setCopied(false), 2200);
+          } else {
+            throw new Error("execCommand copy failed");
+          }
+        }
       } catch (err) {
         console.log("Clipboard fallback failed:", err);
+        setCopyFailed(true);
+        setTimeout(() => setCopyFailed(false), 3000);
       }
     }
   }, [album.title]);
@@ -665,7 +893,14 @@ function FlipViewer({ album }) {
   const showRotate = needRotate && !bypassRotate;
 
   return (
-    <div className={`flipbook${isIosFs ? " flipbook--ios-fs" : ""}`} ref={stageRef} style={{ position: "relative" }}>
+    <div 
+      className={`flipbook${isIosFs ? " flipbook--ios-fs" : ""}${!controlsVisible ? " flipbook--controls-hidden" : ""}`} 
+      ref={stageRef} 
+      style={{ position: "relative" }}
+      onMouseMove={resetControlsTimeout}
+      onClick={resetControlsTimeout}
+      onTouchStart={resetControlsTimeout}
+    >
       {/* Ambient Stardust Canvas & Glow Elements */}
       <CanvasParticles />
       <div className="ambient-glow" style={{ position: "absolute", top: "-10%", right: "-10%", width: "600px", height: "600px", opacity: 0.12, background: "radial-gradient(circle, var(--gold) 0%, transparent 70%)", pointerEvents: "none", zIndex: 0 }} />
@@ -678,7 +913,16 @@ function FlipViewer({ album }) {
           <span className="flipbook__tag" style={{ color: album.color }}>{album.tag} · {sizeLabel(album)}</span>
           <span className="flipbook__title">{album.title}</span>
         </div>
-        <div className="flipbook__bar-actions">
+        <div className="flipbook__bar-actions flipbook__bar-actions--desktop">
+          {/* Music Toggle */}
+          <button className="flipbook__icon-btn" onClick={toggleMusicMuted} data-hover aria-label={musicMuted ? "Unmute music" : "Mute music"}>
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path d="M9 18V5l12-2v13" />
+              <circle cx="6" cy="18" r="3" />
+              <circle cx="18" cy="16" r="3" />
+              {musicMuted && <line x1="3" y1="3" x2="21" y2="21" />}
+            </svg>
+          </button>
           {/* Mute/Unmute Toggle */}
           <button className="flipbook__icon-btn" onClick={toggleMuted} data-hover aria-label={muted ? "Unmute album" : "Mute album"}>
             {muted ? (
@@ -701,8 +945,10 @@ function FlipViewer({ album }) {
               <line x1="8.6" y1="13.5" x2="15.4" y2="17.5" /><line x1="15.4" y1="6.5" x2="8.6" y2="10.5" />
             </svg>
           </button>
+
+
           <button className="flipbook__icon-btn flipbook__icon-btn--fs" onClick={toggleFullscreen} data-hover aria-label="Toggle fullscreen">
-            {isFs ? (
+            {isFs || isIosFs ? (
               <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <path d="M8 3v3a2 2 0 0 1-2 2H3M21 8h-3a2 2 0 0 1-2-2V3M3 16h3a2 2 0 0 1 2 2v3M16 21v-3a2 2 0 0 1 2-2h3" />
               </svg>
@@ -734,7 +980,20 @@ function FlipViewer({ album }) {
             </button>
           </div>
         ) : (
-          <>
+          <div
+            className="flipbook__zoom-wrapper"
+            style={{
+              transform: `scale(${zoomScale})`,
+              transformOrigin: "center center",
+              width: "100%",
+              height: "100%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              position: "relative",
+              transition: "transform 0.25s cubic-bezier(0.25, 1, 0.5, 1)",
+            }}
+          >
             {/* 3D Rotatable Closed Cover with swinging opening sequences */}
             {box && (
               <div
@@ -926,20 +1185,169 @@ function FlipViewer({ album }) {
                 </HTMLFlipBook>
               </div>
             )}
-          </>
+          </div>
+        )}
+
+        {/* Floating Zoom Control (Desktop) */}
+        {!showRotate && (
+          <div className="flipbook__zoom-control flipbook__zoom-control--desktop">
+            <button className="flipbook__zoom-btn" onClick={zoomIn} disabled={zoomScale >= 1.5} aria-label="Zoom in" title="Zoom in">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <circle cx="11" cy="11" r="8" />
+                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                <line x1="8" y1="11" x2="14" y2="11" />
+                <line x1="11" y1="8" x2="11" y2="14" />
+              </svg>
+            </button>
+            <div className="flipbook__zoom-divider" />
+            <button className="flipbook__zoom-btn" onClick={zoomOut} disabled={zoomScale <= 0.5} aria-label="Zoom out" title="Zoom out">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <circle cx="11" cy="11" r="8" />
+                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                <line x1="8" y1="11" x2="14" y2="11" />
+              </svg>
+            </button>
+          </div>
         )}
       </div>
 
       {/* Controls — hidden while prompting to rotate */}
       {!showRotate && (
         <div className="flipbook__controls" style={{ position: "relative", zIndex: 1 }}>
-          <button className="flipbook__nav" onClick={() => go(-1)} disabled={atStart} data-hover aria-label="Previous page">←</button>
-          <span className="flipbook__counter">{label}</span>
-          <button className="flipbook__nav" onClick={() => go(1)} disabled={atEnd} data-hover aria-label="Next page">→</button>
+          <div className="flipbook__center-controls">
+            <span className="flipbook__counter">{label}</span>
+            <span className="flipbook__tap-hint">(Tap pages to turn)</span>
+            <div className="flipbook__nav-row">
+              <div className="flipbook__quick-jump">
+                <button
+                  className={`flipbook__jump-btn ${page === 0 ? "active" : ""}`}
+                  onClick={() => jumpToPage(0)}
+                  data-hover
+                  title="Go to front cover"
+                >
+                  Front
+                </button>
+                <button
+                  className={`flipbook__jump-btn ${isMiddleActive ? "active" : ""}`}
+                  onClick={() => jumpToPage(middlePage)}
+                  data-hover
+                  title={`Go to middle page (${middleLabel})`}
+                >
+                  Middle
+                </button>
+                <button
+                  className={`flipbook__jump-btn ${page === total - 1 ? "active" : ""}`}
+                  onClick={() => jumpToPage(total - 1)}
+                  data-hover
+                  title="Go to back cover"
+                >
+                  Back
+                </button>
+              </div>
+              <div className="flipbook__page-jump-form">
+                <input
+                  type="number"
+                  min="1"
+                  max={total - 2}
+                  value={pageInputValue}
+                  onChange={(e) => setPageInputValue(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      handlePageJump();
+                    }
+                  }}
+                  placeholder="Pg #"
+                  className="flipbook__page-jump-input"
+                  aria-label="Jump to page number"
+                />
+                <button
+                  type="button"
+                  onClick={handlePageJump}
+                  className="flipbook__page-jump-btn"
+                  data-hover
+                >
+                  Go
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       )}
 
       {copied && <div className="flipbook__toast">Link copied ✓</div>}
+      {copyFailed && (
+        <div className="flipbook__toast" style={{ background: "var(--kumkum, #ef4444)" }}>
+          Could not copy link automatically. Please copy the URL from address bar.
+        </div>
+      )}
+      {iosFsTip && (
+        <div className="flipbook__toast" style={{ maxWidth: "85%", textAlign: "center", lineHeight: "1.4" }}>
+          iPhone browsers don't support native fullscreen. Add to Home Screen to view without the URL bar!
+        </div>
+      )}
+
+      {/* Unified Mobile Controls Toolbar (visible on portrait mobile) */}
+      {!showRotate && (
+      <div className="flipbook__mobile-controls">
+        {/* Music Toggle */}
+        <button className="flipbook__icon-btn" onClick={toggleMusicMuted} data-hover aria-label={musicMuted ? "Unmute music" : "Mute music"}>
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d="M9 18V5l12-2v13" />
+            <circle cx="6" cy="18" r="3" />
+            <circle cx="18" cy="16" r="3" />
+            {musicMuted && <line x1="3" y1="3" x2="21" y2="21" />}
+          </svg>
+        </button>
+        {/* Mute/Unmute Toggle */}
+        <button className="flipbook__icon-btn" onClick={toggleMuted} data-hover aria-label={muted ? "Unmute album" : "Mute album"}>
+          {muted ? (
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path d="M11 5L6 9H2v6h4l5 4V5z" />
+              <line x1="23" y1="9" x2="17" y2="15" />
+              <line x1="17" y1="9" x2="23" y2="15" />
+            </svg>
+          ) : (
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path d="M11 5L6 9H2v6h4l5 4V5z" />
+              <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
+              <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
+            </svg>
+          )}
+        </button>
+        <button className="flipbook__icon-btn" onClick={share} data-hover aria-label="Share album">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <circle cx="18" cy="5" r="3" /><circle cx="6" cy="12" r="3" /><circle cx="18" cy="19" r="3" />
+            <line x1="8.6" y1="13.5" x2="15.4" y2="17.5" /><line x1="15.4" y1="6.5" x2="8.6" y2="10.5" />
+          </svg>
+        </button>
+        <button className="flipbook__icon-btn" onClick={zoomOut} data-hover aria-label="Zoom out" title="Zoom out" disabled={zoomScale <= 0.5}>
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <circle cx="11" cy="11" r="8" />
+            <line x1="21" y1="21" x2="16.65" y2="16.65" />
+            <line x1="8" y1="11" x2="14" y2="11" />
+          </svg>
+        </button>
+        <button className="flipbook__icon-btn" onClick={zoomIn} data-hover aria-label="Zoom in" title="Zoom in" disabled={zoomScale >= 1.5}>
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <circle cx="11" cy="11" r="8" />
+            <line x1="21" y1="21" x2="16.65" y2="16.65" />
+            <line x1="8" y1="11" x2="14" y2="11" />
+            <line x1="11" y1="8" x2="11" y2="14" />
+          </svg>
+        </button>
+        <button className="flipbook__icon-btn flipbook__icon-btn--fs" onClick={toggleFullscreen} data-hover aria-label="Toggle fullscreen">
+          {isFs || isIosFs ? (
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path d="M8 3v3a2 2 0 0 1-2 2H3M21 8h-3a2 2 0 0 1-2-2V3M3 16h3a2 2 0 0 1 2 2v3M16 21v-3a2 2 0 0 1 2-2h3" />
+            </svg>
+          ) : (
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path d="M8 3H5a2 2 0 0 0-2 2v3M21 8V5a2 2 0 0 0-2-2h-3M3 16v3a2 2 0 0 0 2 2h3M16 21h3a2 2 0 0 0 2-2v-3" />
+            </svg>
+          )}
+        </button>
+      </div>
+      )}
     </div>
   );
 }
