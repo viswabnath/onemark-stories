@@ -15,12 +15,13 @@
  *   landscape album so visitors get the feel; we don't list every size.
  *
  * Image handling (built from code for now; a self-serve portal comes later):
- *   Drop the exported sheets into  public/albums/<slug>/ and reference them as
- *   absolute /public paths. Each sheet is one landscape page (half the open
- *   width); shown two-up as an open-book spread on desktop, one page on mobile.
- *
- * The .svg files under public/albums/bride-groom/ are placeholders — replace
- * them with the real designed sheets (see public/albums/README.md).
+ *   Drop optimized WebP into public/albums/<slug>/ and reference them as
+ *   absolute /public paths. By default each `pages[]` entry is a FULL
+ *   double-page spread (the viewer splits it into left/right halves). If the
+ *   photographer delivered individual single pages instead, set `split: false`
+ *   and each `pages[]` entry becomes one whole page (p01 = left, p02 = right, …).
+ *   `coverFront`/`coverBack` are always single pages. Every image must already
+ *   be at the exact aspect (object-fit is `fill`) — see public/albums/README.md.
  *
  * Background music (optional, per album):
  *   Every album plays a soft background track while open. Set `music` to give
@@ -60,10 +61,14 @@ export const ALBUMS = [
     num: "02",
     title: "Geetha Sree",
     tag: "Turning One",
-    desc: "A 15×24 first-birthday album",
+    desc: "A landscape first-birthday album",
     color: "#E0992B",
     date: "January 2018",
-    size: "15x24", // portrait-page birthday album
+    // Landscape album delivered as individual single pages (1.6 aspect each),
+    // not spreads — so `split: false` and each pages[] entry is one whole page
+    // (p01 = left page, p02 = right page, …). Open aspect 3.2 → { h:15, w:48 }.
+    size: { h: 15, w: 48 },
+    split: false,
     music: "/audio/birthday.mp3",
     about:
       "Geetha Sree's first birthday — the toys, the cake, the giggles — rebuilt spread by spread into a living book you turn and share the way you would the printed album.",

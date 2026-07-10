@@ -1,7 +1,7 @@
 /**
  * pages/albums/[slug].jsx — immersive digital-album flipbook viewer.
  *
- * Routes: /albums/bride-groom, etc. Slugs auto-derived from album titles.
+ * Routes: /albums/geetha-sree, etc. Slugs auto-derived from album titles.
  * The flipbook is loaded client-side only (react-pageflip needs the DOM).
  *
  * Adding an album to data/albums.js automatically creates its page.

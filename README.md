@@ -25,7 +25,8 @@ Bespoke, cinematic digital experiences for weddings, birthdays, corporate launch
 | Styling | Custom CSS design system (`styles/globals.css`) |
 | Analytics | Vercel Analytics (`@vercel/analytics`) |
 | OG Images | `@vercel/og` — dynamic branded preview cards |
-| Fonts | Cormorant Garamond · Inter · DM Sans |
+| Digital Albums | `react-pageflip` (StPageFlip) — realistic tap-to-flip books |
+| Fonts | Fraunces · Hanken Grotesk · Courier Prime |
 | Hosting | Vercel |
 
 ---
@@ -62,20 +63,33 @@ onemark-stories/
 │   ├── Cursor.jsx         # Custom rose cursor (desktop only)
 │   ├── Loader.jsx         # Page load animation
 │   └── WhatsAppFloat.jsx  # Floating WhatsApp button
+│   ├── Flipbook/          # Interactive digital-album viewer (react-pageflip)
+│   └── AlbumsTeaser.jsx   # Homepage teaser linking to /albums
 ├── data/
 │   ├── projects.js        # All project entries — ordered by design quality
+│   ├── albums.js          # All digital-album entries (source of truth)
 │   └── socials.js         # Social media links
+├── lib/
+│   ├── slug.js            # Shared title → URL slug helper
+│   └── albumSize.js       # Album size preset → on-screen page aspect
 ├── pages/
 │   ├── index.jsx          # Homepage — scroll-driven narrative
 │   ├── works/[slug].jsx   # Individual project detail pages (SSG)
 │   ├── works.jsx          # Standalone portfolio showcase
+│   ├── albums/index.jsx   # Digital Albums landing + gallery
+│   ├── albums/[slug].jsx  # Immersive flipbook viewer (SSG)
 │   ├── api/og.js          # Dynamic OG image generator (Edge Runtime)
+│   ├── sitemap.xml.js     # Dynamic sitemap (projects + albums)
+│   ├── _document.jsx      # <html lang="en">
 │   ├── _app.jsx           # Vercel Analytics + global trackEvent helper
 │   ├── 404.jsx
 │   ├── _error.jsx
 │   └── maintenance.jsx
+├── public/
+│   ├── albums/            # Per-album WebP assets (see albums/README.md)
+│   └── audio/             # Background music tracks
 └── styles/
-    └── globals.css        # Complete design system — 800 lines, no duplicates
+    └── globals.css        # Complete design system (custom CSS, no Tailwind)
 ```
 
 ---
@@ -152,14 +166,18 @@ The homepage is a scroll-driven story — everything flows:
 
 ## Design Tokens
 
+Printed-invitation editorial theme — ivory card stock, kumkum red, marigold gold.
+
 | Token | Value | Role |
 |-------|-------|------|
-| `--bg` | `#1A1118` | Page background |
-| `--surface` | `#251C30` | Cards, panels |
-| `--rose` | `#D4758C` | Primary accent |
-| `--gold` | `#C9A96E` | Secondary accent |
-| `--cyan` | `#29ABE2` | Brand blue |
-| `--text` | `#F5EEF0` | Body text |
+| `--bg` | `#F4ECDB` | Ivory card stock (page bg) |
+| `--surface` | `#FBF6E9` | Raised cards, panels |
+| `--rose` / `--kumkum` | `#96222B` | Kumkum red — primary accent |
+| `--gold` / `--marigold` | `#B9832B` | Marigold gold — foil accent |
+| `--cyan` | `#145A50` | Peacock green — links / secondary |
+| `--ink` / `--text` | `#3A1016` | Maroon-black ink (body text) |
+
+Type roles: `--font-display` Fraunces · `--font-body` Hanken Grotesk · `--font-mono` Courier Prime.
 
 ---
 
@@ -186,10 +204,24 @@ The project appears automatically in the homepage Showcase and `/works`, and get
 
 ---
 
+## Digital Albums
+
+A second product lives alongside the marketing site: printed landscape albums reimagined as realistic, tap-to-flip books shared with one link.
+
+- **Viewer:** `components/Flipbook` (`react-pageflip` / StPageFlip), loaded client-side only and wrapped in an error boundary that degrades to a plain gallery.
+- **Data:** `data/albums.js` — one entry auto-creates an `/albums` card, an `/albums/[slug]` viewer, a sitemap entry, and an OG card.
+- **Assets:** `public/albums/<slug>/` — each `pXX.webp` is a **full double-page spread** (the viewer splits it into halves); covers are single pages. Because `.flipbook__img` is `object-fit: fill`, every image must sit at the exact album aspect. Optional per-album `music` (in `public/audio/`).
+
+See [`public/albums/README.md`](public/albums/README.md) for the geometry rules and [`CLAUDE.md`](CLAUDE.md) for the "Adding an Album" walkthrough.
+
+> **Note:** never run `npm run build` while `npm run dev` is running — they share `.next` and the build rewrites chunk hashes the dev server still references, which 404s the CSS and renders the site unstyled.
+
+---
+
 ## Install Dependencies
 
 ```bash
-npm install @vercel/analytics @vercel/og
+npm install @vercel/analytics @vercel/speed-insights @vercel/og react-pageflip
 ```
 
 ---
