@@ -30,7 +30,8 @@ export async function getStaticProps({ params }) {
 export default function AlbumPage({ album }) {
   const slug = toSlug(album.title);
   const url  = `${DOMAIN}/albums/${slug}`;
-  const ogImage = `${DOMAIN}/api/og?title=${encodeURIComponent(album.title)}&tag=${encodeURIComponent(album.tag)}&desc=${encodeURIComponent(album.about)}&num=${encodeURIComponent(album.num)}`;
+  const ogImage = `${DOMAIN}/api/og?title=${encodeURIComponent(album.title)}&tag=${encodeURIComponent(album.tag)}&desc=${encodeURIComponent(album.about)}&num=${encodeURIComponent(album.num)}&accent=${encodeURIComponent(album.color)}`;
+  const ogAlt = `${album.title} — ${album.tag} · OneMark Stories`;
 
   return (
     <>
@@ -41,17 +42,20 @@ export default function AlbumPage({ album }) {
         <link rel="canonical"    href={url} />
 
         <meta property="og:type"         content="website" />
+        <meta property="og:site_name"    content="OneMark Stories" />
         <meta property="og:url"          content={url} />
         <meta property="og:title"        content={`${album.title} — Digital Album`} />
         <meta property="og:description"  content={album.about} />
         <meta property="og:image"        content={ogImage} />
         <meta property="og:image:width"  content="1200" />
         <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt"    content={ogAlt} />
 
         <meta name="twitter:card"        content="summary_large_image" />
         <meta name="twitter:title"       content={`${album.title} — Digital Album`} />
         <meta name="twitter:description" content={album.about} />
         <meta name="twitter:image"       content={ogImage} />
+        <meta name="twitter:image:alt"   content={ogAlt} />
         <meta name="viewport"            content="width=device-width, initial-scale=1" />
       </Head>
 

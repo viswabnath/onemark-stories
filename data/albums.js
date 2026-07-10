@@ -21,6 +21,12 @@
  *
  * The .svg files under public/albums/bride-groom/ are placeholders — replace
  * them with the real designed sheets (see public/albums/README.md).
+ *
+ * Background music (optional, per album):
+ *   Every album plays a soft background track while open. Set `music` to give
+ *   an album its own tune — drop the file in public/audio/ and reference it,
+ *   e.g. music: "/audio/geetha.mp3". If omitted it falls back to the shared
+ *   default track (public/audio/bg-music.mp3).
  */
 export const ALBUMS = [
   {
@@ -47,6 +53,64 @@ export const ALBUMS = [
       "/albums/srinu-sai/p08.webp",
       "/albums/srinu-sai/p09.webp",
       "/albums/srinu-sai/p10.webp",
+    ],
+  },
+  {
+    id: 1,
+    num: "02",
+    title: "Geetha Sree",
+    tag: "Turning One",
+    desc: "A 15×24 first-birthday album",
+    color: "#E0992B",
+    date: "January 2018",
+    size: "15x24", // portrait-page birthday album
+    music: "/audio/birthday.mp3",
+    about:
+      "Geetha Sree's first birthday — the toys, the cake, the giggles — rebuilt spread by spread into a living book you turn and share the way you would the printed album.",
+    coverFront: "/albums/geetha-sree/cover-front.webp",
+    coverBack: "/albums/geetha-sree/cover-back.webp",
+    pages: [
+      "/albums/geetha-sree/p01.webp",
+      "/albums/geetha-sree/p02.webp",
+      "/albums/geetha-sree/p03.webp",
+      "/albums/geetha-sree/p04.webp",
+      "/albums/geetha-sree/p05.webp",
+      "/albums/geetha-sree/p06.webp",
+      "/albums/geetha-sree/p07.webp",
+      "/albums/geetha-sree/p08.webp",
+      "/albums/geetha-sree/p09.webp",
+      "/albums/geetha-sree/p10.webp",
+      "/albums/geetha-sree/p11.webp",
+      "/albums/geetha-sree/p12.webp",
+    ],
+  },
+  {
+    id: 2,
+    num: "03",
+    title: "Roshini",
+    tag: "Half-Saree Album",
+    desc: "A 12×30 half-saree album",
+    color: "#C0397A",
+    date: "March 2018",
+    size: { h: 12, w: 30 }, // custom 2.5 open ratio
+    music: "/audio/halfsaree.mp3",
+    about:
+      "Roshini's half-saree ceremony, page by page — a landscape album reimagined as a living book you flip with a tap and share with one link.",
+    coverFront: "/albums/roshini/cover-front.webp",
+    coverBack: "/albums/roshini/cover-back.webp",
+    pages: [
+      "/albums/roshini/p01.webp",
+      "/albums/roshini/p02.webp",
+      "/albums/roshini/p03.webp",
+      "/albums/roshini/p04.webp",
+      "/albums/roshini/p05.webp",
+      "/albums/roshini/p06.webp",
+      "/albums/roshini/p07.webp",
+      "/albums/roshini/p08.webp",
+      "/albums/roshini/p09.webp",
+      "/albums/roshini/p10.webp",
+      "/albums/roshini/p11.webp",
+      "/albums/roshini/p12.webp",
     ],
   },
 ];

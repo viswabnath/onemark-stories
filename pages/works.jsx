@@ -29,17 +29,20 @@ export default function WorkPage() {
         <link rel="canonical"            href={`${DOMAIN}/works`} />
 
         <meta property="og:type"         content="website" />
+        <meta property="og:site_name"    content="OneMark Stories" />
         <meta property="og:url"          content={`${DOMAIN}/works`} />
         <meta property="og:title"        content={TITLE} />
         <meta property="og:description"  content={DESC} />
         <meta property="og:image"        content={OG_IMAGE} />
         <meta property="og:image:width"  content="1200" />
         <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt"    content="OneMark Stories — Our Work" />
 
         <meta name="twitter:card"        content="summary_large_image" />
         <meta name="twitter:title"       content={TITLE} />
         <meta name="twitter:description" content={DESC} />
         <meta name="twitter:image"       content={OG_IMAGE} />
+        <meta name="twitter:image:alt"   content="OneMark Stories — Our Work" />
         <meta name="viewport"            content="width=device-width, initial-scale=1" />
       </Head>
 

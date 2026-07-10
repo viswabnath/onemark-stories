@@ -53,7 +53,8 @@ export default function ProjectPage({ project }) {
   );
   const waUrl = `https://wa.me/${WA_NUMBER}?text=${waText}`;
 
-  const ogImage = `${DOMAIN}/api/og?title=${encodeURIComponent(project.title)}&tag=${encodeURIComponent(project.tag)}&desc=${encodeURIComponent(project.about)}&num=${encodeURIComponent(project.num)}`;
+  const ogImage = `${DOMAIN}/api/og?title=${encodeURIComponent(project.title)}&tag=${encodeURIComponent(project.tag)}&desc=${encodeURIComponent(project.about)}&num=${encodeURIComponent(project.num)}&accent=${encodeURIComponent(project.color)}`;
+  const ogAlt = `${project.title} — ${project.tag} · OneMark Stories`;
 
   return (
     <>
@@ -64,17 +65,20 @@ export default function ProjectPage({ project }) {
         <link rel="canonical"    href={`${DOMAIN}/works/${toSlug(project.title)}`} />
 
         <meta property="og:type"        content="website" />
+        <meta property="og:site_name"   content="OneMark Stories" />
         <meta property="og:url"         content={`${DOMAIN}/works/${toSlug(project.title)}`} />
         <meta property="og:title"       content={`${project.title} — OneMark Stories`} />
         <meta property="og:description" content={project.about} />
         <meta property="og:image"       content={ogImage} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height"content="630" />
+        <meta property="og:image:alt"   content={ogAlt} />
 
         <meta name="twitter:card"        content="summary_large_image" />
         <meta name="twitter:title"       content={`${project.title} — OneMark Stories`} />
         <meta name="twitter:description" content={project.about} />
         <meta name="twitter:image"       content={ogImage} />
+        <meta name="twitter:image:alt"   content={ogAlt} />
         <meta name="viewport"            content="width=device-width, initial-scale=1" />
       </Head>
 

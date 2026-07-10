@@ -106,11 +106,18 @@ function playPageTurnSound() {
 
 let bgAudio = null;
 
-function startBackgroundMusic() {
-  if (typeof window === "undefined") return;
-  if (bgAudio) return; // Already playing
+const DEFAULT_MUSIC = "/audio/bg-music.mp3";
 
-  bgAudio = new Audio("/audio/bg-music.mp3");
+function startBackgroundMusic(src = DEFAULT_MUSIC) {
+  if (typeof window === "undefined") return;
+  if (bgAudio) {
+    // Already playing the right track — leave it. If a different album's
+    // track is requested, swap it out.
+    if (bgAudio.src.endsWith(src)) return;
+    stopBackgroundMusic();
+  }
+
+  bgAudio = new Audio(src);
   bgAudio.loop = true;
   bgAudio.volume = 0.0; // Start at 0 volume for smooth fade-in
 
@@ -326,6 +333,7 @@ function FlipViewer({ album }) {
   });
   const total    = singlePages.length + 2; // + front & back covers
   const { aspect } = albumSize(album);      // per-album page aspect (w / h)
+  const musicSrc = album.music || DEFAULT_MUSIC; // optional per-album track
 
   const [page, setPage]     = useState(0);
   const [copied, setCopied] = useState(false);
@@ -541,14 +549,14 @@ function FlipViewer({ album }) {
   const isOpen = page > 0 && page < total - 1;
   useEffect(() => {
     if (isOpen && !muted && !musicMuted && !show3D) {
-      startBackgroundMusic();
+      startBackgroundMusic(musicSrc);
     } else {
       stopBackgroundMusic();
     }
     return () => {
       stopBackgroundMusic();
     };
-  }, [isOpen, muted, musicMuted, show3D]);
+  }, [isOpen, muted, musicMuted, show3D, musicSrc]);
 
   // Handle tab visibility change (stop background music when user minimizes or switches tabs)
   useEffect(() => {
@@ -558,7 +566,7 @@ function FlipViewer({ album }) {
       } else {
         // Resume if the book is open, not muted, and not in 3D mode
         if (isOpen && !muted && !musicMuted && !show3D) {
-          startBackgroundMusic();
+          startBackgroundMusic(musicSrc);
         }
       }
     };
@@ -566,7 +574,7 @@ function FlipViewer({ album }) {
     return () => {
       document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
-  }, [isOpen, muted, musicMuted, show3D]);
+  }, [isOpen, muted, musicMuted, show3D, musicSrc]);
 
   const toggleMuted = useCallback(() => {
     setMuted((prev) => {

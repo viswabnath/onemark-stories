@@ -14,7 +14,7 @@ import WhatsAppFloat from "../../components/WhatsAppFloat";
 import Icon from "../../components/Icon";
 import { ALBUMS } from "../../data/albums";
 import { toSlug } from "../../lib/slug";
-import { albumSize, sizeLabel, OFFERED_SIZES } from "../../lib/albumSize";
+import { sizeLabel, OFFERED_SIZES } from "../../lib/albumSize";
 
 const DOMAIN = "https://stories.onemark.co.in";
 const TITLE  = "Digital Albums — OneMark Stories";
@@ -52,17 +52,20 @@ export default function AlbumsPage() {
         <link rel="canonical"            href={`${DOMAIN}/albums`} />
 
         <meta property="og:type"         content="website" />
+        <meta property="og:site_name"    content="OneMark Stories" />
         <meta property="og:url"          content={`${DOMAIN}/albums`} />
         <meta property="og:title"        content={TITLE} />
         <meta property="og:description"  content={DESC} />
         <meta property="og:image"        content={OG_IMAGE} />
         <meta property="og:image:width"  content="1200" />
         <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt"    content="OneMark Stories — Digital Albums" />
 
         <meta name="twitter:card"        content="summary_large_image" />
         <meta name="twitter:title"       content={TITLE} />
         <meta name="twitter:description" content={DESC} />
         <meta name="twitter:image"       content={OG_IMAGE} />
+        <meta name="twitter:image:alt"   content="OneMark Stories — Digital Albums" />
         <meta name="viewport"            content="width=device-width, initial-scale=1" />
       </Head>
 
@@ -105,7 +108,6 @@ export default function AlbumsPage() {
               <p className="albums-block__sub">Open the demo and flip through it — tap the cover, or drag a corner.</p>
               <div className="albums-index__grid">
                 {ALBUMS.map((album) => {
-                  const { aspect } = albumSize(album);
                   return (
                     <Link
                       key={album.id}
@@ -114,7 +116,9 @@ export default function AlbumsPage() {
                       data-hover
                       onClick={() => window.trackEvent?.("album_card_click", { title: album.title })}
                     >
-                      <div className="album-card__cover" style={{ aspectRatio: String(aspect) }}>
+                      {/* Uniform landscape cover box so every card matches on the
+                          grid regardless of the album's own page proportions. */}
+                      <div className="album-card__cover">
                         <Image
                           src={album.coverFront}
                           alt={`${album.title} — cover`}
