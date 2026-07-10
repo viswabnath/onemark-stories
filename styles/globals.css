@@ -5089,21 +5089,21 @@ body.cursor-clicking .cursor-dot {
   position: absolute;
   top: 0;
   bottom: 0;
-  width: 48px;
+  width: 34px;
   pointer-events: none;
   z-index: 2;
-  opacity: 0.8;
+  opacity: 0.45;
   mix-blend-mode: multiply;
 }
 
 .flipbook__page-crease--left {
   right: 0;
-  background: linear-gradient(to left, rgba(0, 0, 0, 0.26) 0%, rgba(0, 0, 0, 0) 100%);
+  background: linear-gradient(to left, rgba(0, 0, 0, 0.13) 0%, rgba(0, 0, 0, 0) 100%);
 }
 
 .flipbook__page-crease--right {
   left: 0;
-  background: linear-gradient(to right, rgba(0, 0, 0, 0.26) 0%, rgba(0, 0, 0, 0) 100%);
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.13) 0%, rgba(0, 0, 0, 0) 100%);
 }
 
 .flipbook__hint {
@@ -5500,7 +5500,7 @@ body.cursor-clicking .cursor-dot {
 
 .album-card__cover {
   position: relative;
-  aspect-ratio: 2 / 3;
+  aspect-ratio: 3 / 2;
   overflow: hidden;
 }
 

@@ -26,6 +26,7 @@ export default function handler(req) {
   const tag     = searchParams.get("tag")     || "";
   const desc    = searchParams.get("desc")    || "Event websites & interactive digital albums, from ₹4,999";
   const num     = searchParams.get("num")     || "";
+  const accent  = searchParams.get("accent")  || ""; // optional per-item brand hex
 
   // Light editorial palette
   const ROSE  = "#BE5E77";
@@ -36,7 +37,12 @@ export default function handler(req) {
   const TEXT  = "#2A211C";
   const MUTED = "#6E625A";
 
-  const tagColor = tag === "Wedding" ? ROSE
+  // An explicit accent (the album/project's own color) always wins; otherwise
+  // fall back to a per-tag accent, then gold. Keeps every card on-brand even
+  // for tags we haven't hard-coded (e.g. "Turning One", "Half-Saree Album").
+  const isHex = /^#?[0-9a-fA-F]{6}$/.test(accent);
+  const tagColor = isHex ? (accent[0] === "#" ? accent : `#${accent}`)
+    : tag === "Wedding" ? ROSE
     : tag === "Corporate" ? CYAN
     : tag === "Portfolio"  ? CYAN
     : tag === "Wedding Album" ? ROSE
@@ -114,7 +120,7 @@ export default function handler(req) {
         }}>
           {num && (
             <div style={{ fontSize: "14px", color: MUTED, marginBottom: "16px", letterSpacing: "0.15em" }}>
-              PROJECT {num}
+              {`PROJECT ${num}`}
             </div>
           )}
           <div style={{
