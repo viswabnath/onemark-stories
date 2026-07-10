@@ -15,12 +15,11 @@
  *   landscape album so visitors get the feel; we don't list every size.
  *
  * Image handling (built from code for now; a self-serve portal comes later):
- *   Drop the exported sheets into  public/albums/<slug>/ and reference them as
- *   absolute /public paths. Each sheet is one landscape page (half the open
- *   width); shown two-up as an open-book spread on desktop, one page on mobile.
- *
- * The .svg files under public/albums/bride-groom/ are placeholders — replace
- * them with the real designed sheets (see public/albums/README.md).
+ *   Drop optimized WebP into public/albums/<slug>/ and reference them as
+ *   absolute /public paths. Each `pages[]` entry is a FULL double-page spread
+ *   (the viewer splits it into left/right halves); `coverFront`/`coverBack` are
+ *   single pages. Every image must already be at the exact aspect (object-fit
+ *   is `fill`). See public/albums/README.md for the geometry rules.
  *
  * Background music (optional, per album):
  *   Every album plays a soft background track while open. Set `music` to give
