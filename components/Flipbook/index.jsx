@@ -325,11 +325,19 @@ function FlipViewer({ album }) {
   const bookRef  = useRef(null);
   const stageRef = useRef(null); // whole .flipbook (fullscreen target)
   const viewRef  = useRef(null); // .flipbook__stage — the space the book must fit
-  // Each item in album.pages is a double-page landscape spread, so we split it into left/right halves
+  // By default each item in album.pages is a double-page landscape spread, so we
+  // split it into left/right halves. If the album sets `split: false`, each item
+  // is already a single page (shown whole) — p01 becomes the left page, p02 the
+  // right, and so on.
+  const doSplit = album.split !== false;
   const singlePages = [];
   album.pages.forEach((src, idx) => {
-    singlePages.push({ src, splitSide: "left", idx });
-    singlePages.push({ src, splitSide: "right", idx });
+    if (doSplit) {
+      singlePages.push({ src, splitSide: "left", idx });
+      singlePages.push({ src, splitSide: "right", idx });
+    } else {
+      singlePages.push({ src, splitSide: null, idx });
+    }
   });
   const total    = singlePages.length + 2; // + front & back covers
   const { aspect } = albumSize(album);      // per-album page aspect (w / h)
@@ -348,9 +356,8 @@ function FlipViewer({ album }) {
   const [orientation, setOrientation]   = useState("landscape");
   const [pageInputValue, setPageInputValue] = useState("");
 
-  const N = album.pages.length;
-  const S = N * 2;
-  const middlePage = S / 2;
+  const S = singlePages.length; // total inner pages (2× spreads, or 1× if not split)
+  const middlePage = Math.max(1, Math.round(S / 2));
   const midLeft = middlePage - (middlePage % 2 === 0 ? 1 : 0);
   const middleLabel = orientation === "landscape" 
     ? `Pages ${midLeft}-${midLeft + 1}` 
@@ -1108,8 +1115,8 @@ function FlipViewer({ album }) {
                       className="book-3d__face"
                       style={{
                         backgroundImage: `url(${singlePages[0].src})`,
-                        backgroundSize: "200% 100%",
-                        backgroundPosition: "left center",
+                        backgroundSize: doSplit ? "200% 100%" : "100% 100%",
+                        backgroundPosition: doSplit ? "left center" : "center",
                         transform: "translateZ(8px)",
                         borderRadius: "2px",
                         backfaceVisibility: "hidden",
@@ -1122,8 +1129,8 @@ function FlipViewer({ album }) {
                       className="book-3d__face"
                       style={{
                         backgroundImage: `url(${singlePages[singlePages.length - 1].src})`,
-                        backgroundSize: "200% 100%",
-                        backgroundPosition: "right center",
+                        backgroundSize: doSplit ? "200% 100%" : "100% 100%",
+                        backgroundPosition: doSplit ? "right center" : "center",
                         transform: "translateZ(-8px) rotateY(180deg)",
                         borderRadius: "2px",
                         backfaceVisibility: "hidden",
@@ -1362,10 +1369,16 @@ function FlipViewer({ album }) {
 
 /* ── Fallback: a plain vertical gallery if the flip engine fails ─────── */
 function GalleryFallback({ album }) {
+  const { aspect } = albumSize(album);
+  const doSplit = album.split !== false;
   const singlePages = [];
   album.pages.forEach((src, idx) => {
-    singlePages.push({ src, splitSide: "left", idx });
-    singlePages.push({ src, splitSide: "right", idx });
+    if (doSplit) {
+      singlePages.push({ src, splitSide: "left", idx });
+      singlePages.push({ src, splitSide: "right", idx });
+    } else {
+      singlePages.push({ src, splitSide: null, idx });
+    }
   });
 
   return (
@@ -1382,12 +1395,12 @@ function GalleryFallback({ album }) {
         {/* Inner Pages (Split Spreads) */}
         {singlePages.map((item, i) => (
           <div
-            key={`${item.src}-${item.splitSide}`}
+            key={`${item.src}-${item.splitSide ?? "whole"}-${i}`}
             className="flipbook__gallery-img-wrap"
             style={{
               position: "relative",
               width: "min(92vw, 520px)",
-              aspectRatio: "1.5",
+              aspectRatio: String(aspect),
               borderRadius: "8px",
               border: "1px solid var(--border-2)",
               overflow: "hidden"
@@ -1399,8 +1412,8 @@ function GalleryFallback({ album }) {
               style={{
                 position: "absolute",
                 top: 0,
-                left: item.splitSide === "left" ? 0 : "-100%",
-                width: "200%",
+                left: item.splitSide === "right" ? "-100%" : 0,
+                width: item.splitSide ? "200%" : "100%",
                 height: "100%",
                 maxWidth: "none",
                 objectFit: "cover"
