@@ -6,7 +6,7 @@
  *     containing a Countdown Widget, a Vinyl Player widget, an RSVP Selector, and a Mini Flipbook.
  *  2. FAQItem & FAQS updated with the custom digital album questions.
  */
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { ALBUMS } from "../data/albums";
@@ -18,103 +18,6 @@ const DEMO_SLUG = DEMO ? toSlug(DEMO.title) : "";
 const WA_NUMBER = "918331978532";
 const WA_MSG = encodeURIComponent("Hi OneMark Stories! I'd like to know more about pricing and what's included.");
 const WA_LINK = `https://wa.me/${WA_NUMBER}?text=${WA_MSG}`;
-
-/* ── Bento Widgets ── */
-
-const CountdownWidget = () => {
-  const calculateTimeLeft = () => {
-    const difference = +new Date("2026-12-12T00:00:00") - +new Date();
-    let timeLeft = { days: 0, hours: 0, minutes: 0, seconds: 0 };
-
-    if (difference > 0) {
-      timeLeft = {
-        days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-        hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-        minutes: Math.floor((difference / 1000 / 60) % 60),
-        seconds: Math.floor((difference / 1000) % 60),
-      };
-    }
-    return timeLeft;
-  };
-
-  const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
-
-  useEffect(() => {
-    // Synchronize initial remaining time on client mount (asynchronous to satisfy linter)
-    const initialTimer = setTimeout(() => {
-      setTimeLeft(calculateTimeLeft());
-    }, 0);
-
-    const timer = setInterval(() => {
-      setTimeLeft(calculateTimeLeft());
-    }, 1000);
-    return () => {
-      clearTimeout(initialTimer);
-      clearInterval(timer);
-    };
-  }, []);
-
-  return (
-    <div className="bento-countdown">
-      <span style={{ fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.22em", color: "var(--gold)", fontWeight: 600 }}>Ticking Down to the Day</span>
-      <div className="bento-countdown__timer">
-        <div className="bento-countdown__unit">
-          <span className="bento-countdown__num">{String(timeLeft.days).padStart(2, '0')}</span>
-          <span className="bento-countdown__label">Days</span>
-        </div>
-        <div className="bento-countdown__unit">
-          <span className="bento-countdown__num">{String(timeLeft.hours).padStart(2, '0')}</span>
-          <span className="bento-countdown__label">Hours</span>
-        </div>
-        <div className="bento-countdown__unit">
-          <span className="bento-countdown__num">{String(timeLeft.minutes).padStart(2, '0')}</span>
-          <span className="bento-countdown__label">Mins</span>
-        </div>
-        <div className="bento-countdown__unit">
-          <span className="bento-countdown__num">{String(timeLeft.seconds).padStart(2, '0')}</span>
-          <span className="bento-countdown__label">Secs</span>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-const AlbumThumbWidget = () => {
-  if (!DEMO) return null;
-  return (
-    <Link href={`/albums/${DEMO_SLUG}`} className="bento-album" data-hover aria-label={`Open the ${DEMO.title} album`}>
-      <div className="bento-album__frame">
-        <Image src={DEMO.coverFront} alt={`${DEMO.title} album cover`} width={260} height={173} sizes="260px" />
-      </div>
-      <span className="bento-album__label">Your digital album</span>
-      <span className="bento-album__cta">Open the book →</span>
-    </Link>
-  );
-};
-
-const RSVPWidget = () => {
-  const [active, setActive] = useState(null);
-
-  return (
-    <div className="rsvp-bubble">
-      <span style={{ fontSize: "10px", textTransform: "uppercase", letterSpacing: "0.22em", color: "var(--rose)", fontWeight: 600 }}>Guest Attendance</span>
-      <div className="rsvp-bubble__container">
-        <button
-          onClick={() => setActive("yes")}
-          className={`rsvp-bubble__btn${active === "yes" ? " rsvp-bubble__btn--active" : ""}`}
-        >
-          Yes
-        </button>
-        <button
-          onClick={() => setActive("no")}
-          className={`rsvp-bubble__btn${active === "no" ? " rsvp-bubble__btn--active" : ""}`}
-        >
-          No
-        </button>
-      </div>
-    </div>
-  );
-};
 
 const AlbumSpreadWidget = () => {
   if (!DEMO) return null;
