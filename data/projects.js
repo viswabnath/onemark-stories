@@ -212,4 +212,26 @@ export const PROJECTS = [
       "Traditional Telugu wedding details",
     ],
   },
+
+  // ── 11. WEDDING — Nikah, gated reveal + multi-phase countdown ─────
+  {
+    id: 10,
+    num: "11",
+    title: "Hasnad × Fathima",
+    tag: "Wedding",
+    desc: "A Nikah, Beautifully Unveiled",
+    color: "#A23B54",
+    url: "https://fathima-hasnad.netlify.app/",
+    about:
+      "A bilingual Nikah invitation for two doctors, Dr. Shaik Hasnad Baba & Dr. Syed Taslim Fathima — opening on a locked invitation card that unlocks into their story, set against Arabic and Urdu calligraphy, a Qur'anic verse, and their engagement gallery.",
+    importance:
+      "A Nikah carries its own language and rhythm — Bismillah, Qur'anic verses, Nikah and Walima as distinct chapters. A dedicated site holds that tone with care, in a way a forwarded message never can.",
+    features: [
+      "Locked invitation gate that reveals the site with music and motion",
+      "Live countdown that shifts across Nikah, Reception, and a post-wedding keepsake",
+      "Arabic & Urdu calligraphy woven through the design",
+      "Interactive engagement photo gallery with lightbox viewing",
+      "Fully optimised SEO & Open Graph for beautiful WhatsApp and social previews",
+    ],
+  },
 ];
