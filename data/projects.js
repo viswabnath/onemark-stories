@@ -31,30 +31,30 @@ export const PROJECTS = [
   },
 
   // ── 2. BIRTHDAY — premium personal gift, shows we do more than weddings
-  {
-    id: 1,
-    num: "02",
-    title: "Manojna",
-    tag: "Birthday",
-    desc: "A Birthday, Unwrapped",
-    color: "#C9A96E",
-    url: "https://manojna.digital/",
-    about:
-      "A cinematic, chapter-by-chapter birthday greeting made just for Manojna — an envelope that opens into a heartfelt story, floating petals, its own soundtrack, and a personal message that unwraps as you scroll, all on a custom .digital domain.",
-    importance:
-      "Some people deserve more than a WhatsApp message. A personal birthday website turns 'happy birthday' into an experience they open, scroll through, and keep forever — a one-of-a-kind gift with their name on the door.",
-    features: [
-      "Cinematic 'open your story' envelope intro",
-      "Chapter-by-chapter story that unwraps as you scroll",
-      "Background music with a live audio player",
-      "Custom domain (manojna.digital) — a gift with its own address",
-    ],
-  },
+  // {
+  //   id: 1,
+  //   num: "02",
+  //   title: "Manojna",
+  //   tag: "Birthday",
+  //   desc: "A Birthday, Unwrapped",
+  //   color: "#C9A96E",
+  //   url: "https://manojna.digital/",
+  //   about:
+  //     "A cinematic, chapter-by-chapter birthday greeting made just for Manojna — an envelope that opens into a heartfelt story, floating petals, its own soundtrack, and a personal message that unwraps as you scroll, all on a custom .digital domain.",
+  //   importance:
+  //     "Some people deserve more than a WhatsApp message. A personal birthday website turns 'happy birthday' into an experience they open, scroll through, and keep forever — a one-of-a-kind gift with their name on the door.",
+  //   features: [
+  //     "Cinematic 'open your story' envelope intro",
+  //     "Chapter-by-chapter story that unwraps as you scroll",
+  //     "Background music with a live audio player",
+  //     "Custom domain (manojna.digital) — a gift with its own address",
+  //   ],
+  // },
 
   // ── 3. WEDDING — technically impressive (PWA, fireworks) ──────────
   {
     id: 2,
-    num: "03",
+    num: "02",
     title: "Ganesh × Srija",
     tag: "Wedding",
     desc: "A Wedding Story Kept Alive",
@@ -76,7 +76,7 @@ export const PROJECTS = [
   // ── 4. HOUSEWARMING — different event type ────────────────────────
   {
     id: 3,
-    num: "04",
+    num: "03",
     title: "Yadlapalli Gruha Pravesam",
     tag: "Housewarming",
     desc: "A Sacred New Beginning",
@@ -96,7 +96,7 @@ export const PROJECTS = [
   // ── 5. WEDDING — creative / genre-bending concept ─────────────────
   {
     id: 4,
-    num: "05",
+    num: "04",
     title: "Nazurul × Sajida",
     tag: "Wedding",
     desc: "Tech Meets Tradition",
@@ -116,7 +116,7 @@ export const PROJECTS = [
   // ── 6. WEDDING — unique uptime concept (also our album demo couple) ─
   {
     id: 5,
-    num: "06",
+    num: "05",
     title: "Srinu × Sai",
     tag: "Wedding",
     desc: "An Uptime Love Story",
@@ -136,7 +136,7 @@ export const PROJECTS = [
   // ── 7. SURPRISE — fun / different audience ────────────────────────
   {
     id: 6,
-    num: "07",
+    num: "06",
     title: "Valentine Week",
     tag: "Surprise",
     desc: "Live Countdown Experience",
@@ -156,7 +156,7 @@ export const PROJECTS = [
   // ── 8. WEDDING — cross-continental story ──────────────────────────
   {
     id: 7,
-    num: "08",
+    num: "07",
     title: "Arun × Spandana",
     tag: "Wedding",
     desc: "A Global Love Story",
@@ -176,7 +176,7 @@ export const PROJECTS = [
   // ── 9. WEDDING — full love story ──────────────────────────────────
   {
     id: 8,
-    num: "09",
+    num: "08",
     title: "Anil × Eswari",
     tag: "Wedding",
     desc: "A Love Story in Full",
@@ -196,7 +196,7 @@ export const PROJECTS = [
   // ── 10. WEDDING — classic / keepsake ─────────────────────────────
   {
     id: 9,
-    num: "10",
+    num: "09",
     title: "Venkat × Nandini",
     tag: "Wedding",
     desc: "Interactive Wedding Keepsake",
@@ -216,7 +216,7 @@ export const PROJECTS = [
   // ── 11. WEDDING — Nikah, gated reveal + multi-phase countdown ─────
   {
     id: 10,
-    num: "11",
+    num: "10",
     title: "Hasnad × Fathima",
     tag: "Wedding",
     desc: "A Nikah, Beautifully Unveiled",
@@ -232,6 +232,29 @@ export const PROJECTS = [
       "Arabic & Urdu calligraphy woven through the design",
       "Interactive engagement photo gallery with lightbox viewing",
       "Fully optimised SEO & Open Graph for beautiful WhatsApp and social previews",
+    ],
+  },
+
+  // ── 12. WEDDING — Tirumala temple gate, scratch reveal, two-family split ─
+  {
+    id: 11,
+    num: "11",
+    title: "Nagaraja × Harika",
+    tag: "Wedding",
+    desc: "A Wedding at the Feet of the Lord",
+    color: "#B8862B",
+    url: "https://harika-nagaraja.netlify.app/",
+    about:
+      "A divine South Indian wedding invitation for Nagaraja & Harika, whose Muhurtham is at Kalyana Vedika, Tirumala. Guests walk through a golden temple door into the invitation, scratch to reveal the sacred moment, then choose the celebration they're attending — the Pelli Kuthuru at the bride's home in Kakinada or the Reception at the groom's home in Chennai.",
+    importance:
+      "An intimate Tirumala wedding with close family, and two big celebrations in two cities for two different sets of guests. One link lets every guest seek blessings for the Muhurtham and see only the event they're invited to — no mixed-up dates, no separate cards for each side.",
+    features: [
+      "Animated temple-gate opening that zooms through the sanctum doorway",
+      "Scratch-to-reveal Muhurtham and event dates with petal burst and temple bell",
+      "Bride's-home / groom's-home choice that shows only that family's celebration",
+      "Live countdown, add-to-calendar and map links for every event",
+      "Three.js diya sparks, falling petals and soft background music",
+      "SEO, structured event data and llms.txt for search engines and AI assistants",
     ],
   },
 ];
