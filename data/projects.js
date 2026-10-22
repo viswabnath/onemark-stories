@@ -234,4 +234,27 @@ export const PROJECTS = [
       "Fully optimised SEO & Open Graph for beautiful WhatsApp and social previews",
     ],
   },
+
+  // ── 12. WEDDING — Tirumala temple gate, scratch reveal, two-family split ─
+  {
+    id: 11,
+    num: "12",
+    title: "Nagaraja × Harika",
+    tag: "Wedding",
+    desc: "A Wedding at the Feet of the Lord",
+    color: "#B8862B",
+    url: "https://harika-nagaraja.netlify.app/",
+    about:
+      "A divine South Indian wedding invitation for Nagaraja & Harika, whose Muhurtham is at Kalyana Vedika, Tirumala. Guests walk through a golden temple door into the invitation, scratch to reveal the sacred moment, then choose the celebration they're attending — the Pelli Kuthuru at the bride's home in Kakinada or the Reception at the groom's home in Chennai.",
+    importance:
+      "An intimate Tirumala wedding with close family, and two big celebrations in two cities for two different sets of guests. One link lets every guest seek blessings for the Muhurtham and see only the event they're invited to — no mixed-up dates, no separate cards for each side.",
+    features: [
+      "Animated temple-gate opening that zooms through the sanctum doorway",
+      "Scratch-to-reveal Muhurtham and event dates with petal burst and temple bell",
+      "Bride's-home / groom's-home choice that shows only that family's celebration",
+      "Live countdown, add-to-calendar and map links for every event",
+      "Three.js diya sparks, falling petals and soft background music",
+      "SEO, structured event data and llms.txt for search engines and AI assistants",
+    ],
+  },
 ];
