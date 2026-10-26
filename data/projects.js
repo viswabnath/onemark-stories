@@ -245,7 +245,7 @@ export const PROJECTS = [
     color: "#B8862B",
     url: "https://harika-nagaraja.netlify.app/",
     about:
-      "A divine South Indian wedding invitation for Nagaraja & Harika, whose Muhurtham is at Kalyana Vedika, Tirumala. Guests walk through a golden temple door into the invitation, scratch to reveal the sacred moment, then choose the celebration they're attending — the Pelli Kuthuru at the bride's home in Kakinada or the Reception at the groom's home in Chennai.",
+      "A divine South Indian wedding invitation for Nagaraja & Harika, whose Muhurtham is at Mouna Swamy Mutt on Papavinasanam Road, Tirumala. Guests walk through a golden temple door into the invitation, scratch to reveal the sacred moment, then choose the celebration they're attending — the Pelli Kuthuru at the bride's home in Kakinada or the Reception at the groom's home in Chennai.",
     importance:
       "An intimate Tirumala wedding with close family, and two big celebrations in two cities for two different sets of guests. One link lets every guest seek blessings for the Muhurtham and see only the event they're invited to — no mixed-up dates, no separate cards for each side.",
     features: [
