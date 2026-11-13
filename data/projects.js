@@ -133,30 +133,10 @@ export const PROJECTS = [
     ],
   },
 
-  // ── 7. SURPRISE — fun / different audience ────────────────────────
-  {
-    id: 6,
-    num: "06",
-    title: "Valentine Week",
-    tag: "Surprise",
-    desc: "Live Countdown Experience",
-    color: "#C9A96E",
-    url: "https://mavi-valentine-week.vercel.app/",
-    about:
-      "A lively, animated Valentine Week countdown page that builds anticipation day-by-day — a digital surprise that makes love feel like a celebration.",
-    importance:
-      "Saying 'I love you' with a custom-built page hits different than a text message. This is a gesture that shows effort — something they'll screenshot, share, and remember.",
-    features: [
-      "Day-by-day Valentine countdown",
-      "Animated love messages",
-      "Shareable surprise link",
-    ],
-  },
-
-  // ── 8. WEDDING — cross-continental story ──────────────────────────
+  // ── 7. WEDDING — cross-continental story ──────────────────────────
   {
     id: 7,
-    num: "07",
+    num: "06",
     title: "Arun × Spandana",
     tag: "Wedding",
     desc: "A Global Love Story",
@@ -173,10 +153,10 @@ export const PROJECTS = [
     ],
   },
 
-  // ── 9. WEDDING — full love story ──────────────────────────────────
+  // ── 8. WEDDING — full love story ──────────────────────────────────
   {
     id: 8,
-    num: "08",
+    num: "07",
     title: "Anil × Eswari",
     tag: "Wedding",
     desc: "A Love Story in Full",
@@ -193,10 +173,10 @@ export const PROJECTS = [
     ],
   },
 
-  // ── 10. WEDDING — classic / keepsake ─────────────────────────────
+  // ── 9. WEDDING — classic / keepsake ─────────────────────────────
   {
     id: 9,
-    num: "09",
+    num: "08",
     title: "Venkat × Nandini",
     tag: "Wedding",
     desc: "Interactive Wedding Keepsake",
@@ -213,10 +193,10 @@ export const PROJECTS = [
     ],
   },
 
-  // ── 11. WEDDING — Nikah, gated reveal + multi-phase countdown ─────
+  // ── 10. WEDDING — Nikah, gated reveal + multi-phase countdown ─────
   {
     id: 10,
-    num: "10",
+    num: "09",
     title: "Hasnad × Fathima",
     tag: "Wedding",
     desc: "A Nikah, Beautifully Unveiled",
@@ -235,10 +215,10 @@ export const PROJECTS = [
     ],
   },
 
-  // ── 12. WEDDING — Tirumala temple gate, scratch reveal, two-family split ─
+  // ── 11. WEDDING — Tirumala temple gate, scratch reveal, two-family split ─
   {
     id: 11,
-    num: "11",
+    num: "10",
     title: "Nagaraja × Harika",
     tag: "Wedding",
     desc: "A Wedding at the Feet of the Lord",
@@ -255,6 +235,29 @@ export const PROJECTS = [
       "Live countdown, add-to-calendar and map links for every event",
       "Three.js diya sparks, falling petals and soft background music",
       "SEO, structured event data and llms.txt for search engines and AI assistants",
+    ],
+  },
+
+  // ── 12. WEDDING — peacock-arch welcome, date + time scratch cards, two-event countdown ─
+  {
+    id: 12,
+    num: "11",
+    title: "Hemeshwar × Vasudha",
+    tag: "Wedding",
+    desc: "A Telugu Wedding Through the Peacock Arch",
+    color: "#145A50",
+    url: "https://hemeshwar-vasudha.netlify.app/",
+    about:
+      "A South Indian Telugu wedding invitation for Chi. Hemeshwar Kumar & Chi.La.Sow. Vasudha, with the Marriage at Lion's Club, Chintalapudi and a Reception with lunch the next day in Gudivada. Guests step through a peacock-and-marigold wedding arch into the invitation, then scratch to reveal the date and the time of each celebration.",
+    importance:
+      "Two celebrations in two towns, one in the evening and one the next noon, each with its own venue. One link shows every guest exactly what, when and where, in the family's own artwork, Telugu blessings and a devotional song, with no scattered forwards.",
+    features: [
+      "Full-screen peacock-arch welcome that fades into the invitation, with soft Telugu devotional music and a pause button",
+      "Separate scratch cards for the date and the time of the Marriage and the Reception",
+      "Live countdown that moves from the Marriage to the Reception, then turns into a thank-you note",
+      "Family introduction with Telugu blessings and hand-illustrated South Indian artwork",
+      "Add-to-calendar and map links for both events",
+      "Self-hosted fonts, structured event data and llms.txt for search engines and AI assistants",
     ],
   },
 ];
