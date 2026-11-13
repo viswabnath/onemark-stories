@@ -1,224 +1,39 @@
 /**
  * data/projects.js
  *
- * Ordered for impact + variety — the strongest, most distinctive builds come
- * first, and non-wedding occasions (birthday, housewarming, surprise) are
- * interleaved early so visitors see the full range rather than a wall of
- * wedding countdowns.
+ * Ordered newest first — the most recently added project is at the top.
+ * When adding a project, put it at the TOP of the array with the next id and
+ * num "01", then renumber the rest so the showcase counter runs 01–N in order.
  */
 
 export const PROJECTS = [
-  // ── 1. FLAGSHIP WEDDING — cinematic, best quality ─────────────────
+  // ── 1. WEDDING — peacock-arch welcome, date + time scratch cards, two-event countdown ─
   {
-    id: 0,
+    id: 12,
     num: "01",
-    title: "Vijay × Rashmika",
+    title: "Hemeshwar × Vasudha",
     tag: "Wedding",
-    desc: "A Cinematic Union",
-    color: "#D4758C",
-    url: "https://vijay-rashmika.netlify.app/",
+    desc: "A Telugu Wedding Through the Peacock Arch",
+    color: "#145A50",
+    url: "https://hemeshwar-vasudha.netlify.app/",
     about:
-      "A bespoke, interactive digital experience for Vijay & Rashmika. Crafted with modern web technologies and fluid animations, it transforms standard event details into an immersive, cinematic journey for their guests.",
+      "A South Indian Telugu wedding invitation for Chi. Hemeshwar Kumar & Chi.La.Sow. Vasudha, with the Marriage at Lion's Club, Chintalapudi and a Reception with lunch the next day in Gudivada. Guests step through a peacock-and-marigold wedding arch into the invitation, then scratch to reveal the date and the time of each celebration.",
     importance:
-      "Modern weddings require more than a paper invite. With guests traveling from across the globe, a centralised, high-performance web platform ensures seamless access to itineraries, locations, and updates — all while building anticipation for the big day.",
+      "Two celebrations in two towns, one in the evening and one the next noon, each with its own venue. One link shows every guest exactly what, when and where, in the family's own artwork, Telugu blessings and a devotional song, with no scattered forwards.",
     features: [
-      "Dynamic, real-time wedding countdown",
-      "Silky smooth scroll animations and cinematic UI",
-      "Interactive event itinerary and venue navigation",
-      "High-performance, responsive design for all mobile devices",
-      "Optimised for seamless sharing across WhatsApp & Instagram",
+      "Full-screen peacock-arch welcome that fades into the invitation, with soft Telugu devotional music and a pause button",
+      "Separate scratch cards for the date and the time of the Marriage and the Reception",
+      "Live countdown that moves from the Marriage to the Reception, then turns into a thank-you note",
+      "Family introduction with Telugu blessings and hand-illustrated South Indian artwork",
+      "Add-to-calendar and map links for both events",
+      "Self-hosted fonts, structured event data and llms.txt for search engines and AI assistants",
     ],
   },
 
-  // ── 2. BIRTHDAY — premium personal gift, shows we do more than weddings
-  // {
-  //   id: 1,
-  //   num: "02",
-  //   title: "Manojna",
-  //   tag: "Birthday",
-  //   desc: "A Birthday, Unwrapped",
-  //   color: "#C9A96E",
-  //   url: "https://manojna.digital/",
-  //   about:
-  //     "A cinematic, chapter-by-chapter birthday greeting made just for Manojna — an envelope that opens into a heartfelt story, floating petals, its own soundtrack, and a personal message that unwraps as you scroll, all on a custom .digital domain.",
-  //   importance:
-  //     "Some people deserve more than a WhatsApp message. A personal birthday website turns 'happy birthday' into an experience they open, scroll through, and keep forever — a one-of-a-kind gift with their name on the door.",
-  //   features: [
-  //     "Cinematic 'open your story' envelope intro",
-  //     "Chapter-by-chapter story that unwraps as you scroll",
-  //     "Background music with a live audio player",
-  //     "Custom domain (manojna.digital) — a gift with its own address",
-  //   ],
-  // },
-
-  // ── 3. WEDDING — technically impressive (PWA, fireworks) ──────────
-  {
-    id: 2,
-    num: "02",
-    title: "Ganesh × Srija",
-    tag: "Wedding",
-    desc: "A Wedding Story Kept Alive",
-    color: "#D4758C",
-    url: "https://ganesh-srija.netlify.app",
-    about:
-      "A premium digital wedding invitation for Ganesh Reddy & Srija — capturing their sacred Telugu union in Bhadrachalam with an interactive countdown to their Muhurtham.",
-    importance:
-      "Their sacred union deserved more than a standard WhatsApp forward. This digital invitation acts as a permanent keepsake, featuring rich social previews, installable PWA capabilities, and interactive elements that let every guest feel the magic.",
-    features: [
-      "Dynamic 4-state live timer (Countdown to Count-up) anchored to the Muhurtham",
-      "Triggered digital fireworks and celebration sparks tied to the wedding time",
-      "Progressive Web App (PWA) — installs on the home screen like a native app",
-      "Fully optimised SEO & Open Graph for beautiful WhatsApp and social previews",
-      "GSAP scroll animations and interactive lightbox photo galleries",
-    ],
-  },
-
-  // ── 4. HOUSEWARMING — different event type ────────────────────────
-  {
-    id: 3,
-    num: "03",
-    title: "Yadlapalli Gruha Pravesam",
-    tag: "Housewarming",
-    desc: "A Sacred New Beginning",
-    color: "#C9A96E",
-    url: "https://yadlapalli-gruhapravesam.vercel.app",
-    about:
-      "A beautiful digital invitation for the Yadlapalli family's Gruha Pravesam — capturing the sanctity and joy of stepping into a new home with an elegant, shareable web experience.",
-    importance:
-      "A housewarming is a once-in-a-lifetime milestone. A dedicated digital invitation ensures every guest — near or far — arrives with the right details, the right spirit, and a moment to cherish forever.",
-    features: [
-      "Elegant event details and ceremony schedule",
-      "Live countdown to the Gruha Pravesam moment",
-      "Shareable across WhatsApp & Instagram",
-    ],
-  },
-
-  // ── 5. WEDDING — creative / genre-bending concept ─────────────────
-  {
-    id: 4,
-    num: "04",
-    title: "Nazurul × Sajida",
-    tag: "Wedding",
-    desc: "Tech Meets Tradition",
-    color: "#C9A96E",
-    url: "https://nazurul-sajida.netlify.app/",
-    about:
-      "A bold, genre-bending wedding invitation where two IT professionals — from House Nazurul and House Sajida — unite their worlds in a Game of Thrones meets Silicon Valley narrative.",
-    importance:
-      "Paper invitations get lost. Digital ones travel instantly and can be opened again and again. Give your guests a page they'll revisit — not a message they'll scroll past.",
-    features: [
-      "House-vs-House narrative with character cards",
-      "Animated timeline from birth to wedding day",
-      "RSVP-ready design, mobile-first for easy sharing",
-    ],
-  },
-
-  // ── 6. WEDDING — unique uptime concept (also our album demo couple) ─
-  {
-    id: 5,
-    num: "05",
-    title: "Srinu × Sai",
-    tag: "Wedding",
-    desc: "An Uptime Love Story",
-    color: "#D4758C",
-    url: "https://srinu-sree.netlify.app",
-    about:
-      "A cinematic wedding story for Srinu & Sai — their entire journey from engagement to wedding told as a live system uptime log, chapter by chapter.",
-    importance:
-      "Their story deserved more than a WhatsApp forward. This page lives forever, plays like a film, and lets every guest relive the magic — anytime, anywhere.",
-    features: [
-      "Live uptime counter since 18 Feb 2024",
-      "Full chapter journey: Engagement → Haldi → Marriage → Reception → Post-wedding",
-      "Cinematic photo galleries with captions",
-    ],
-  },
-
-  // ── 7. WEDDING — cross-continental story ──────────────────────────
-  {
-    id: 7,
-    num: "06",
-    title: "Arun × Spandana",
-    tag: "Wedding",
-    desc: "A Global Love Story",
-    color: "#D4758C",
-    url: "https://arun-spandana.netlify.app",
-    about:
-      "From the peaks of Ladakh to the streets of London — an immersive digital experience capturing the cross-continental love story of Arun & Spandana.",
-    importance:
-      "A modern, interactive narrative that allows guests to journey through their story before arriving at the celebration, ensuring the magic begins long before the wedding day.",
-    features: [
-      "Cinematic cross-continental storytelling",
-      "Beautiful timeline and journey mapping",
-      "Seamless mobile and desktop experience",
-    ],
-  },
-
-  // ── 8. WEDDING — full love story ──────────────────────────────────
-  {
-    id: 8,
-    num: "07",
-    title: "Anil × Eswari",
-    tag: "Wedding",
-    desc: "A Love Story in Full",
-    color: "#D4758C",
-    url: "https://anil-eswari.netlify.app/",
-    about:
-      "A vibrant celebration site for Anil & Eswari — bringing together their love story timeline, ceremony schedule, family message, and wedding memories in one joyful experience.",
-    importance:
-      "Families are spread across cities and countries. A website becomes the central hub — your out-of-town guests know exactly where to go, what to wear, and when to arrive.",
-    features: [
-      "Full love story timeline with real photos",
-      "Live countdown to the wedding day",
-      "Shareable across WhatsApp & Instagram",
-    ],
-  },
-
-  // ── 9. WEDDING — classic / keepsake ─────────────────────────────
-  {
-    id: 9,
-    num: "08",
-    title: "Venkat × Nandini",
-    tag: "Wedding",
-    desc: "Interactive Wedding Keepsake",
-    color: "#D4758C",
-    url: "https://venkat-nandini.netlify.app/",
-    about:
-      "A beautifully crafted wedding site for Venkat & Nandini — capturing their ceremony details and a live countdown to the big day.",
-    importance:
-      "Your wedding is a once-in-a-lifetime event. A dedicated site lets your guests experience the joy before they arrive — no WhatsApp forwards, no confusion.",
-    features: [
-      "Live countdown to the wedding day",
-      "Venue info & event timeline",
-      "Traditional Telugu wedding details",
-    ],
-  },
-
-  // ── 10. WEDDING — Nikah, gated reveal + multi-phase countdown ─────
-  {
-    id: 10,
-    num: "09",
-    title: "Hasnad × Fathima",
-    tag: "Wedding",
-    desc: "A Nikah, Beautifully Unveiled",
-    color: "#A23B54",
-    url: "https://fathima-hasnad.netlify.app/",
-    about:
-      "A bilingual Nikah invitation for two doctors, Dr. Shaik Hasnad Baba & Dr. Syed Taslim Fathima — opening on a locked invitation card that unlocks into their story, set against Arabic and Urdu calligraphy, a Qur'anic verse, and their engagement gallery.",
-    importance:
-      "A Nikah carries its own language and rhythm — Bismillah, Qur'anic verses, Nikah and Walima as distinct chapters. A dedicated site holds that tone with care, in a way a forwarded message never can.",
-    features: [
-      "Locked invitation gate that reveals the site with music and motion",
-      "Live countdown that shifts across Nikah, Reception, and a post-wedding keepsake",
-      "Arabic & Urdu calligraphy woven through the design",
-      "Interactive engagement photo gallery with lightbox viewing",
-      "Fully optimised SEO & Open Graph for beautiful WhatsApp and social previews",
-    ],
-  },
-
-  // ── 11. WEDDING — Tirumala temple gate, scratch reveal, two-family split ─
+  // ── 2. WEDDING — Tirumala temple gate, scratch reveal, two-family split ─
   {
     id: 11,
-    num: "10",
+    num: "02",
     title: "Nagaraja × Harika",
     tag: "Wedding",
     desc: "A Wedding at the Feet of the Lord",
@@ -238,26 +53,210 @@ export const PROJECTS = [
     ],
   },
 
-  // ── 12. WEDDING — peacock-arch welcome, date + time scratch cards, two-event countdown ─
+  // ── 3. WEDDING — Nikah, gated reveal + multi-phase countdown ─────
   {
-    id: 12,
-    num: "11",
-    title: "Hemeshwar × Vasudha",
+    id: 10,
+    num: "03",
+    title: "Hasnad × Fathima",
     tag: "Wedding",
-    desc: "A Telugu Wedding Through the Peacock Arch",
-    color: "#145A50",
-    url: "https://hemeshwar-vasudha.netlify.app/",
+    desc: "A Nikah, Beautifully Unveiled",
+    color: "#A23B54",
+    url: "https://fathima-hasnad.netlify.app/",
     about:
-      "A South Indian Telugu wedding invitation for Chi. Hemeshwar Kumar & Chi.La.Sow. Vasudha, with the Marriage at Lion's Club, Chintalapudi and a Reception with lunch the next day in Gudivada. Guests step through a peacock-and-marigold wedding arch into the invitation, then scratch to reveal the date and the time of each celebration.",
+      "A bilingual Nikah invitation for two doctors, Dr. Shaik Hasnad Baba & Dr. Syed Taslim Fathima — opening on a locked invitation card that unlocks into their story, set against Arabic and Urdu calligraphy, a Qur'anic verse, and their engagement gallery.",
     importance:
-      "Two celebrations in two towns, one in the evening and one the next noon, each with its own venue. One link shows every guest exactly what, when and where, in the family's own artwork, Telugu blessings and a devotional song, with no scattered forwards.",
+      "A Nikah carries its own language and rhythm — Bismillah, Qur'anic verses, Nikah and Walima as distinct chapters. A dedicated site holds that tone with care, in a way a forwarded message never can.",
     features: [
-      "Full-screen peacock-arch welcome that fades into the invitation, with soft Telugu devotional music and a pause button",
-      "Separate scratch cards for the date and the time of the Marriage and the Reception",
-      "Live countdown that moves from the Marriage to the Reception, then turns into a thank-you note",
-      "Family introduction with Telugu blessings and hand-illustrated South Indian artwork",
-      "Add-to-calendar and map links for both events",
-      "Self-hosted fonts, structured event data and llms.txt for search engines and AI assistants",
+      "Locked invitation gate that reveals the site with music and motion",
+      "Live countdown that shifts across Nikah, Reception, and a post-wedding keepsake",
+      "Arabic & Urdu calligraphy woven through the design",
+      "Interactive engagement photo gallery with lightbox viewing",
+      "Fully optimised SEO & Open Graph for beautiful WhatsApp and social previews",
     ],
   },
+
+  // ── 4. WEDDING — classic / keepsake ─────────────────────────────
+  {
+    id: 9,
+    num: "04",
+    title: "Venkat × Nandini",
+    tag: "Wedding",
+    desc: "Interactive Wedding Keepsake",
+    color: "#D4758C",
+    url: "https://venkat-nandini.netlify.app/",
+    about:
+      "A beautifully crafted wedding site for Venkat & Nandini — capturing their ceremony details and a live countdown to the big day.",
+    importance:
+      "Your wedding is a once-in-a-lifetime event. A dedicated site lets your guests experience the joy before they arrive — no WhatsApp forwards, no confusion.",
+    features: [
+      "Live countdown to the wedding day",
+      "Venue info & event timeline",
+      "Traditional Telugu wedding details",
+    ],
+  },
+
+  // ── 5. WEDDING — full love story ──────────────────────────────────
+  {
+    id: 8,
+    num: "05",
+    title: "Anil × Eswari",
+    tag: "Wedding",
+    desc: "A Love Story in Full",
+    color: "#D4758C",
+    url: "https://anil-eswari.netlify.app/",
+    about:
+      "A vibrant celebration site for Anil & Eswari — bringing together their love story timeline, ceremony schedule, family message, and wedding memories in one joyful experience.",
+    importance:
+      "Families are spread across cities and countries. A website becomes the central hub — your out-of-town guests know exactly where to go, what to wear, and when to arrive.",
+    features: [
+      "Full love story timeline with real photos",
+      "Live countdown to the wedding day",
+      "Shareable across WhatsApp & Instagram",
+    ],
+  },
+
+  // ── 6. WEDDING — cross-continental story ──────────────────────────
+  {
+    id: 7,
+    num: "06",
+    title: "Arun × Spandana",
+    tag: "Wedding",
+    desc: "A Global Love Story",
+    color: "#D4758C",
+    url: "https://arun-spandana.netlify.app",
+    about:
+      "From the peaks of Ladakh to the streets of London — an immersive digital experience capturing the cross-continental love story of Arun & Spandana.",
+    importance:
+      "A modern, interactive narrative that allows guests to journey through their story before arriving at the celebration, ensuring the magic begins long before the wedding day.",
+    features: [
+      "Cinematic cross-continental storytelling",
+      "Beautiful timeline and journey mapping",
+      "Seamless mobile and desktop experience",
+    ],
+  },
+
+  // ── 7. WEDDING — unique uptime concept (also our album demo couple) ─
+  {
+    id: 5,
+    num: "07",
+    title: "Srinu × Sai",
+    tag: "Wedding",
+    desc: "An Uptime Love Story",
+    color: "#D4758C",
+    url: "https://srinu-sree.netlify.app",
+    about:
+      "A cinematic wedding story for Srinu & Sai — their entire journey from engagement to wedding told as a live system uptime log, chapter by chapter.",
+    importance:
+      "Their story deserved more than a WhatsApp forward. This page lives forever, plays like a film, and lets every guest relive the magic — anytime, anywhere.",
+    features: [
+      "Live uptime counter since 18 Feb 2024",
+      "Full chapter journey: Engagement → Haldi → Marriage → Reception → Post-wedding",
+      "Cinematic photo galleries with captions",
+    ],
+  },
+
+  // ── 8. WEDDING — creative / genre-bending concept ─────────────────
+  {
+    id: 4,
+    num: "08",
+    title: "Nazurul × Sajida",
+    tag: "Wedding",
+    desc: "Tech Meets Tradition",
+    color: "#C9A96E",
+    url: "https://nazurul-sajida.netlify.app/",
+    about:
+      "A bold, genre-bending wedding invitation where two IT professionals — from House Nazurul and House Sajida — unite their worlds in a Game of Thrones meets Silicon Valley narrative.",
+    importance:
+      "Paper invitations get lost. Digital ones travel instantly and can be opened again and again. Give your guests a page they'll revisit — not a message they'll scroll past.",
+    features: [
+      "House-vs-House narrative with character cards",
+      "Animated timeline from birth to wedding day",
+      "RSVP-ready design, mobile-first for easy sharing",
+    ],
+  },
+
+  // ── 9. HOUSEWARMING — different event type ────────────────────────
+  {
+    id: 3,
+    num: "09",
+    title: "Yadlapalli Gruha Pravesam",
+    tag: "Housewarming",
+    desc: "A Sacred New Beginning",
+    color: "#C9A96E",
+    url: "https://yadlapalli-gruhapravesam.vercel.app",
+    about:
+      "A beautiful digital invitation for the Yadlapalli family's Gruha Pravesam — capturing the sanctity and joy of stepping into a new home with an elegant, shareable web experience.",
+    importance:
+      "A housewarming is a once-in-a-lifetime milestone. A dedicated digital invitation ensures every guest — near or far — arrives with the right details, the right spirit, and a moment to cherish forever.",
+    features: [
+      "Elegant event details and ceremony schedule",
+      "Live countdown to the Gruha Pravesam moment",
+      "Shareable across WhatsApp & Instagram",
+    ],
+  },
+
+  // ── 10. WEDDING — technically impressive (PWA, fireworks) ──────────
+  {
+    id: 2,
+    num: "10",
+    title: "Ganesh × Srija",
+    tag: "Wedding",
+    desc: "A Wedding Story Kept Alive",
+    color: "#D4758C",
+    url: "https://ganesh-srija.netlify.app",
+    about:
+      "A premium digital wedding invitation for Ganesh Reddy & Srija — capturing their sacred Telugu union in Bhadrachalam with an interactive countdown to their Muhurtham.",
+    importance:
+      "Their sacred union deserved more than a standard WhatsApp forward. This digital invitation acts as a permanent keepsake, featuring rich social previews, installable PWA capabilities, and interactive elements that let every guest feel the magic.",
+    features: [
+      "Dynamic 4-state live timer (Countdown to Count-up) anchored to the Muhurtham",
+      "Triggered digital fireworks and celebration sparks tied to the wedding time",
+      "Progressive Web App (PWA) — installs on the home screen like a native app",
+      "Fully optimised SEO & Open Graph for beautiful WhatsApp and social previews",
+      "GSAP scroll animations and interactive lightbox photo galleries",
+    ],
+  },
+
+  // ── 11. FLAGSHIP WEDDING — cinematic, best quality ─────────────────
+  {
+    id: 0,
+    num: "11",
+    title: "Vijay × Rashmika",
+    tag: "Wedding",
+    desc: "A Cinematic Union",
+    color: "#D4758C",
+    url: "https://vijay-rashmika.netlify.app/",
+    about:
+      "A bespoke, interactive digital experience for Vijay & Rashmika. Crafted with modern web technologies and fluid animations, it transforms standard event details into an immersive, cinematic journey for their guests.",
+    importance:
+      "Modern weddings require more than a paper invite. With guests traveling from across the globe, a centralised, high-performance web platform ensures seamless access to itineraries, locations, and updates — all while building anticipation for the big day.",
+    features: [
+      "Dynamic, real-time wedding countdown",
+      "Silky smooth scroll animations and cinematic UI",
+      "Interactive event itinerary and venue navigation",
+      "High-performance, responsive design for all mobile devices",
+      "Optimised for seamless sharing across WhatsApp & Instagram",
+    ],
+  },
+
+  // ── HIDDEN — kept for reference; uncomment, give it the next id and renumber to re-enable
+  // {
+  //   id: 1,
+  //   num: "02",
+  //   title: "Manojna",
+  //   tag: "Birthday",
+  //   desc: "A Birthday, Unwrapped",
+  //   color: "#C9A96E",
+  //   url: "https://manojna.digital/",
+  //   about:
+  //     "A cinematic, chapter-by-chapter birthday greeting made just for Manojna — an envelope that opens into a heartfelt story, floating petals, its own soundtrack, and a personal message that unwraps as you scroll, all on a custom .digital domain.",
+  //   importance:
+  //     "Some people deserve more than a WhatsApp message. A personal birthday website turns 'happy birthday' into an experience they open, scroll through, and keep forever — a one-of-a-kind gift with their name on the door.",
+  //   features: [
+  //     "Cinematic 'open your story' envelope intro",
+  //     "Chapter-by-chapter story that unwraps as you scroll",
+  //     "Background music with a live audio player",
+  //     "Custom domain (manojna.digital) — a gift with its own address",
+  //   ],
+  // },
 ];
